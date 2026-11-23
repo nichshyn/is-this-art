@@ -1,7 +1,7 @@
 node_modules
 .next
 out
-data/
+/data/
 public/uploads/*
 !public/uploads/.gitkeep
 .env
