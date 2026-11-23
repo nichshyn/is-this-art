@@ -1,0 +1,35 @@
+# Render Blueprint for IS THIS ART?
+#
+# The current runtime stores its SQLite database and uploads on local disk, so
+# the web service must be long-running and must keep a persistent disk.
+# Deploy this file from the repository root.
+
+services:
+  - type: web
+    name: is-this-art
+    runtime: node
+    region: frankfurt
+    plan: 0.5c-512mb
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    healthCheckPath: /
+    disk:
+      name: is-this-art-data
+      mountPath: /opt/render/project/src/data
+      sizeGB: 5
+    envVars:
+      - key: AUTH_SECRET
+        generateValue: true
+      - key: NEXT_SERVER_ACTIONS_ENCRYPTION_KEY
+        generateValue: true
+      - key: DATA_DIR
+        value: /opt/render/project/src/data
+      - key: NEXT_PUBLIC_SITE_URL
+        sync: false
+      - key: SEED_ADMIN_EMAIL
+        sync: false
+      - key: SEED_ADMIN_PASSWORD
+        sync: false
+      - key: SEED_ADMIN_USERNAME
+        value: curator
+        sync: false

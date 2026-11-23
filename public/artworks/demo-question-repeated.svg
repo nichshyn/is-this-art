@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" role="img" aria-labelledby="t">
+  <title id="t">A Question, Repeated — a typographic experimental work</title>
+  <defs>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="saturate" values="0" result="g"/>
+      <feComponentTransfer in="g" result="a"><feFuncA type="linear" slope="0.045"/></feComponentTransfer>
+      <feBlend in="SourceGraphic" in2="a" mode="multiply"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="1200" fill="#f5f3ee"/>
+  <g font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="46" letter-spacing="2" fill="#1b1b19">
+    <text x="90" y="150" opacity="0.92">IS THIS ART?</text>
+    <text x="90" y="240" opacity="0.78">IS THIS ART?</text>
+    <text x="90" y="330" opacity="0.64">IS THIS ART?</text>
+    <text x="90" y="420" opacity="0.5">IS THIS ART?</text>
+    <text x="90" y="510" opacity="0.38">IS THIS ART?</text>
+    <text x="90" y="600" opacity="0.27">IS THIS ART?</text>
+    <text x="90" y="690" opacity="0.18">IS THIS ART?</text>
+    <text x="90" y="780" opacity="0.11">IS THIS ART?</text>
+    <text x="90" y="870" opacity="0.06">IS THIS ART?</text>
+    <text x="90" y="960" opacity="0.03">IS THIS ART?</text>
+  </g>
+  <g font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="46" letter-spacing="2" fill="#1b1b19">
+    <text x="760" y="150" opacity="0.03">IS THIS ART?</text>
+    <text x="760" y="240" opacity="0.06">IS THIS ART?</text>
+    <text x="760" y="330" opacity="0.11">IS THIS ART?</text>
+    <text x="760" y="420" opacity="0.18">IS THIS ART?</text>
+    <text x="760" y="510" opacity="0.27">IS THIS ART?</text>
+    <text x="760" y="600" opacity="0.38">IS THIS ART?</text>
+    <text x="760" y="690" opacity="0.5">IS THIS ART?</text>
+    <text x="760" y="780" opacity="0.64">IS THIS ART?</text>
+    <text x="760" y="870" opacity="0.78">IS THIS ART?</text>
+    <text x="760" y="960" opacity="0.92">IS THIS ART?</text>
+  </g>
+  <text x="1284" y="960" font-family="Inter, sans-serif" font-weight="700" font-size="220" fill="#b8442f">?</text>
+  <rect width="1600" height="1200" filter="url(#grain)"/>
+  <text x="72" y="1128" font-family="Inter, sans-serif" font-size="20" letter-spacing="6" fill="#6f6a60">A QUESTION, REPEATED / 2025</text>
+</svg>

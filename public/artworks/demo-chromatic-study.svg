@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" role="img" aria-labelledby="t">
+  <title id="t">Chromatic Study No. 4 — a digital colour composition</title>
+  <defs>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="saturate" values="0" result="g"/>
+      <feComponentTransfer in="g" result="a"><feFuncA type="linear" slope="0.07"/></feComponentTransfer>
+      <feBlend in="SourceGraphic" in2="a" mode="multiply"/>
+    </filter>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f4f1e9"/>
+      <stop offset="1" stop-color="#e8e3d7"/>
+    </linearGradient>
+    <linearGradient id="red" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c4553f"/>
+      <stop offset="1" stop-color="#a23f2d"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3f5f86"/>
+      <stop offset="1" stop-color="#2d4867"/>
+    </linearGradient>
+    <linearGradient id="ochre" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c9a35c"/>
+      <stop offset="1" stop-color="#ad8744"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1200" fill="url(#paper)"/>
+  <rect x="150" y="140" width="300" height="920" fill="url(#red)" opacity="0.92"/>
+  <rect x="510" y="140" width="120" height="920" fill="#1d1d1b" opacity="0.9"/>
+  <rect x="690" y="140" width="420" height="440" fill="url(#blue)" opacity="0.9"/>
+  <rect x="690" y="640" width="420" height="420" fill="url(#ochre)" opacity="0.9"/>
+  <circle cx="1290" cy="600" r="230" fill="#e7e1d2"/>
+  <circle cx="1290" cy="600" r="230" fill="none" stroke="#1d1d1b" stroke-width="2" opacity="0.75"/>
+  <circle cx="1290" cy="600" r="118" fill="#1d1d1b" opacity="0.92"/>
+  <rect x="150" y="140" width="1360" height="920" fill="none" stroke="#1d1d1b" stroke-width="2" opacity="0.25"/>
+  <rect width="1600" height="1200" filter="url(#grain)"/>
+  <text x="72" y="1128" font-family="Inter, sans-serif" font-size="20" letter-spacing="6" fill="#6f6a60">CHROMATIC STUDY NO. 4 / 2025</text>
+</svg>
