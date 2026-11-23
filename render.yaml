@@ -32,4 +32,3 @@ services:
         sync: false
       - key: SEED_ADMIN_USERNAME
         value: curator
-        sync: false
