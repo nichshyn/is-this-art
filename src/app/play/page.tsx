@@ -7,9 +7,9 @@ import { getArtworkBySlug, getNextPlayArtwork, hasVoted } from "@/lib/queries";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Play",
+  title: "Игра",
   description:
-    "One artwork. One question. Three answers. Judge the work, then see what the world thinks.",
+    "Одна работа. Один вопрос. Три ответа. Оцените работу, а потом узнайте, что думают другие.",
   alternates: { canonical: "/play" },
 };
 

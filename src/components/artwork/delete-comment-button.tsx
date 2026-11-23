@@ -21,10 +21,10 @@ export function DeleteCommentButton({ commentId }: { commentId: string }) {
         })
       }
       className="inline-flex items-center gap-1 text-[10.5px] text-muted opacity-0 transition-opacity hover:text-red-500 focus:opacity-100 group-hover:opacity-100 disabled:opacity-50"
-      aria-label="Delete comment"
+      aria-label="Удалить комментарий"
     >
       <Trash2 size={12} />
-      Delete
+      Удалить
     </button>
   );
 }

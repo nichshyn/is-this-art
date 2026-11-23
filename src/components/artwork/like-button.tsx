@@ -41,7 +41,7 @@ export function LikeButton({
       if (!result.ok) {
         setLiked(!next);
         setCount((c) => Math.max(0, c + (next ? -1 : 1)));
-        setError(result.error ?? "Could not update.");
+        setError(result.error ?? "Не удалось обновить.");
       }
     });
   }
@@ -53,7 +53,7 @@ export function LikeButton({
         onClick={onClick}
         disabled={pending}
         aria-pressed={liked}
-        aria-label={liked ? "Remove like" : "Like this artwork"}
+        aria-label={liked ? "Убрать отметку «Нравится»" : "Отметить «Нравится»"}
         className={cn(
           "inline-flex items-center gap-2 rounded-full border border-line px-3.5 py-2 text-[12.5px] transition-all hover:bg-subtle disabled:opacity-60",
           liked && "border-ink/20 bg-subtle",
@@ -65,7 +65,7 @@ export function LikeButton({
           className={cn("transition-colors", liked && "fill-ink text-ink")}
         />
         <span className="tabular-nums">{count}</span>
-        {!compact && <span className="text-muted">{liked ? "Liked" : "Like"}</span>}
+        {!compact && <span className="text-muted">{liked ? "Вы отметили" : "Нравится"}</span>}
       </button>
       {error && <span className="text-[10.5px] text-red-500">{error}</span>}
     </div>

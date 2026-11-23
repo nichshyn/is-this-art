@@ -41,7 +41,7 @@ export async function signupAction(
   formData: FormData,
 ): Promise<FormState> {
   const limited = rateLimit(await ipKey("signup"), 8, 15 * 60_000);
-  if (!limited.ok) return { error: "Too many attempts. Try again in a few minutes." };
+  if (!limited.ok) return { error: "Слишком много попыток. Попробуйте через несколько минут." };
 
   const parsed = signupSchema.safeParse({
     username: String(formData.get("username") ?? ""),
@@ -51,12 +51,12 @@ export async function signupAction(
   if (!parsed.success) return { error: firstError(parsed.error) };
 
   const existingEmail = queryOne("SELECT 1 FROM users WHERE email = ?", parsed.data.email);
-  if (existingEmail) return { error: "An account with this email already exists." };
+  if (existingEmail) return { error: "Учётная запись с такой электронной почтой уже существует." };
   const existingName = queryOne(
     "SELECT 1 FROM users WHERE username = ?",
     parsed.data.username,
   );
-  if (existingName) return { error: "That username is taken." };
+  if (existingName) return { error: "Это имя пользователя уже занято." };
 
   const id = newId("usr_");
   const { getDb } = await import("@/lib/db");
@@ -77,7 +77,7 @@ export async function loginAction(
   formData: FormData,
 ): Promise<FormState> {
   const limited = rateLimit(await ipKey("login"), 12, 15 * 60_000);
-  if (!limited.ok) return { error: "Too many attempts. Try again in a few minutes." };
+  if (!limited.ok) return { error: "Слишком много попыток. Попробуйте через несколько минут." };
 
   const parsed = loginSchema.safeParse({
     email: String(formData.get("email") ?? ""),
@@ -87,9 +87,9 @@ export async function loginAction(
 
   const user = getUserByEmail(parsed.data.email);
   if (!user || !verifyPassword(parsed.data.password, user.password_hash)) {
-    return { error: "Email or password is incorrect." };
+    return { error: "Неверная электронная почта или пароль." };
   }
-  if (user.is_blocked) return { error: "This account has been suspended." };
+  if (user.is_blocked) return { error: "Эта учётная запись заблокирована." };
 
   await createSession(user.id);
   redirect(safeNext(formData.get("next"), "/play"));
@@ -105,7 +105,7 @@ export async function forgotAction(
   formData: FormData,
 ): Promise<FormState> {
   const limited = rateLimit(await ipKey("forgot"), 6, 15 * 60_000);
-  if (!limited.ok) return { error: "Too many attempts. Try again in a few minutes." };
+  if (!limited.ok) return { error: "Слишком много попыток. Попробуйте через несколько минут." };
 
   const parsed = forgotSchema.safeParse({
     email: String(formData.get("email") ?? ""),
@@ -114,7 +114,7 @@ export async function forgotAction(
 
   const user = getUserByEmail(parsed.data.email);
   const message =
-    "If an account exists for that email, a reset link has been created.";
+    "Если учётная запись с такой электронной почтой существует, ссылка для сброса пароля создана.";
 
   if (user) {
     const token = randomToken(32);
@@ -141,7 +141,7 @@ export async function resetAction(
   formData: FormData,
 ): Promise<FormState> {
   const limited = rateLimit(await ipKey("reset"), 8, 15 * 60_000);
-  if (!limited.ok) return { error: "Too many attempts. Try again in a few minutes." };
+  if (!limited.ok) return { error: "Слишком много попыток. Попробуйте через несколько минут." };
 
   const parsed = resetSchema.safeParse({
     token: String(formData.get("token") ?? ""),
@@ -155,7 +155,7 @@ export async function resetAction(
     id,
   );
   if (!row || row.used_at || row.expires_at < new Date().toISOString()) {
-    return { error: "This reset link is invalid or has expired." };
+    return { error: "Недействительная или устаревшая ссылка для сброса пароля." };
   }
 
   const { getDb } = await import("@/lib/db");
@@ -189,7 +189,7 @@ export async function updateProfileAction(
     .run(parsed.data.bio || null, parsed.data.avatarUrl || null, user.id);
   revalidatePath(`/u/${user.username}`);
   revalidatePath("/community");
-  return { success: "Profile updated." };
+  return { success: "Профиль обновлён." };
 }
 
 export async function changePasswordAction(
@@ -200,14 +200,14 @@ export async function changePasswordAction(
   const current = String(formData.get("currentPassword") ?? "");
   const next = String(formData.get("newPassword") ?? "");
   if (!verifyPassword(current, user.password_hash)) {
-    return { error: "Current password is incorrect." };
+    return { error: "Неверный текущий пароль." };
   }
-  if (next.length < 8) return { error: "New password must be at least 8 characters." };
+  if (next.length < 8) return { error: "Новый пароль должен содержать не менее 8 символов." };
   const { getDb } = await import("@/lib/db");
   getDb()
     .prepare("UPDATE users SET password_hash = ? WHERE id = ?")
     .run(hashPassword(next), user.id);
-  return { success: "Password changed." };
+  return { success: "Пароль изменён." };
 }
 
 export async function deleteAccountAction(): Promise<void> {

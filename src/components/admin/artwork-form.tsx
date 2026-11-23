@@ -49,14 +49,14 @@ export function AdminArtworkForm({
           <Check size={21} />
         </span>
         <h2 className="display mt-5 text-[clamp(1.6rem,3vw,2.2rem)]">
-          {artwork ? "Artwork updated." : "Artwork created."}
+          {artwork ? "Работа обновлена." : "Работа создана."}
         </h2>
         <p className="mx-auto mt-2 max-w-sm text-[12.5px] leading-relaxed text-muted">
           {state.success}
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <Link href="/admin/artworks" className={buttonClasses({ size: "sm" })}>
-            Back to catalog
+            Вернуться в каталог
           </Link>
           {!artwork && (
             <button
@@ -64,7 +64,7 @@ export function AdminArtworkForm({
               onClick={() => window.location.reload()}
               className={buttonClasses({ variant: "secondary", size: "sm" })}
             >
-              Add another
+              Добавить ещё
             </button>
           )}
         </div>
@@ -77,7 +77,7 @@ export function AdminArtworkForm({
       {artwork && <input type="hidden" name="id" value={artwork.id} />}
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Title" htmlFor="title" className="sm:col-span-2">
+        <Field label="Название" htmlFor="title" className="sm:col-span-2">
           <input
             id="title"
             name="title"
@@ -87,7 +87,7 @@ export function AdminArtworkForm({
             className="field"
           />
         </Field>
-        <Field label="Slug" htmlFor="slug" hint="Lowercase, numbers, hyphens">
+        <Field label="Слаг" htmlFor="slug" hint="Строчные латинские буквы, цифры, дефисы">
           <input
             id="slug"
             name="slug"
@@ -99,7 +99,7 @@ export function AdminArtworkForm({
             className="field"
           />
         </Field>
-        <Field label="Artist name" htmlFor="artistName">
+        <Field label="Имя художника" htmlFor="artistName">
           <input
             id="artistName"
             name="artistName"
@@ -109,7 +109,7 @@ export function AdminArtworkForm({
             className="field"
           />
         </Field>
-        <Field label="Category" htmlFor="category">
+        <Field label="Категория" htmlFor="category">
           <select
             id="category"
             name="category"
@@ -118,7 +118,7 @@ export function AdminArtworkForm({
             className="field"
           >
             <option value="" disabled>
-              Choose a category
+              Выберите категорию
             </option>
             {categories.map((category) => (
               <option key={category.slug} value={category.slug}>
@@ -127,7 +127,7 @@ export function AdminArtworkForm({
             ))}
           </select>
         </Field>
-        <Field label="Year" htmlFor="creationYear" hint="Optional">
+        <Field label="Год" htmlFor="creationYear" hint="Необязательно">
           <input
             id="creationYear"
             name="creationYear"
@@ -136,7 +136,7 @@ export function AdminArtworkForm({
             className="field"
           />
         </Field>
-        <Field label="Country" htmlFor="country" hint="Optional">
+        <Field label="Страна" htmlFor="country" hint="Необязательно">
           <input
             id="country"
             name="country"
@@ -145,7 +145,7 @@ export function AdminArtworkForm({
             className="field"
           />
         </Field>
-        <Field label="Location" htmlFor="location" hint="Optional">
+        <Field label="Местоположение" htmlFor="location" hint="Необязательно">
           <input
             id="location"
             name="location"
@@ -154,7 +154,7 @@ export function AdminArtworkForm({
             className="field"
           />
         </Field>
-        <Field label="Description" htmlFor="description" className="sm:col-span-2">
+        <Field label="Описание" htmlFor="description" className="sm:col-span-2">
           <textarea
             id="description"
             name="description"
@@ -166,7 +166,7 @@ export function AdminArtworkForm({
             className="field-area"
           />
         </Field>
-        <Field label="History" htmlFor="history" hint="Optional · shown after voting" className="sm:col-span-2">
+        <Field label="История" htmlFor="history" hint="Необязательно · показывается после голосования" className="sm:col-span-2">
           <textarea
             id="history"
             name="history"
@@ -176,7 +176,7 @@ export function AdminArtworkForm({
             className="field-area"
           />
         </Field>
-        <Field label="Interesting fact" htmlFor="funFact" hint="Optional" className="sm:col-span-2">
+        <Field label="Любопытный факт" htmlFor="funFact" hint="Необязательно" className="sm:col-span-2">
           <input
             id="funFact"
             name="funFact"
@@ -188,9 +188,9 @@ export function AdminArtworkForm({
       </div>
 
       <div className="rounded-2xl border border-line p-4 sm:p-5">
-        <h3 className="text-[12px] font-medium">Image</h3>
+        <h3 className="text-[12px] font-medium">Изображение</h3>
         <p className="mt-1 text-[11px] text-muted">
-          Upload a file, or point to a local /artworks path or an https URL.
+          Загрузите файл или укажите локальный путь /artworks либо HTTPS-ссылку.
         </p>
         <div className="mt-4 grid gap-5 sm:grid-cols-[220px_minmax(0,1fr)]">
           <div className="relative flex min-h-[170px] items-center justify-center overflow-hidden rounded-xl border border-line bg-subtle p-2">
@@ -198,20 +198,20 @@ export function AdminArtworkForm({
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={preview}
-                alt="Artwork preview"
+                alt="Предпросмотр работы"
                 className="max-h-[220px] max-w-full rounded-md object-contain"
               />
             ) : (
               <span className="flex flex-col items-center gap-2 text-[10.5px] text-muted">
                 <ImagePlus size={20} />
-                No image selected
+                Изображение не выбрано
               </span>
             )}
           </div>
           <div className="space-y-4">
             <div>
               <label htmlFor="image" className="mb-1.5 block text-[11px] font-medium">
-                Upload file
+                Загрузить файл
               </label>
               <input
                 id="image"
@@ -228,7 +228,7 @@ export function AdminArtworkForm({
             </div>
             <div>
               <label htmlFor="imageUrl" className="mb-1.5 block text-[11px] font-medium">
-                Or image URL / local path
+                Или URL изображения / локальный путь
               </label>
               <input
                 id="imageUrl"
@@ -240,7 +240,7 @@ export function AdminArtworkForm({
               />
             </div>
             <div className="grid grid-cols-2 gap-2">
-              <Field label="Width" htmlFor="imageWidth" hint="px">
+              <Field label="Ширина" htmlFor="imageWidth" hint="px">
                 <input
                   id="imageWidth"
                   name="imageWidth"
@@ -250,7 +250,7 @@ export function AdminArtworkForm({
                   className="field text-[12px]"
                 />
               </Field>
-              <Field label="Height" htmlFor="imageHeight" hint="px">
+              <Field label="Высота" htmlFor="imageHeight" hint="px">
                 <input
                   id="imageHeight"
                   name="imageHeight"
@@ -265,7 +265,7 @@ export function AdminArtworkForm({
         </div>
 
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
-          <Field label="Image credit" htmlFor="imageCredit" hint="Optional">
+          <Field label="Автор изображения" htmlFor="imageCredit" hint="Необязательно">
             <input
               id="imageCredit"
               name="imageCredit"
@@ -274,7 +274,7 @@ export function AdminArtworkForm({
               className="field text-[12px]"
             />
           </Field>
-          <Field label="Licence" htmlFor="imageLicense" hint="Optional">
+          <Field label="Лицензия" htmlFor="imageLicense" hint="Необязательно">
             <input
               id="imageLicense"
               name="imageLicense"
@@ -283,7 +283,7 @@ export function AdminArtworkForm({
               className="field text-[12px]"
             />
           </Field>
-          <Field label="Source URL" htmlFor="imageSourceUrl" hint="Optional · https" className="sm:col-span-2">
+          <Field label="URL источника" htmlFor="imageSourceUrl" hint="Необязательно · https" className="sm:col-span-2">
             <input
               id="imageSourceUrl"
               name="imageSourceUrl"
@@ -301,15 +301,15 @@ export function AdminArtworkForm({
             rel="noreferrer noopener"
             className="mt-2 inline-flex items-center gap-1 text-[10px] text-muted underline underline-offset-2"
           >
-            Current source <ExternalLink size={9} />
+            Текущий источник <ExternalLink size={9} />
           </a>
         )}
       </div>
 
       <div className="flex flex-wrap gap-5 rounded-2xl border border-line bg-subtle/50 p-4">
-        <CheckField name="isAiGenerated" label="AI-generated" defaultChecked={artwork?.is_ai_generated === 1} />
-        <CheckField name="isVerified" label="Verified source" defaultChecked={artwork ? artwork.is_verified === 1 : true} />
-        <CheckField name="isDemo" label="Demo content" defaultChecked={artwork?.is_demo === 1} />
+        <CheckField name="isAiGenerated" label="Создано ИИ" defaultChecked={artwork?.is_ai_generated === 1} />
+        <CheckField name="isVerified" label="Проверенный источник" defaultChecked={artwork ? artwork.is_verified === 1 : true} />
+        <CheckField name="isDemo" label="Демо-контент" defaultChecked={artwork?.is_demo === 1} />
       </div>
 
       {state.error && (
@@ -322,10 +322,10 @@ export function AdminArtworkForm({
       <div className="flex flex-wrap items-center gap-2 border-t border-line pt-5">
         <button type="submit" disabled={pending} className={buttonClasses({ size: "md" })}>
           {pending ? <Loader2 size={14} className="animate-spin" /> : <UploadCloud size={14} />}
-          {artwork ? "Save changes" : "Create artwork"}
+          {artwork ? "Сохранить изменения" : "Создать работу"}
         </button>
         <Link href="/admin/artworks" className={buttonClasses({ variant: "ghost", size: "md" })}>
-          Cancel
+          Отмена
         </Link>
       </div>
     </form>

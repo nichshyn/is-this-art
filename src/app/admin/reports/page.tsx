@@ -10,6 +10,19 @@ export const dynamic = "force-dynamic";
 
 const FILTERS = ["open", "resolved", "dismissed", "all"] as const;
 
+const FILTER_LABELS: Record<(typeof FILTERS)[number], string> = {
+  open: "открытые",
+  resolved: "урегулированные",
+  dismissed: "отклонённые",
+  all: "все",
+};
+
+const STATUS_LABELS: Record<string, string> = {
+  open: "открыта",
+  resolved: "урегулирована",
+  dismissed: "отклонена",
+};
+
 export default async function AdminReportsPage({
   searchParams,
 }: {
@@ -26,13 +39,13 @@ export default async function AdminReportsPage({
     <div>
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h2 className="text-[16px] font-medium tracking-tight">Reports</h2>
+          <h2 className="text-[16px] font-medium tracking-tight">Жалобы</h2>
           <p className="mt-1 max-w-xl text-[12px] leading-relaxed text-muted">
-            Community flags. Resolving records a decision; dismissing closes the
-            report without changing the artwork.
+            Жалобы от сообщества. Решение фиксируется в системе, а отклонённая
+            жалоба закрывается без изменений работы.
           </p>
         </div>
-        <p className="text-[11px] text-muted">{all.filter((r) => r.status === "open").length} open</p>
+        <p className="text-[11px] text-muted">Открытых жалоб: {all.filter((r) => r.status === "open").length}</p>
       </div>
 
       <div className="mt-5 flex flex-wrap gap-1">
@@ -48,7 +61,7 @@ export default async function AdminReportsPage({
                 filter === status ? "bg-accent text-accent-ink" : "text-muted hover:bg-subtle hover:text-ink",
               )}
             >
-              {filter} <span className="opacity-60">{count}</span>
+              {FILTER_LABELS[filter]} <span className="opacity-60">{count}</span>
             </Link>
           );
         })}
@@ -57,8 +70,12 @@ export default async function AdminReportsPage({
       {rows.length === 0 ? (
         <div className="mt-6 rounded-2xl border border-dashed border-line py-20 text-center">
           <Flag size={20} className="mx-auto text-muted" />
-          <p className="mt-3 text-[13px] font-medium">No {status === "all" ? "" : status} reports.</p>
-          <p className="mt-1 text-[11.5px] text-muted">The queue is quiet.</p>
+          <p className="mt-3 text-[13px] font-medium">
+            {status === "all"
+              ? "Жалоб нет."
+              : `Нет жалоб со статусом «${FILTER_LABELS[status as (typeof FILTERS)[number]]}».`}
+          </p>
+          <p className="mt-1 text-[11.5px] text-muted">В очереди тихо.</p>
         </div>
       ) : (
         <ul className="mt-5 space-y-2">
@@ -68,7 +85,7 @@ export default async function AdminReportsPage({
                 <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg bg-subtle">
                   <ArtworkThumb
                     src={report.artwork_image ?? ""}
-                    alt={report.artwork_title ?? "Artwork"}
+                    alt={report.artwork_title ?? "Работа"}
                     sizes="56px"
                   />
                 </div>
@@ -85,7 +102,7 @@ export default async function AdminReportsPage({
                             : "bg-subtle text-muted",
                       )}
                     >
-                      {report.status}
+                      {STATUS_LABELS[report.status] ?? report.status}
                     </span>
                   </div>
                   <p className="mt-1 text-[10.5px] text-muted">
@@ -96,7 +113,7 @@ export default async function AdminReportsPage({
                     ) : (
                       report.artwork_title
                     )}
-                    {" · reported by "}
+                    {" · жалоба от "}
                     <Link href={`/u/${report.username}`} className="underline underline-offset-2">
                       @{report.username}
                     </Link>
@@ -112,7 +129,7 @@ export default async function AdminReportsPage({
                 {report.status === "open" ? (
                   <ReportActions reportId={report.id} />
                 ) : (
-                  <span className="text-[10px] text-muted">Closed</span>
+                  <span className="text-[10px] text-muted">Закрыта</span>
                 )}
               </div>
             </li>

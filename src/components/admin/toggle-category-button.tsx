@@ -22,7 +22,7 @@ export function ToggleCategoryButton({
     startTransition(async () => {
       const result = await adminToggleCategoryAction(slug);
       if (!result.ok) {
-        setError("Could not update.");
+        setError("Не удалось обновить.");
         return;
       }
       router.refresh();
@@ -44,7 +44,7 @@ export function ToggleCategoryButton({
         ) : (
           <Eye size={11} />
         )}
-        {active ? "Hide" : "Show"}
+        {active ? "Скрыть" : "Показать"}
       </button>
       {error && <span className="text-[9.5px] text-red-500">{error}</span>}
     </span>

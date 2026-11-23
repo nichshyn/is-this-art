@@ -431,35 +431,35 @@ declare
   v_higher_users integer;
 begin
   if v_user is null then
-    return jsonb_build_object('ok', false, 'code', 'unauthorized', 'message', 'Sign in to vote.');
+    return jsonb_build_object('ok', false, 'code', 'unauthorized', 'message', 'Войдите, чтобы голосовать.');
   end if;
 
   if p_vote_type not in ('yes', 'no', 'unsure') then
-    return jsonb_build_object('ok', false, 'code', 'invalid', 'message', 'Choose one of the three answers.');
+    return jsonb_build_object('ok', false, 'code', 'invalid', 'message', 'Выберите один из трёх вариантов ответа.');
   end if;
 
   select * into v_profile from public.profiles where id = v_user for update;
   if not found then
-    return jsonb_build_object('ok', false, 'code', 'unauthorized', 'message', 'Profile not found.');
+    return jsonb_build_object('ok', false, 'code', 'unauthorized', 'message', 'Профиль не найден.');
   end if;
   if v_profile.is_blocked then
-    return jsonb_build_object('ok', false, 'code', 'blocked', 'message', 'This account has been suspended.');
+    return jsonb_build_object('ok', false, 'code', 'blocked', 'message', 'Эта учётная запись заблокирована.');
   end if;
 
   select * into v_artwork from public.artworks where id = p_artwork_id and status = 'approved';
   if not found then
-    return jsonb_build_object('ok', false, 'code', 'not_found', 'message', 'This artwork is not available.');
+    return jsonb_build_object('ok', false, 'code', 'not_found', 'message', 'Эта работа недоступна.');
   end if;
 
   if exists (select 1 from public.votes where user_id = v_user and artwork_id = p_artwork_id) then
-    return jsonb_build_object('ok', false, 'code', 'already_voted', 'message', 'You have already judged this artwork.');
+    return jsonb_build_object('ok', false, 'code', 'already_voted', 'message', 'Вы уже оценили эту работу.');
   end if;
 
   begin
     insert into public.votes (user_id, artwork_id, vote_type)
     values (v_user, p_artwork_id, p_vote_type);
   exception when unique_violation then
-    return jsonb_build_object('ok', false, 'code', 'already_voted', 'message', 'You have already judged this artwork.');
+    return jsonb_build_object('ok', false, 'code', 'already_voted', 'message', 'Вы уже оценили эту работу.');
   end;
 
   -- Streak: one increment per UTC day.

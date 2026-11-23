@@ -34,7 +34,7 @@ import {
   getUserWorks,
   isFollowing,
 } from "@/lib/queries";
-import { formatDate, formatNumber } from "@/lib/utils";
+import { formatDate, formatNumber, plural } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -45,10 +45,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { username } = await params;
   const user = getPublicUser(username);
-  if (!user) return { title: "Member not found" };
+  if (!user) return { title: "Участник не найден" };
   return {
     title: `@${user.username}`,
-    description: user.bio || `The gallery profile of @${user.username} on IS THIS ART?`,
+    description: user.bio || `Профиль @${user.username} в IS THIS ART?`,
     alternates: { canonical: `/u/${user.username}` },
   };
 }
@@ -98,8 +98,8 @@ export default async function ProfilePage({
               @{user.username}
             </h1>
             <p className="mt-2 text-[11.5px] text-muted">
-              Joined {formatDate(user.created_at)}
-              {user.role === "admin" ? " · Curator" : ""}
+              На сайте с {formatDate(user.created_at)}
+              {user.role === "admin" ? " · Куратор" : ""}
             </p>
             {user.bio && (
               <p className="mt-4 text-[13px] leading-relaxed text-ink/80">{user.bio}</p>
@@ -108,7 +108,7 @@ export default async function ProfilePage({
             <div className="mt-6 flex flex-wrap items-center gap-2">
               {isOwn ? (
                 <Link href="/settings" className={buttonClasses({ variant: "secondary", size: "sm" })}>
-                  <Settings size={13} /> Edit profile
+                  <Settings size={13} /> Изменить профиль
                 </Link>
               ) : (
                 <FollowButton
@@ -118,18 +118,18 @@ export default async function ProfilePage({
                 />
               )}
               <Link href="/play" className={buttonClasses({ variant: "ghost", size: "sm" })}>
-                Judge a work <ArrowUpRight size={13} />
+                Оценить работу <ArrowUpRight size={13} />
               </Link>
             </div>
 
             <dl className="mt-7 grid grid-cols-2 gap-x-4 gap-y-4 border-t border-line pt-5">
               {[
-                ["Points", formatNumber(user.points)],
-                ["Streak", `${user.streak} ${user.streak === 1 ? "day" : "days"}`],
-                ["Judgments", formatNumber(stats.votes)],
-                ["Works", formatNumber(stats.works)],
-                ["Followers", formatNumber(stats.followers)],
-                ["Following", formatNumber(stats.following)],
+                ["Очки", formatNumber(user.points)],
+                ["Серия", plural(user.streak, "день", "дня", "дней")],
+                ["Суждения", formatNumber(stats.votes)],
+                ["Работы", formatNumber(stats.works)],
+                ["Подписчики", formatNumber(stats.followers)],
+                ["Подписки", formatNumber(stats.following)],
               ].map(([label, value]) => (
                 <div key={label}>
                   <dd className="text-[19px] font-semibold tracking-tight tabular-nums">{value}</dd>
@@ -140,9 +140,9 @@ export default async function ProfilePage({
           </div>
 
           <div className="mt-3 rounded-2xl border border-line p-5">
-            <p className="eyebrow">Achievements</p>
+            <p className="eyebrow">Достижения</p>
             <p className="mt-2 text-[11.5px] text-muted">
-              {earned.length} of {all.length} unlocked
+              Открыто {plural(earned.length, "достижение", "достижения", "достижений")} из {all.length}.
             </p>
             <ul className="mt-4 grid grid-cols-2 gap-2">
               {all.map((achievement) => {
@@ -176,20 +176,20 @@ export default async function ProfilePage({
         <div className="min-w-0">
           <section>
             <div className="flex items-baseline justify-between gap-4">
-              <h2 className="display text-[clamp(1.5rem,2.8vw,2.1rem)]">Submitted works</h2>
-              <span className="text-[11px] text-muted">{stats.works} approved</span>
+              <h2 className="display text-[clamp(1.5rem,2.8vw,2.1rem)]">Предложенные работы</h2>
+              <span className="text-[11px] text-muted">одобрено {plural(stats.works, "работа", "работы", "работ")}</span>
             </div>
             {works.length === 0 ? (
               <div className="mt-5 rounded-2xl border border-dashed border-line py-14 text-center">
-                <p className="text-[13px] font-medium">Nothing submitted yet.</p>
+                <p className="text-[13px] font-medium">Пока ничего не предложено.</p>
                 <p className="mt-1.5 text-[12px] text-muted">
                   {isOwn
-                    ? "Your first approved work is waiting in the queue."
-                    : `@${user.username} has not shared a work yet.`}
+                    ? "Ваша первая работа ждёт одобрения."
+                    : `У @${user.username} пока нет работ.`}
                 </p>
                 {isOwn && (
                   <Link href="/submit" className={buttonClasses({ size: "sm", className: "mt-4" })}>
-                    Submit a work
+                    Предложить работу
                   </Link>
                 )}
               </div>
@@ -206,16 +206,16 @@ export default async function ProfilePage({
 
           <section className="mt-14">
             <div className="flex items-baseline justify-between gap-4">
-              <h2 className="display text-[clamp(1.5rem,2.8vw,2.1rem)]">Recent judgments</h2>
+              <h2 className="display text-[clamp(1.5rem,2.8vw,2.1rem)]">Последние суждения</h2>
               <Link href="/play" className="text-[11.5px] text-muted hover:text-ink">
-                Judge something yourself
+                Оцените сами какую-нибудь работу
               </Link>
             </div>
             {recentVotes.length === 0 ? (
               <div className="mt-5 rounded-2xl border border-dashed border-line py-12 text-center">
-                <p className="text-[13px] font-medium">No judgments yet.</p>
+                <p className="text-[13px] font-medium">Суждений пока нет.</p>
                 <p className="mt-1.5 text-[12px] text-muted">
-                  Every opinion starts with a first look.
+                  Каждое мнение начинается с первого взгляда.
                 </p>
               </div>
             ) : (

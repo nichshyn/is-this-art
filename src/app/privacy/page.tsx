@@ -2,71 +2,71 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Privacy & terms",
+  title: "Конфиденциальность и условия",
   description:
-    "What IS THIS ART? stores, how cookies are used, and the terms that apply to this demonstration project.",
+    "Что сохраняет IS THIS ART?, как используются файлы cookie и какие условия действуют в этом демонстрационном проекте.",
   alternates: { canonical: "/privacy" },
 };
 
 const SECTIONS = [
   {
     id: "what-we-store",
-    title: "What we store",
+    title: "Что мы сохраняем",
     body: [
-      "If you create an account: your username, email address, a scrypt hash of your password, optional bio and avatar URL, points, streak, achievements and timestamps.",
-      "If you play: each judgment (yes / no / not sure) linked to your account or an anonymous guest identifier, plus the artwork judged and the time. Votes are final and one per person per work.",
-      "If you participate: comments, likes, follows, reports and submitted artworks, including the image file and the description you provide.",
-      "If you sign in with Google: your email address, verified status, display name and profile picture URL. We do not receive your Google password.",
+      "Если вы создаёте аккаунт: имя пользователя, адрес электронной почты, хеш пароля scrypt, необязательные описание профиля и ссылка на аватар, очки, серия дней, достижения и время событий.",
+      "Если вы играете: каждое суждение («да» / «нет» / «не уверен»), связанное с вашим аккаунтом или анонимным идентификатором гостя, а также работа и время. Голоса окончательны — по одному от каждого человека на каждую работу.",
+      "Если вы участвуете: комментарии, отметки «Нравится», подписки, жалобы и предложенные работы, включая файл изображения и описание, которое вы указали.",
+      "Если вы входите через Google: адрес электронной почты, статус подтверждения, отображаемое имя и ссылка на фото профиля. Мы не получаем ваш пароль Google.",
     ],
   },
   {
     id: "cookies",
-    title: "Cookies & local storage",
+    title: "Файлы cookie и локальное хранилище",
     body: [
-      "ita_session is an httpOnly cookie containing a random session token. The server stores only a hash of that token. It expires after 30 days or when you sign out.",
-      "ita_guest is an httpOnly, signed cookie used to enforce one vote per guest per artwork. It expires after one year and contains no personal information.",
-      "ita_oauth_state is a short-lived httpOnly cookie used to protect the Google sign-in flow.",
-      "Your light/dark preference is stored in localStorage under ita-theme. It never leaves your browser.",
-      "There are no advertising cookies, third-party analytics scripts or cross-site trackers in this project.",
+      "ita_session — файл cookie с флагом httpOnly, содержащий случайный токен сессии. Сервер хранит только хеш этого токена. Срок действия — 30 дней или до выхода из аккаунта.",
+      "ita_guest — подписанный файл cookie с флагом httpOnly, который обеспечивает один голос гостя на каждую работу. Он действует один год и не содержит личных данных.",
+      "ita_oauth_state — недолговечный файл cookie с флагом httpOnly, защищающий вход через Google.",
+      "Выбор светлой или тёмной темы хранится в localStorage под ключом ita-theme. Он никогда не покидает ваш браузер.",
+      "В проекте нет рекламных файлов cookie, сторонних скриптов аналитики или межсайтовых трекеров.",
     ],
   },
   {
     id: "how-we-use-it",
-    title: "How it is used",
+    title: "Как это используется",
     body: [
-      "To run the game: count votes, calculate percentages, award points, maintain streaks and render the leaderboard.",
-      "To moderate the gallery: review submissions, handle reports and prevent abuse such as spam or repeated votes.",
-      "To operate accounts: authenticate you, let you manage your profile and respond to password reset requests.",
-      "We do not sell personal data, build advertising profiles or share data with data brokers.",
+      "Для работы игры: подсчёт голосов, расчёт процентов, начисление очков, ведение серий дней и отображение таблицы лидеров.",
+      "Для модерации галереи: проверка предложенных работ, обработка жалоб и защита от злоупотреблений, таких как спам и повторные голоса.",
+      "Для работы с аккаунтами: аутентификация, управление профилем и обработка запросов на сброс пароля.",
+      "Мы не продаём личные данные, не составляем рекламные профили и не передаём данные брокерам данных.",
     ],
   },
   {
     id: "retention",
-    title: "Retention & deletion",
+    title: "Хранение и удаление",
     body: [
-      "Account data is kept until you delete your account. Deleting your account removes your votes, comments, likes, follows, reports and submissions, and signs you out.",
-      "Guest votes remain linked to a random identifier until the gallery is reset or the vote is removed by an administrator. They are not linked to a name or email.",
-      "Server logs may contain request metadata for a short period for security and debugging. This demonstration stores data in a local SQLite database unless a Supabase deployment is configured.",
+      "Данные аккаунта хранятся до его удаления. Удаление аккаунта стирает ваши голоса, комментарии, отметки «Нравится», подписки, жалобы и предложенные работы, а также выполняет выход из системы.",
+      "Голоса гостей остаются связанными со случайным идентификатором до сброса галереи или удаления голоса администратором. Они не привязаны к имени или адресу электронной почты.",
+      "Журналы сервера могут некоторое время содержать метаданные запросов в целях безопасности и отладки. Эта демонстрация хранит данные в локальной базе SQLite, если не настроено развёртывание с Supabase.",
     ],
   },
   {
     id: "security",
-    title: "Security",
+    title: "Безопасность",
     body: [
-      "Passwords are hashed with scrypt and a per-user salt. Session tokens are random, stored hashed, and sent in httpOnly, sameSite cookies.",
-      "All mutations validate input server-side and use parameterised SQL. Uploads are checked by file signature and dimensions before being stored.",
-      "No system is perfect. If you find a security issue, please report it to the operator of this instance rather than exploiting it.",
+      "Пароли хешируются с помощью scrypt и уникальной соли для каждого пользователя. Токены сессий случайны, хранятся в хешированном виде и передаются в файлах cookie с флагами httpOnly и sameSite.",
+      "Все изменения проверяют входные данные на сервере и используют параметризованные SQL-запросы. Загрузки проверяются по сигнатуре файла и размерам до сохранения.",
+      "Ни одна система не идеальна. Если вы обнаружили проблему с безопасностью, сообщите о ней оператору этого экземпляра, а не используйте её в своих целях.",
     ],
   },
   {
     id: "terms",
-    title: "Terms of use",
+    title: "Условия использования",
     body: [
-      "This is a demonstration product. Percentages reflect stored opinions, not expert appraisal, market value or legal ownership. Nothing here is art-historical advice.",
-      "By submitting an image you confirm you made it or have permission to share it, and you grant this instance permission to display it for the purpose of the experiment. Do not upload illegal, hateful, sexually explicit or non-consensual content.",
-      "Moderators may reject, hide or remove content, suspend accounts and reset demonstration data. Approved works can be removed on request.",
-      "The service is provided as-is, without warranties. The operator is not liable for decisions made on the basis of votes or comments.",
-      "If you are under the age required to consent to data processing in your jurisdiction, do not create an account.",
+      "Это демонстрационный продукт. Проценты отражают сохранённые мнения, а не экспертную оценку, рыночную стоимость или юридические права. Ничто здесь не является консультацией по истории искусства.",
+      "Отправляя изображение, вы подтверждаете, что создали его или имеете разрешение на его распространение, и даёте этому экземпляру право показывать его в рамках эксперимента. Не загружайте незаконный, ненавистнический, откровенно сексуальный контент и материалы без согласия изображённых людей.",
+      "Модераторы могут отклонять, скрывать или удалять материалы, блокировать аккаунты и сбрасывать демонстрационные данные. Одобренные работы можно удалить по запросу.",
+      "Сервис предоставляется «как есть», без гарантий. Оператор не несёт ответственности за решения, принятые на основе голосов или комментариев.",
+      "Если вы не достигли возраста, с которого в вашей юрисдикции требуется согласие на обработку данных, не создавайте аккаунт.",
     ],
   },
 ];
@@ -76,13 +76,13 @@ export default function PrivacyPage() {
     <div className="container-page py-10 sm:py-14">
       <div className="grid gap-10 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-16">
         <aside className="lg:sticky lg:top-24 lg:self-start">
-          <p className="eyebrow">The fine print</p>
+          <p className="eyebrow">Мелкий шрифт</p>
           <h1 className="display mt-4 text-[clamp(2rem,4.4vw,3.2rem)] leading-[0.96]">
-            Privacy
+            Конфиденциальность
             <br />
-            &amp; terms.
+            и условия.
           </h1>
-          <nav className="mt-6 hidden space-y-2 lg:block" aria-label="On this page">
+          <nav className="mt-6 hidden space-y-2 lg:block" aria-label="На этой странице">
             {SECTIONS.map((section) => (
               <a
                 key={section.id}
@@ -94,17 +94,16 @@ export default function PrivacyPage() {
             ))}
           </nav>
           <p className="mt-6 text-[10.5px] leading-relaxed text-muted">
-            Last updated {new Date().getFullYear()}. This note describes the reference
-            implementation in this repository.
+            Последнее обновление: {new Date().getFullYear()}. Этот документ описывает
+            эталонную реализацию в этом репозитории.
           </p>
         </aside>
 
         <div className="max-w-2xl">
           <p className="text-[14px] leading-[1.8] text-ink/85">
-            IS THIS ART? is a small demonstration of a social game about taste. It is
-            designed to collect as little as possible while still making votes,
-            points and moderation work. This page explains what is stored and the
-            terms that apply.
+            IS THIS ART? — небольшой демонстрационный проект о вкусе. Он собирает как
+            можно меньше данных, но при этом голоса, очки и модерация работают. На
+            этой странице объясняется, что сохраняется и какие условия действуют.
           </p>
 
           <div className="mt-9 space-y-10">
@@ -128,15 +127,16 @@ export default function PrivacyPage() {
           </div>
 
           <div className="mt-10 rounded-2xl border border-line bg-subtle/60 p-5">
-            <h2 className="text-[13px] font-medium">Questions or removal requests</h2>
+            <h2 className="text-[13px] font-medium">Вопросы и запросы на удаление</h2>
             <p className="mt-2 text-[12px] leading-relaxed text-muted">
-              Use the report control on any artwork page to flag a credit, rights or
-              content issue. For account deletion, sign in and use{" "}
+              Используйте кнопку жалобы на странице любой работы, чтобы сообщить о
+              проблеме с указанием авторства, прав или контента. Чтобы удалить
+              аккаунт, войдите и откройте{" "}
               <Link href="/settings" className="underline underline-offset-2 hover:text-ink">
-                Settings → Danger zone
+                Настройки → Опасная зона
               </Link>
-              . Instance operators should replace this paragraph with a contact
-              address before deploying publicly.
+              . Операторам экземпляра следует заменить этот абзац на адрес для связи
+              перед публичным запуском.
             </p>
           </div>
         </div>

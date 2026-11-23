@@ -17,7 +17,7 @@ export function ReportActions({ reportId }: { reportId: string }) {
     startTransition(async () => {
       const result = await adminResolveReportAction(reportId, status);
       if (!result.ok) {
-        setError("Could not update the report.");
+        setError("Не удалось обновить жалобу.");
         return;
       }
       router.refresh();
@@ -34,7 +34,7 @@ export function ReportActions({ reportId }: { reportId: string }) {
           className={buttonClasses({ size: "sm", className: "h-7 px-2.5 text-[10.5px]" })}
         >
           {pending ? <Loader2 size={11} className="animate-spin" /> : <Check size={11} />}
-          Resolve
+          Решить
         </button>
         <button
           type="button"
@@ -42,7 +42,7 @@ export function ReportActions({ reportId }: { reportId: string }) {
           disabled={pending}
           className={buttonClasses({ variant: "secondary", size: "sm", className: "h-7 px-2.5 text-[10.5px]" })}
         >
-          <X size={11} /> Dismiss
+          <X size={11} /> Отклонить
         </button>
       </div>
       {error && <span className="text-[9.5px] text-red-500">{error}</span>}

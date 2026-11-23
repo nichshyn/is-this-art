@@ -17,13 +17,13 @@ export function AddCategoryForm() {
       <div className="grid gap-3 sm:grid-cols-2">
         <div>
           <label htmlFor="name" className="mb-1.5 block text-[11px] font-medium">
-            Category name
+            Название категории
           </label>
           <input id="name" name="name" required minLength={2} maxLength={60} className="field text-[12px]" />
         </div>
         <div>
           <label htmlFor="description" className="mb-1.5 block text-[11px] font-medium">
-            Description <span className="font-normal text-muted">optional</span>
+            Описание <span className="font-normal text-muted">необязательно</span>
           </label>
           <input id="description" name="description" maxLength={200} className="field text-[12px]" />
         </div>
@@ -40,7 +40,7 @@ export function AddCategoryForm() {
       )}
       <button type="submit" disabled={pending} className={buttonClasses({ size: "sm" })}>
         {pending ? <Loader2 size={13} className="animate-spin" /> : <Plus size={13} />}
-        Add category
+        Добавить категорию
       </button>
     </form>
   );

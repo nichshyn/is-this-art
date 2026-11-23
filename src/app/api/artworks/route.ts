@@ -27,25 +27,25 @@ function uniqueSlug(title: string): string {
 
 export async function POST(request: Request) {
   if (!isSameOrigin(request)) {
-    return NextResponse.json({ ok: false, error: "Invalid origin." }, { status: 403 });
+    return NextResponse.json({ ok: false, error: "Недопустимый источник запроса." }, { status: 403 });
   }
   const user = await getCurrentUser();
   if (!user) {
     return NextResponse.json(
-      { ok: false, error: "Sign in to submit an artwork." },
+      { ok: false, error: "Войдите, чтобы предложить работу." },
       { status: 401 },
     );
   }
   if (user.is_blocked) {
     return NextResponse.json(
-      { ok: false, error: "This account is suspended." },
+      { ok: false, error: "Эта учётная запись заблокирована." },
       { status: 403 },
     );
   }
   const limited = rateLimit(`upload:${user.id}:${clientIp(request)}`, 5, 10 * 60_000);
   if (!limited.ok) {
     return NextResponse.json(
-      { ok: false, error: "Too many uploads. Try again later." },
+      { ok: false, error: "Слишком много загрузок. Попробуйте позже." },
       { status: 429 },
     );
   }
@@ -54,12 +54,12 @@ export async function POST(request: Request) {
   try {
     form = await request.formData();
   } catch {
-    return NextResponse.json({ ok: false, error: "Could not read the upload." }, { status: 400 });
+    return NextResponse.json({ ok: false, error: "Не удалось прочитать загруженный файл." }, { status: 400 });
   }
 
   const file = form.get("image");
   if (!(file instanceof File)) {
-    return NextResponse.json({ ok: false, error: "Choose an image to upload." }, { status: 400 });
+    return NextResponse.json({ ok: false, error: "Выберите изображение для загрузки." }, { status: 400 });
   }
 
   const parsed = artworkSubmissionSchema.safeParse({
@@ -122,14 +122,14 @@ export async function POST(request: Request) {
       id,
       slug,
       status: "pending",
-      message: "Submitted for review. It will appear publicly once approved.",
+      message: "Работа отправлена на модерацию. Она появится публично после одобрения.",
     });
   } catch (error) {
     console.error("[upload]", error);
     return NextResponse.json(
       {
         ok: false,
-        error: error instanceof Error ? error.message : "Upload failed. Try again.",
+        error: error instanceof Error ? error.message : "Не удалось загрузить файл. Попробуйте снова.",
       },
       { status: 400 },
     );

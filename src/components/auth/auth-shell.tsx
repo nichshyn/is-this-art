@@ -39,20 +39,20 @@ export function AuthShell({
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/10" />
           <div className="absolute inset-x-0 bottom-0 p-9 text-white">
             <p className="text-[10px] font-medium uppercase tracking-[0.24em] text-white/50">
-              A social experiment about taste
+              Социальный эксперимент о вкусе
             </p>
             <blockquote className="mt-4 max-w-sm text-[22px] font-medium leading-[1.25] tracking-tight">
-              “There is no answer key. Only the room, and what it sees.”
+              «Правильных ответов нет. Есть только зал и то, что он видит.»
             </blockquote>
             <p className="mt-5 text-[11.5px] text-white/55">
-              Look first. Judge second. Read the label last.
+              Сначала смотрите. Потом оценивайте. Подпись — напоследок.
             </p>
           </div>
           <Link
             href="/play"
             className="absolute right-6 top-6 rounded-full border border-white/20 bg-black/20 px-3.5 py-2 text-[11px] text-white/80 backdrop-blur transition-colors hover:bg-black/40"
           >
-            Try it without an account
+            Попробовать без аккаунта
           </Link>
         </aside>
       </div>
@@ -60,7 +60,7 @@ export function AuthShell({
   );
 }
 
-export function GoogleButton({ label = "Continue with Google" }: { label?: string }) {
+export function GoogleButton({ label = "Продолжить через Google" }: { label?: string }) {
   return (
     <a
       href="/api/auth/google"

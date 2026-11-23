@@ -10,16 +10,16 @@ import { safeNext } from "@/lib/utils";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Sign in",
-  description: "Sign in to keep your points, streaks and place on the leaderboard.",
+  title: "Вход",
+  description: "Войдите, чтобы сохранить очки, серию дней и место в таблице лидеров.",
   alternates: { canonical: "/login" },
 };
 
 const ERRORS: Record<string, string> = {
-  "google-not-configured": "Google sign-in is not configured on this instance.",
-  "google-state": "The Google sign-in session expired. Please try again.",
-  google: "Google sign-in could not be completed. Please try again.",
-  blocked: "This account has been suspended.",
+  "google-not-configured": "Вход через Google не настроен на этом сайте.",
+  "google-state": "Сеанс входа через Google истёк. Попробуйте ещё раз.",
+  google: "Не удалось войти через Google. Попробуйте ещё раз.",
+  blocked: "Эта учётная запись заблокирована.",
 };
 
 export default async function LoginPage({
@@ -34,21 +34,21 @@ export default async function LoginPage({
 
   return (
     <AuthShell
-      eyebrow="Welcome back"
-      title="Sign in to keep looking."
-      description="Your votes already count. An account keeps the points, the streak and the arguments."
+      eyebrow="С возвращением"
+      title="Войдите, чтобы продолжить смотреть."
+      description="Ваши голоса уже идут в счёт. Учётная запись сохранит очки, серию дней и аргументы."
       footer={
         <>
-          New here?{" "}
+          Впервые здесь?{" "}
           <Link href="/signup" className="font-medium text-ink underline underline-offset-2">
-            Create an account
+            Создать аккаунт
           </Link>
         </>
       }
     >
       {params.reset && (
         <p className="mb-4 rounded-xl border border-emerald-500/20 bg-emerald-500/5 px-3.5 py-2.5 text-[12px] text-emerald-700 dark:text-emerald-400">
-          Your password has been reset. Sign in with the new one.
+          Ваш пароль сброшен. Войдите с новым паролем.
         </p>
       )}
       {params.error && ERRORS[params.error] && (
@@ -61,7 +61,7 @@ export default async function LoginPage({
         <>
           <div className="my-5 flex items-center gap-3">
             <span className="h-px flex-1 bg-line" />
-            <span className="text-[10px] uppercase tracking-[0.16em] text-muted">or</span>
+            <span className="text-[10px] uppercase tracking-[0.16em] text-muted">или</span>
             <span className="h-px flex-1 bg-line" />
           </div>
           <GoogleButton />

@@ -116,28 +116,28 @@ export function readImageDimensions(
 
 export async function validateUpload(file: File): Promise<ValidatedImage> {
   if (!file || typeof file === "string") {
-    throw new Error("Choose an image to upload.");
+    throw new Error("Выберите изображение для загрузки.");
   }
-  if (file.size === 0) throw new Error("The selected file is empty.");
+  if (file.size === 0) throw new Error("Выбранный файл пуст.");
   if (file.size > LIMITS.uploadBytes) {
-    throw new Error(`Images must be smaller than ${Math.round(LIMITS.uploadBytes / 1024 / 1024)} MB.`);
+    throw new Error(`Размер изображения должен быть меньше ${Math.round(LIMITS.uploadBytes / 1024 / 1024)} МБ.`);
   }
 
   const buffer = Buffer.from(await file.arrayBuffer());
   const mime = sniff(buffer);
   if (!mime) {
-    throw new Error("Only JPG, PNG and WEBP images are accepted.");
+    throw new Error("Поддерживаются только изображения JPG, PNG и WEBP.");
   }
   const dimensions = readImageDimensions(buffer, mime);
   if (!dimensions || !dimensions.width || !dimensions.height) {
-    throw new Error("Could not read the image dimensions. Try another file.");
+    throw new Error("Не удалось определить размеры изображения. Попробуйте другой файл.");
   }
   if (
     Math.min(dimensions.width, dimensions.height) < LIMITS.minImageSide ||
     Math.max(dimensions.width, dimensions.height) > LIMITS.maxImageSide
   ) {
     throw new Error(
-      `Images must be between ${LIMITS.minImageSide}px and ${LIMITS.maxImageSide}px on each side.`,
+      `Каждая сторона изображения должна быть от ${LIMITS.minImageSide} до ${LIMITS.maxImageSide} пикселей.`,
     );
   }
   return {

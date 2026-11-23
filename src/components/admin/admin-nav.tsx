@@ -14,12 +14,12 @@ import {
 import { cn } from "@/lib/utils";
 
 const ITEMS = [
-  { href: "/admin", label: "Overview", icon: Gauge, exact: true },
-  { href: "/admin/moderation", label: "Moderation", icon: ShieldAlert, key: "pending" },
-  { href: "/admin/artworks", label: "Artworks", icon: Images, key: "artworks" },
-  { href: "/admin/reports", label: "Reports", icon: Flag, key: "reports" },
-  { href: "/admin/users", label: "Users", icon: Users, key: "users" },
-  { href: "/admin/categories", label: "Categories", icon: FolderTree },
+  { href: "/admin", label: "Обзор", icon: Gauge, exact: true },
+  { href: "/admin/moderation", label: "Модерация", icon: ShieldAlert, key: "pending" },
+  { href: "/admin/artworks", label: "Работы", icon: Images, key: "artworks" },
+  { href: "/admin/reports", label: "Жалобы", icon: Flag, key: "reports" },
+  { href: "/admin/users", label: "Пользователи", icon: Users, key: "users" },
+  { href: "/admin/categories", label: "Категории", icon: FolderTree },
 ] as const;
 
 export function AdminNav({
@@ -29,7 +29,7 @@ export function AdminNav({
 }) {
   const pathname = usePathname();
   return (
-    <nav className="no-scrollbar -mx-1 flex gap-1 overflow-x-auto border-b border-line pb-2" aria-label="Admin sections">
+    <nav className="no-scrollbar -mx-1 flex gap-1 overflow-x-auto border-b border-line pb-2" aria-label="Разделы админки">
       {ITEMS.map((item) => {
         const active =
           "exact" in item && item.exact

@@ -119,15 +119,15 @@ function awardVoteAchievements(
 
 export function castVote(input: CastVoteInput): CastVoteResult {
   if (!VOTE_TYPES.includes(input.voteType)) {
-    return { ok: false, code: "invalid", message: "Choose one of the three answers." };
+    return { ok: false, code: "invalid", message: "Выберите один из трёх вариантов ответа." };
   }
   if (!input.userId && !input.guestId) {
-    return { ok: false, code: "invalid", message: "Could not identify this session." };
+    return { ok: false, code: "invalid", message: "Не удалось определить сессию." };
   }
 
   const artwork = getArtworkById(input.artworkId);
   if (!artwork || artwork.status !== "approved") {
-    return { ok: false, code: "not_found", message: "This artwork is not available." };
+    return { ok: false, code: "not_found", message: "Эта работа недоступна." };
   }
 
   const existing = input.userId
@@ -145,7 +145,7 @@ export function castVote(input: CastVoteInput): CastVoteResult {
     return {
       ok: false,
       code: "already_voted",
-      message: "You have already judged this artwork.",
+      message: "Вы уже оценили эту работу.",
     };
   }
 
@@ -256,18 +256,18 @@ export function castVote(input: CastVoteInput): CastVoteResult {
     };
   } catch (error) {
     if (error instanceof Error && error.message === "BLOCKED") {
-      return { ok: false, code: "blocked", message: "This account has been suspended." };
+      return { ok: false, code: "blocked", message: "Эта учётная запись заблокирована." };
     }
     const message = error instanceof Error ? error.message : "";
     if (message.includes("UNIQUE constraint")) {
       return {
         ok: false,
         code: "already_voted",
-        message: "You have already judged this artwork.",
+        message: "Вы уже оценили эту работу.",
       };
     }
     console.error("[vote]", error);
-    return { ok: false, code: "invalid", message: "Could not record your vote. Try again." };
+    return { ok: false, code: "invalid", message: "Не удалось сохранить ваш голос. Попробуйте снова." };
   }
 }
 

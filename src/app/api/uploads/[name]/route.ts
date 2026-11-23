@@ -9,7 +9,7 @@ export async function GET(
   const { name } = await params;
   const file = await readLocalUpload(name);
   if (!file) {
-    return new Response("Not found", { status: 404 });
+    return new Response("Не найдено", { status: 404 });
   }
   return new Response(new Uint8Array(file.buffer), {
     headers: {

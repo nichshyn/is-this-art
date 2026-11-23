@@ -15,15 +15,15 @@ export default function AdminNewArtworkPage() {
           href="/admin/artworks"
           className="inline-flex items-center gap-1.5 text-[11.5px] text-muted hover:text-ink"
         >
-          <ArrowLeft size={13} /> Catalog
+          <ArrowLeft size={13} /> Каталог
         </Link>
-        <p className="text-[11px] text-muted">Admin-created works publish immediately</p>
+        <p className="text-[11px] text-muted">Работы, добавленные администратором, публикуются сразу</p>
       </div>
       <div className="card p-5 sm:p-7">
-        <h2 className="text-[16px] font-medium tracking-tight">Add an artwork</h2>
+        <h2 className="text-[16px] font-medium tracking-tight">Добавить работу</h2>
         <p className="mt-1 max-w-2xl text-[12px] leading-relaxed text-muted">
-          Use a verified public-domain or licensed image. Keep the credit, licence
-          and source URL accurate — they are shown on the public artwork page.
+          Используйте проверенное изображение в общественном достоянии или с лицензией.
+          Укажите точные данные об авторе, лицензии и источнике — они видны на публичной странице работы.
         </p>
         <div className="mt-7">
           <AdminArtworkForm categories={categories.map((category) => ({ slug: category.slug, name: category.name }))} />

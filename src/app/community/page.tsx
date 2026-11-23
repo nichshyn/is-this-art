@@ -19,14 +19,14 @@ import {
   getCommunityMembers,
   getSiteStats,
 } from "@/lib/queries";
-import { formatNumber, timeAgo } from "@/lib/utils";
+import { formatNumber, plural, timeAgo } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Community",
+  title: "Сообщество",
   description:
-    "Meet the people looking closely: recent submissions, conversations and the members shaping the gallery.",
+    "Познакомьтесь с теми, кто смотрит внимательно: новые работы, обсуждения и участники, которые формируют галерею.",
   alternates: { canonical: "/community" },
 };
 
@@ -41,31 +41,31 @@ export default function CommunityPage() {
         <div className="container-page py-12 sm:py-16">
           <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
             <div>
-              <p className="eyebrow">The community</p>
+              <p className="eyebrow">Сообщество</p>
               <h1 className="display mt-4 text-[clamp(2.7rem,6.4vw,5.4rem)] leading-[0.9]">
-                A room full of
+                Здесь полно
                 <br />
-                second opinions.
+                других мнений.
               </h1>
               <p className="mt-5 max-w-xl text-[14px] leading-relaxed text-muted">
-                Some people come to look. Some come to argue. Some come to submit
-                the thing they made at 2am. All of them are part of the experiment.
+                Кто-то приходит посмотреть. Кто-то — поспорить. Кто-то — показать
+                то, что сделал в два часа ночи. Все они — часть эксперимента.
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <Link href="/signup" className={buttonClasses()}>
-                  Join the community <ArrowRight size={15} />
+                  Присоединиться к сообществу <ArrowRight size={15} />
                 </Link>
                 <Link href="/submit" className={buttonClasses({ variant: "secondary" })}>
-                  Submit a work
+                  Предложить работу
                 </Link>
               </div>
             </div>
             <dl className="grid grid-cols-2 gap-3">
               {[
-                { icon: <Users size={15} />, label: "Members", value: stats.users },
-                { icon: <MessageSquare size={15} />, label: "Comments", value: stats.comments },
-                { icon: <Sparkles size={15} />, label: "Judgments", value: stats.votes },
-                { icon: <Trophy size={15} />, label: "Works", value: stats.artworks },
+                { icon: <Users size={15} />, label: "Участники", value: stats.users },
+                { icon: <MessageSquare size={15} />, label: "Комментарии", value: stats.comments },
+                { icon: <Sparkles size={15} />, label: "Суждения", value: stats.votes },
+                { icon: <Trophy size={15} />, label: "Работы", value: stats.artworks },
               ].map((item) => (
                 <div key={item.label} className="rounded-2xl border border-line bg-surface p-4">
                   <span className="flex h-8 w-8 items-center justify-center rounded-full bg-subtle text-ink">
@@ -86,20 +86,20 @@ export default function CommunityPage() {
 
       <section className="container-page py-16 sm:py-20">
         <SectionHeading
-          eyebrow="From the community"
-          title="Works submitted by people, not institutions."
-          description="Every approved upload is reviewed by a moderator, then opened to the room."
+          eyebrow="От сообщества"
+          title="Работы, предложенные людьми, а не организациями."
+          description="Каждая одобренная загрузка проходит проверку модератора, а затем открывается для всех."
           href="/discover?sort=newest"
-          linkLabel="Newest additions"
+          linkLabel="Новые поступления"
         />
         {data.works.length === 0 ? (
           <div className="mt-10 rounded-2xl border border-dashed border-line py-16 text-center">
-            <p className="text-[14px] font-medium">No community submissions yet.</p>
+            <p className="text-[14px] font-medium">Пока нет работ от сообщества.</p>
             <p className="mt-2 text-[12.5px] text-muted">
-              Be the first to put something of your own in front of the room.
+              Станьте первым, кто покажет свою работу всем.
             </p>
             <Link href="/submit" className={buttonClasses({ size: "sm", className: "mt-5" })}>
-              Submit artwork
+              Предложить работу
             </Link>
           </div>
         ) : (
@@ -117,15 +117,15 @@ export default function CommunityPage() {
         <div className="container-page grid gap-12 py-16 lg:grid-cols-[1fr_1fr] lg:py-20">
           <div>
             <div className="flex items-baseline justify-between gap-4">
-              <p className="eyebrow">Latest conversations</p>
+              <p className="eyebrow">Последние обсуждения</p>
               <Link href="/discover" className="text-[11px] text-muted hover:text-ink">
-                Find a work to discuss
+                Найти работу для обсуждения
               </Link>
             </div>
             <ul className="mt-5 space-y-2">
               {data.comments.length === 0 && (
                 <li className="rounded-2xl border border-dashed border-line p-6 text-center text-[12.5px] text-muted">
-                  No comments yet. The first opinion is always the loneliest.
+                  Комментариев пока нет. Первое мнение всегда самое одинокое.
                 </li>
               )}
               {data.comments.map((comment) => (
@@ -146,7 +146,7 @@ export default function CommunityPage() {
                         {comment.content}
                       </p>
                       <p className="mt-1 truncate text-[10.5px] text-muted">
-                        on {comment.artwork_title}
+                        к работе {comment.artwork_title}
                       </p>
                     </div>
                   </Link>
@@ -157,9 +157,9 @@ export default function CommunityPage() {
 
           <div>
             <div className="flex items-baseline justify-between gap-4">
-              <p className="eyebrow">Members to follow</p>
+              <p className="eyebrow">Участники, на которых стоит подписаться</p>
               <Link href="/leaderboard" className="text-[11px] text-muted hover:text-ink">
-                Full leaderboard
+                Вся таблица лидеров
               </Link>
             </div>
             <ul className="mt-5 grid gap-2 sm:grid-cols-2">
@@ -176,7 +176,7 @@ export default function CommunityPage() {
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-[12.5px] font-medium">@{member.username}</p>
                       <p className="text-[10.5px] text-muted">
-                        {formatNumber(member.points)} pts · {member.votes} judgments
+                        {plural(member.points, "очко", "очка", "очков")} · {plural(member.votes, "суждение", "суждения", "суждений")}
                       </p>
                     </div>
                     <ArrowUpRight
@@ -195,16 +195,16 @@ export default function CommunityPage() {
         <div className="grid gap-4 sm:grid-cols-3">
           {[
             {
-              title: "Look first, read later",
-              text: "In Play, the title, artist and history stay hidden until you have made your call.",
+              title: "Сначала смотрите, потом читайте",
+              text: "В игре название, автор и история скрыты, пока вы не вынесете суждение.",
             },
             {
-              title: "One person, one judgment",
-              text: "Votes are final and enforced at the database level. You cannot stuff the ballot.",
+              title: "Один человек — одно суждение",
+              text: "Голоса окончательны и закреплены на уровне базы данных. Накрутить результат нельзя.",
             },
             {
-              title: "No house style",
-              text: "The gallery mixes public-domain classics, community uploads and clearly labelled demos.",
+              title: "Никакого единого стиля",
+              text: "В галерее соседствуют классика из общественного достояния, работы сообщества и явно помеченные демо-материалы.",
             },
           ].map((item, index) => (
             <Reveal key={item.title} delay={index * 0.05}>

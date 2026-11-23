@@ -41,13 +41,13 @@ export function SubmitForm() {
       return;
     }
     if (!ACCEPTED.includes(next.type)) {
-      setState({ status: "error", message: "Use a JPG, PNG or WEBP image." });
+      setState({ status: "error", message: "Используйте изображение JPG, PNG или WEBP." });
       return;
     }
     if (next.size > LIMITS.uploadBytes) {
       setState({
         status: "error",
-        message: `That image is larger than ${Math.round(LIMITS.uploadBytes / 1024 / 1024)} MB.`,
+        message: `Размер изображения превышает ${Math.round(LIMITS.uploadBytes / 1024 / 1024)} МБ.`,
       });
       return;
     }
@@ -68,7 +68,7 @@ export function SubmitForm() {
     if (pending) return;
     const form = event.currentTarget;
     if (!file) {
-      setState({ status: "error", message: "Choose an image to submit." });
+      setState({ status: "error", message: "Выберите изображение для отправки." });
       return;
     }
     setPending(true);
@@ -85,21 +85,21 @@ export function SubmitForm() {
       if (!response.ok || !result.ok) {
         setState({
           status: "error",
-          message: result.error ?? "Could not submit the artwork. Try again.",
+          message: result.error ?? "Не удалось предложить работу. Попробуйте снова.",
         });
         setPending(false);
         return;
       }
       setState({
         status: "success",
-        message: result.message ?? "Submitted for review.",
+        message: result.message ?? "Отправлено на рассмотрение.",
         slug: result.slug,
       });
       formRef.current?.reset();
       removeFile();
       setPending(false);
     } catch {
-      setState({ status: "error", message: "Network error. Check your connection and try again." });
+      setState({ status: "error", message: "Ошибка сети. Проверьте подключение и попробуйте снова." });
       setPending(false);
     }
   }
@@ -111,22 +111,22 @@ export function SubmitForm() {
           <Check size={24} />
         </span>
         <h2 className="display mt-6 text-[clamp(1.8rem,3.5vw,2.6rem)] leading-[1.02]">
-          Thank you — it&apos;s in the queue.
+          Спасибо — работа в очереди.
         </h2>
         <p className="mx-auto mt-3 max-w-sm text-[13.5px] leading-relaxed text-muted">
-          {state.message} A moderator reviews every submission before it appears in
-          the gallery. You can follow its status on this page.
+          {state.message} Модератор проверяет каждую предложенную работу, прежде чем
+          она появится в галерее. Вы можете следить за её статусом на этой странице.
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-3">
           <Link href="/play" className={buttonClasses()}>
-            Keep playing <ArrowRight size={15} />
+            Продолжить игру <ArrowRight size={15} />
           </Link>
           <button
             type="button"
             onClick={() => setState({ status: "idle" })}
             className={buttonClasses({ variant: "secondary" })}
           >
-            Submit another work
+            Предложить ещё работу
           </button>
         </div>
       </div>
@@ -138,9 +138,9 @@ export function SubmitForm() {
       <div>
         <div className="flex items-baseline justify-between gap-3">
           <label htmlFor="image" className="text-[12px] font-medium">
-            The image
+            Изображение
           </label>
-          <span className="text-[10.5px] text-muted">JPG, PNG or WEBP · max 8 MB</span>
+          <span className="text-[10.5px] text-muted">JPG, PNG или WEBP · до 8 МБ</span>
         </div>
 
         {preview ? (
@@ -148,7 +148,7 @@ export function SubmitForm() {
             <div className="relative flex min-h-[260px] items-center justify-center p-4">
               <Image
                 src={preview}
-                alt="Selected artwork preview"
+                alt="Предпросмотр выбранной работы"
                 width={800}
                 height={800}
                 unoptimized
@@ -162,7 +162,7 @@ export function SubmitForm() {
                 onClick={removeFile}
                 className="inline-flex items-center gap-1 text-[11px] text-muted transition-colors hover:text-ink"
               >
-                <X size={12} /> Remove
+                <X size={12} /> Удалить
               </button>
             </div>
           </div>
@@ -191,11 +191,10 @@ export function SubmitForm() {
               <UploadCloud size={20} strokeWidth={1.6} />
             </span>
             <span className="mt-4 text-[13.5px] font-medium">
-              Drop an image here, or click to browse
+              Перетащите изображение сюда или нажмите, чтобы выбрать файл
             </span>
             <span className="mt-1.5 max-w-xs text-[11.5px] leading-relaxed text-muted">
-              At least {LIMITS.minImageSide}px on the shortest side. Your image is
-              only visible to moderators until it is approved.
+              Не менее {LIMITS.minImageSide} px по короткой стороне. Пока изображение не одобрено, его видят только модераторы.
             </span>
           </button>
         )}
@@ -212,32 +211,32 @@ export function SubmitForm() {
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Title" htmlFor="title" className="sm:col-span-2">
+        <Field label="Название" htmlFor="title" className="sm:col-span-2">
           <input
             id="title"
             name="title"
             required
             maxLength={120}
-            placeholder="Untitled (study in grey)"
+            placeholder="Без названия (этюд в серых тонах)"
             className="field"
           />
         </Field>
 
-        <Field label="Artist or pseudonym" htmlFor="artistName">
+        <Field label="Художник или псевдоним" htmlFor="artistName">
           <input
             id="artistName"
             name="artistName"
             required
             maxLength={120}
-            placeholder="How should the work be credited?"
+            placeholder="Как указать автора работы?"
             className="field"
           />
         </Field>
 
-        <Field label="Category" htmlFor="category">
+        <Field label="Категория" htmlFor="category">
           <select id="category" name="category" required defaultValue="" className="field">
             <option value="" disabled>
-              Choose a category
+              Выберите категорию
             </option>
             {CATEGORIES.map((category) => (
               <option key={category.slug} value={category.slug}>
@@ -247,7 +246,7 @@ export function SubmitForm() {
           </select>
         </Field>
 
-        <Field label="Year" htmlFor="creationYear" hint="Optional">
+        <Field label="Год" htmlFor="creationYear" hint="Необязательно">
           <input
             id="creationYear"
             name="creationYear"
@@ -257,24 +256,24 @@ export function SubmitForm() {
           />
         </Field>
 
-        <Field label="Country" htmlFor="country" hint="Optional">
-          <input id="country" name="country" maxLength={80} placeholder="Where was it made?" className="field" />
+        <Field label="Страна" htmlFor="country" hint="Необязательно">
+          <input id="country" name="country" maxLength={80} placeholder="Где была создана работа?" className="field" />
         </Field>
 
-        <Field label="Location" htmlFor="location" hint="Optional" className="sm:col-span-2">
+        <Field label="Местоположение" htmlFor="location" hint="Необязательно" className="sm:col-span-2">
           <input
             id="location"
             name="location"
             maxLength={160}
-            placeholder="Collection, city, or 'private collection'"
+            placeholder="Коллекция, город или «частная коллекция»"
             className="field"
           />
         </Field>
 
         <Field
-          label="About the work"
+          label="О работе"
           htmlFor="description"
-          hint="20–2000 characters"
+          hint="20–2000 символов"
           className="sm:col-span-2"
         >
           <textarea
@@ -284,20 +283,20 @@ export function SubmitForm() {
             minLength={20}
             maxLength={2000}
             rows={5}
-            placeholder="What should a viewer know before they judge it? Describe the work, not its reputation."
+            placeholder="Что зрителю стоит знать перед оценкой? Опишите работу, а не её репутацию."
             className="field-area"
           />
         </Field>
       </div>
 
       <div className="space-y-3 rounded-2xl border border-line bg-subtle/60 p-4">
-        <Checkbox name="isOriginal" label="I made this work, or I have permission to share it." defaultChecked />
-        <Checkbox name="isAiGenerated" label="This work was generated or co-created with AI." />
-        <Checkbox name="isAnonymous" label="Hide my username on the public artwork page." />
+        <Checkbox name="isOriginal" label="Я создал(а) эту работу или имею разрешение на её публикацию." defaultChecked />
+        <Checkbox name="isAiGenerated" label="Эта работа сгенерирована или создана при участии ИИ." />
+        <Checkbox name="isAnonymous" label="Скрыть моё имя пользователя на публичной странице работы." />
         <Checkbox
           name="agree"
           required
-          label="I understand every submission is reviewed, and that the platform records opinions rather than facts."
+          label="Я понимаю, что каждая работа проходит проверку и что платформа собирает мнения, а не факты."
         />
       </div>
 
@@ -310,11 +309,11 @@ export function SubmitForm() {
       <div className="flex flex-col gap-3 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
         <p className="inline-flex items-center gap-1.5 text-[11px] text-muted">
           <ShieldCheck size={13} />
-          Reviewed by a human moderator
+          Проверка человеком-модератором
         </p>
         <button type="submit" disabled={pending} className={buttonClasses({ size: "lg" })}>
           {pending ? <Loader2 size={16} className="animate-spin" /> : <ImagePlus size={16} />}
-          {pending ? "Submitting…" : "Submit for review"}
+          {pending ? "Отправляем…" : "Отправить на рассмотрение"}
         </button>
       </div>
     </form>

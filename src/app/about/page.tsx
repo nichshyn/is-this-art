@@ -6,32 +6,32 @@ import { buttonClasses } from "@/components/ui/button";
 import { Reveal } from "@/components/ui/reveal";
 
 export const metadata: Metadata = {
-  title: "About the experiment",
+  title: "О проекте",
   description:
-    "IS THIS ART? is a social experiment about taste. It does not define art; it records what people see.",
+    "IS THIS ART? — социальный эксперимент о вкусе. Он не даёт определения искусству, а фиксирует, что видят люди.",
   alternates: { canonical: "/about" },
 };
 
 const PRINCIPLES = [
   {
     number: "01",
-    title: "Look before you read",
-    text: "In Play, the title, artist and history are hidden until you have made a judgment. The label is part of the work — but it should not be the first thing you see.",
+    title: "Сначала смотрите, потом читайте",
+    text: "В игре название, автор и история скрыты, пока вы не вынесете суждение. Подпись — часть работы, но не то, что должно бросаться в глаза первым.",
   },
   {
     number: "02",
-    title: "One person, one answer",
-    text: "Each account or guest session can judge a work once. The constraint lives in the database, not just the interface. Ballot-stuffing is not an opinion.",
+    title: "Один человек — один ответ",
+    text: "Каждый аккаунт или гостевая сессия может оценить работу один раз. Ограничение зашито в базе данных, а не только в интерфейсе. Накрутка голосов — не мнение.",
   },
   {
     number: "03",
-    title: "Percentages are not verdicts",
-    text: "The numbers describe the room, not the work. A work with 41% 'yes' is not 41% art. It is a record of a conversation.",
+    title: "Проценты — не приговор",
+    text: "Цифры описывают собравшихся, а не работу. Работа с 41 % голосов «за» не является искусством на 41 %. Это запись разговора.",
   },
   {
     number: "04",
-    title: "Credit the source",
-    text: "Historical images are public domain or CC0 and carry a credit, licence and source link. Demo works are labelled. The site never invents provenance.",
+    title: "Указывайте источник",
+    text: "Исторические изображения находятся в общественном достоянии или под лицензией CC0 и снабжены указанием авторства, лицензией и ссылкой на источник. Демо-работы помечены. Сайт никогда не выдумывает происхождение.",
   },
 ];
 
@@ -40,27 +40,27 @@ export default function AboutPage() {
     <>
       <section className="container-page pb-16 pt-12 sm:pb-24 sm:pt-20">
         <div className="max-w-4xl">
-          <p className="eyebrow">The experiment</p>
+          <p className="eyebrow">Эксперимент</p>
           <h1 className="display mt-5 text-[clamp(3rem,8vw,7rem)] leading-[0.86]">
-            WHO DECIDES
+            КТО РЕШАЕТ,
             <br />
-            WHAT ART IS?
+            ЧТО ТАКОЕ ИСКУССТВО?
           </h1>
           <p className="mt-7 max-w-2xl text-[15px] leading-[1.8] text-muted">
-            IS THIS ART? is a small, deliberate experiment about taste. You are shown
-            an image without its label. You make a call. Then the label, the history
-            and the room&apos;s answers appear.
+            IS THIS ART? — небольшой, вдумчивый эксперимент о вкусе. Вам показывают
+            изображение без подписи. Вы выносите суждение. Затем появляются
+            подпись, история и ответы других.
           </p>
           <p className="mt-4 max-w-2xl text-[15px] leading-[1.8] text-muted">
-            The site does not tell you what art is. It asks you to notice your own
-            reaction — and then to see how it compares with everyone else&apos;s.
+            Сайт не говорит, что такое искусство. Он просит заметить вашу собственную
+            реакцию — и сравнить её с реакциями остальных.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/play" className={buttonClasses({ size: "lg" })}>
-              Make a judgment <ArrowRight size={16} />
+              Вынести суждение <ArrowRight size={16} />
             </Link>
             <Link href="/discover" className={buttonClasses({ variant: "secondary", size: "lg" })}>
-              Browse the gallery
+              Открыть галерею
             </Link>
           </div>
         </div>
@@ -71,18 +71,18 @@ export default function AboutPage() {
           {[
             {
               icon: <Eye size={18} strokeWidth={1.6} />,
-              title: "A game, not a test",
-              text: "There are no correct answers and no score for being right. Points reward looking, not agreeing.",
+              title: "Игра, а не тест",
+              text: "Правильных ответов нет и очков за «правильность» не бывает. Очки поощряют внимание, а не согласие.",
             },
             {
               icon: <Scale size={18} strokeWidth={1.6} />,
-              title: "A record, not a court",
-              text: "Votes are opinions. The platform does not adjudicate quality, ownership or artistic merit.",
+              title: "Запись, а не суд",
+              text: "Голоса — это мнения. Платформа не оценивает качество, права собственности или художественные достоинства.",
             },
             {
               icon: <Sparkles size={18} strokeWidth={1.6} />,
-              title: "A gallery, not a feed",
-              text: "One work at a time, with room to look. No infinite scroll, no engagement bait, no ads.",
+              title: "Галерея, а не лента",
+              text: "По одной работе за раз и с местом для рассматривания. Ни бесконечной прокрутки, ни крючков для вовлечения, ни рекламы.",
             },
           ].map((item, index) => (
             <Reveal key={item.title} delay={index * 0.05} className="flex gap-4">
@@ -103,15 +103,15 @@ export default function AboutPage() {
       <section className="container-page py-20 sm:py-24">
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
-            <p className="eyebrow">Four principles</p>
+            <p className="eyebrow">Четыре принципа</p>
             <h2 className="display mt-4 text-[clamp(2rem,4.4vw,3.6rem)] leading-[0.98]">
-              The rules are
+              Правил
               <br />
-              deliberately few.
+              намеренно мало.
             </h2>
             <p className="mt-4 max-w-sm text-[13.5px] leading-relaxed text-muted">
-              The experiment is built to make one thing slightly harder: deciding
-              before you have looked.
+              Эксперимент устроен так, чтобы чуть сложнее было решить до того, как
+              вы посмотрите.
             </p>
           </div>
           <ol className="space-y-8">
@@ -133,31 +133,31 @@ export default function AboutPage() {
       <section className="border-t border-line bg-subtle/40">
         <div className="container-page grid gap-10 py-16 lg:grid-cols-2 lg:py-20">
           <div>
-            <p className="eyebrow">What is in the gallery</p>
+            <p className="eyebrow">Что в галерее</p>
             <h2 className="display mt-4 text-[clamp(1.8rem,3.6vw,2.8rem)] leading-[1.02]">
-              Real works, clearly labelled demos.
+              Настоящие работы и явно помеченные демо.
             </h2>
             <p className="mt-4 max-w-lg text-[13px] leading-[1.8] text-muted">
-              The catalogue mixes public-domain and CC0 images from Wikimedia Commons
-              with a small number of demonstration pieces created for this project.
-              Every record shows its credit and licence; demo works carry a visible
-              &ldquo;Demo&rdquo; badge. AI-assisted images are marked as such.
+              Каталог соединяет изображения из общественного достояния и под лицензией
+              CC0 с Wikimedia Commons и небольшое число демонстрационных работ,
+              созданных для проекта. У каждой записи указаны авторство и лицензия;
+              демо-работы носят заметный бейдж «Демо». Изображения, созданные с
+              помощью ИИ, тоже помечены.
             </p>
             <Link href="/credits" className="link-underline mt-5 inline-flex text-[12.5px] font-medium">
-              Image credits and licences
+              Источники и лицензии изображений
             </Link>
           </div>
           <div className="rounded-2xl border border-line bg-surface p-6">
-            <p className="eyebrow">A note on the numbers</p>
+            <p className="eyebrow">О цифрах</p>
             <p className="mt-3 text-[13px] leading-[1.8] text-muted">
-              Percentages are computed from stored votes at the moment you look. They
-              are not weighted by expertise, seniority or follower count. A curator
-              and a first-time visitor each get one answer.
+              Проценты рассчитываются из сохранённых голосов на момент, когда вы
+              смотрите. Они не взвешиваются по экспертизе, стажу или числу
+              подписчиков. Куратор и новый посетитель дают по одному ответу.
             </p>
             <p className="mt-3 text-[13px] leading-[1.8] text-muted">
-              Because the gallery is small and the seed data is partly simulated, the
-              numbers here are a demonstration of the mechanic, not a scientific
-              survey.
+              Поскольку галерея невелика, а исходные данные отчасти смоделированы,
+              цифры здесь демонстрируют механизм, а не научное исследование.
             </p>
           </div>
         </div>
@@ -165,13 +165,13 @@ export default function AboutPage() {
 
       <section className="container-page py-20 text-center sm:py-24">
         <h2 className="display mx-auto max-w-2xl text-[clamp(2rem,4.6vw,3.8rem)] leading-[0.98]">
-          There is no answer key.
+          Правильных ответов нет.
         </h2>
         <p className="mx-auto mt-4 max-w-md text-[13.5px] leading-relaxed text-muted">
-          There is only the next image, your first reaction, and the room.
+          Есть только следующее изображение, ваша первая реакция и другие люди.
         </p>
         <Link href="/play" className={buttonClasses({ size: "lg", className: "mt-7" })}>
-          Start exploring <ArrowRight size={16} />
+          Начать обзор <ArrowRight size={16} />
         </Link>
       </section>
     </>

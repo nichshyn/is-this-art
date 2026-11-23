@@ -9,9 +9,9 @@ import { getCurrentUser, googleOAuthConfigured } from "@/lib/auth";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Create account",
+  title: "Создание аккаунта",
   description:
-    "Create a free account to keep points, build a streak and appear on the leaderboard.",
+    "Создайте бесплатный аккаунт, чтобы копить очки, вести серию дней и попасть в таблицу лидеров.",
   alternates: { canonical: "/signup" },
 };
 
@@ -21,14 +21,14 @@ export default async function SignupPage() {
 
   return (
     <AuthShell
-      eyebrow="Join the experiment"
-      title="Make your looking count."
-      description="Free, no feed, no ads. Just one image at a time and a record of what you and everyone else saw."
+      eyebrow="Присоединяйтесь к эксперименту"
+      title="Пусть ваш взгляд имеет значение."
+      description="Бесплатно, без ленты и рекламы. По одному изображению за раз и запись того, что увидели вы и все остальные."
       footer={
         <>
-          Already have an account?{" "}
+          Уже есть аккаунт?{" "}
           <Link href="/login" className="font-medium text-ink underline underline-offset-2">
-            Sign in
+            Войти
           </Link>
         </>
       }
@@ -38,10 +38,10 @@ export default async function SignupPage() {
         <>
           <div className="my-5 flex items-center gap-3">
             <span className="h-px flex-1 bg-line" />
-            <span className="text-[10px] uppercase tracking-[0.16em] text-muted">or</span>
+            <span className="text-[10px] uppercase tracking-[0.16em] text-muted">или</span>
             <span className="h-px flex-1 bg-line" />
           </div>
-          <GoogleButton label="Sign up with Google" />
+          <GoogleButton label="Зарегистрироваться через Google" />
         </>
       )}
     </AuthShell>

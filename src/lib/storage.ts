@@ -39,7 +39,7 @@ export async function storeImage(image: ValidatedImage): Promise<StoredImage> {
     });
     if (!response.ok) {
       const detail = await response.text().catch(() => "");
-      throw new Error(`Storage upload failed (${response.status}). ${detail.slice(0, 200)}`);
+      throw new Error(`Не удалось загрузить файл в хранилище (${response.status}). ${detail.slice(0, 200)}`);
     }
     return {
       url: `${supabaseUrl.replace(/\/$/, "")}/storage/v1/object/public/${encodeURIComponent(bucket)}/${filename}`,

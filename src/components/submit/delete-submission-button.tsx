@@ -12,12 +12,12 @@ export function DeleteSubmissionButton({ artworkId }: { artworkId: string }) {
   const [error, setError] = useState<string | null>(null);
 
   function onClick() {
-    if (!window.confirm("Remove this pending submission? This cannot be undone.")) return;
+    if (!window.confirm("Удалить эту предложенную работу на рассмотрении? Это действие нельзя отменить.")) return;
     setError(null);
     startTransition(async () => {
       const result = await deleteOwnSubmissionAction(artworkId);
       if (!result.ok) {
-        setError(result.error ?? "Could not remove the submission.");
+        setError(result.error ?? "Не удалось удалить предложенную работу.");
         return;
       }
       router.refresh();
@@ -33,7 +33,7 @@ export function DeleteSubmissionButton({ artworkId }: { artworkId: string }) {
         className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-[10.5px] text-muted transition-colors hover:bg-subtle hover:text-ink disabled:opacity-50"
       >
         <Trash2 size={12} />
-        {pending ? "Removing…" : "Remove"}
+        {pending ? "Удаляем…" : "Удалить"}
       </button>
       {error && <span className="text-[10px] text-red-500">{error}</span>}
     </div>

@@ -29,7 +29,7 @@ export function ThemeToggle({ className }: { className?: string }) {
     <button
       type="button"
       onClick={toggle}
-      aria-label={dark ? "Switch to light theme" : "Switch to dark theme"}
+      aria-label={dark ? "Переключить на светлую тему" : "Переключить на тёмную тему"}
       className={cn(
         "relative inline-flex h-9 w-9 items-center justify-center rounded-full text-muted transition-colors hover:bg-subtle hover:text-ink",
         className,

@@ -36,7 +36,7 @@ export function FollowButton({
       const result = await toggleFollowAction(username);
       if (!result.ok) {
         setFollowing(!next);
-        setError(result.error ?? "Could not update.");
+        setError(result.error ?? "Не удалось обновить.");
       }
     });
   }
@@ -55,7 +55,7 @@ export function FollowButton({
         )}
       >
         {following ? <Check size={14} /> : <Plus size={14} />}
-        {following ? "Following" : "Follow"}
+        {following ? "Вы подписаны" : "Подписаться"}
       </button>
       {error && <span className="text-[10.5px] text-red-500">{error}</span>}
     </div>

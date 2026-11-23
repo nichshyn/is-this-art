@@ -24,11 +24,11 @@ export async function addCommentAction(
   formData: FormData,
 ): Promise<FormState> {
   const user = await getCurrentUser();
-  if (!user) return { error: "Sign in to join the conversation." };
-  if (user.is_blocked) return { error: "This account is suspended." };
+  if (!user) return { error: "Войдите, чтобы участвовать в обсуждении." };
+  if (user.is_blocked) return { error: "Эта учётная запись заблокирована." };
 
   const limited = rateLimit(`comment:${user.id}`, 12, 10 * 60_000);
-  if (!limited.ok) return { error: "You are commenting too quickly. Try again shortly." };
+  if (!limited.ok) return { error: "Вы слишком быстро оставляете комментарии. Попробуйте чуть позже." };
 
   const parsed = commentSchema.safeParse({
     artworkId: String(formData.get("artworkId") ?? ""),
@@ -41,7 +41,7 @@ export async function addCommentAction(
     parsed.data.artworkId,
   );
   if (!artwork || artwork.status !== "approved") {
-    return { error: "This artwork is not available for comments." };
+    return { error: "Эту работу нельзя комментировать." };
   }
 
   const { getDb } = await import("@/lib/db");
@@ -59,21 +59,21 @@ export async function addCommentAction(
   awardCommentAchievement(user.id);
   revalidatePath(`/artwork/${artwork.slug}`);
   revalidatePath("/community");
-  return { success: "Comment posted." };
+  return { success: "Комментарий опубликован." };
 }
 
 export async function deleteCommentAction(commentId: string): Promise<ToggleResult> {
   const user = await getCurrentUser();
-  if (!user) return { ok: false, error: "Sign in first.", requireAuth: true };
+  if (!user) return { ok: false, error: "Сначала войдите.", requireAuth: true };
   const comment = queryOne<{ user_id: string; artwork_id: string; slug: string }>(
     `SELECT c.user_id, c.artwork_id, a.slug
      FROM comments c JOIN artworks a ON a.id = c.artwork_id
      WHERE c.id = ?`,
     commentId,
   );
-  if (!comment) return { ok: false, error: "Comment not found." };
+  if (!comment) return { ok: false, error: "Комментарий не найден." };
   if (comment.user_id !== user.id && user.role !== "admin") {
-    return { ok: false, error: "You can only delete your own comments." };
+    return { ok: false, error: "Вы можете удалять только свои комментарии." };
   }
   const { getDb } = await import("@/lib/db");
   getDb().prepare("DELETE FROM comments WHERE id = ?").run(commentId);
@@ -84,14 +84,14 @@ export async function deleteCommentAction(commentId: string): Promise<ToggleResu
 
 export async function toggleLikeAction(artworkId: string): Promise<ToggleResult> {
   const user = await getCurrentUser();
-  if (!user) return { ok: false, requireAuth: true, error: "Sign in to like artworks." };
-  if (user.is_blocked) return { ok: false, error: "This account is suspended." };
+  if (!user) return { ok: false, requireAuth: true, error: "Войдите, чтобы поставить отметку «Нравится»." };
+  if (user.is_blocked) return { ok: false, error: "Эта учётная запись заблокирована." };
 
   const artwork = queryOne<{ slug: string }>(
     "SELECT slug FROM artworks WHERE id = ? AND status = 'approved'",
     artworkId,
   );
-  if (!artwork) return { ok: false, error: "Artwork not found." };
+  if (!artwork) return { ok: false, error: "Работа не найдена." };
 
   const { getDb } = await import("@/lib/db");
   const db = getDb();
@@ -116,10 +116,10 @@ export async function toggleLikeAction(artworkId: string): Promise<ToggleResult>
 
 export async function toggleFollowAction(username: string): Promise<ToggleResult> {
   const user = await getCurrentUser();
-  if (!user) return { ok: false, requireAuth: true, error: "Sign in to follow artists." };
+  if (!user) return { ok: false, requireAuth: true, error: "Войдите, чтобы подписываться на художников." };
   const target = getUserByUsername(username);
-  if (!target) return { ok: false, error: "Artist not found." };
-  if (target.id === user.id) return { ok: false, error: "You cannot follow yourself." };
+  if (!target) return { ok: false, error: "Художник не найден." };
+  if (target.id === user.id) return { ok: false, error: "Нельзя подписаться на самого себя." };
 
   const { getDb } = await import("@/lib/db");
   const db = getDb();
@@ -143,9 +143,9 @@ export async function reportAction(
   formData: FormData,
 ): Promise<FormState> {
   const user = await getCurrentUser();
-  if (!user) return { error: "Sign in to report an artwork." };
+  if (!user) return { error: "Войдите, чтобы пожаловаться на работу." };
   const limited = rateLimit(`report:${user.id}`, 6, 60 * 60_000);
-  if (!limited.ok) return { error: "Too many reports. Try again later." };
+  if (!limited.ok) return { error: "Слишком много жалоб. Попробуйте позже." };
 
   const parsed = reportSchema.safeParse({
     artworkId: String(formData.get("artworkId") ?? ""),
@@ -158,14 +158,14 @@ export async function reportAction(
     "SELECT slug FROM artworks WHERE id = ? AND status = 'approved'",
     parsed.data.artworkId,
   );
-  if (!artwork) return { error: "Artwork not found." };
+  if (!artwork) return { error: "Работа не найдена." };
 
   const duplicate = queryOne(
     "SELECT 1 FROM reports WHERE user_id = ? AND artwork_id = ? AND status = 'open'",
     user.id,
     parsed.data.artworkId,
   );
-  if (duplicate) return { success: "You already have an open report for this work." };
+  if (duplicate) return { success: "У вас уже есть открытая жалоба на эту работу." };
 
   const { getDb } = await import("@/lib/db");
   getDb()
@@ -180,21 +180,21 @@ export async function reportAction(
       parsed.data.details || null,
       new Date().toISOString(),
     );
-  return { success: "Thank you. A moderator will review this report." };
+  return { success: "Спасибо. Модератор рассмотрит вашу жалобу." };
 }
 
 export async function deleteOwnSubmissionAction(artworkId: string): Promise<ToggleResult> {
   const user = await getCurrentUser();
-  if (!user) return { ok: false, error: "Sign in first." };
+  if (!user) return { ok: false, error: "Сначала войдите." };
   const artwork = queryOne<{ submitted_by: string; status: string }>(
     "SELECT submitted_by, status FROM artworks WHERE id = ?",
     artworkId,
   );
   if (!artwork || artwork.submitted_by !== user.id) {
-    return { ok: false, error: "Submission not found." };
+    return { ok: false, error: "Предложенная работа не найдена." };
   }
   if (artwork.status === "approved") {
-    return { ok: false, error: "Approved works can only be removed by a moderator." };
+    return { ok: false, error: "Одобренные работы может удалить только модератор." };
   }
   const { getDb } = await import("@/lib/db");
   getDb().prepare("DELETE FROM artworks WHERE id = ?").run(artworkId);

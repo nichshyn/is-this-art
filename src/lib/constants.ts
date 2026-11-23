@@ -2,7 +2,7 @@ export const SITE = {
   name: "IS THIS ART?",
   shortName: "IS THIS ART?",
   description:
-    "A social experiment about taste. Look at an artwork, make your judgment, and see what the world thinks.",
+    "Социальный эксперимент о вкусе. Рассмотрите работу, выскажите своё суждение и посмотрите, что думают остальные.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   twitter: "@isthisart",
 };
@@ -10,48 +10,48 @@ export const SITE = {
 export const CATEGORIES = [
   {
     slug: "contemporary-art",
-    name: "Contemporary Art",
-    description: "Work made by living artists and the recent past.",
+    name: "Современное искусство",
+    description: "Работы живых художников и мастеров недавнего прошлого.",
   },
   {
     slug: "abstract-art",
-    name: "Abstract Art",
-    description: "Form, colour and gesture without a representational subject.",
+    name: "Абстрактное искусство",
+    description: "Форма, цвет и жест без изобразительного сюжета.",
   },
   {
     slug: "installations",
-    name: "Installations",
-    description: "Rooms, objects and situations staged in space.",
+    name: "Инсталляции",
+    description: "Помещения, объекты и ситуации, выстроенные в пространстве.",
   },
   {
     slug: "paintings",
-    name: "Paintings & Prints",
-    description: "Two-dimensional works, from panel paintings to woodblock prints.",
+    name: "Живопись и гравюра",
+    description: "Двумерные работы — от живописи на досках до гравюр.",
   },
   {
     slug: "sculpture",
-    name: "Sculpture",
-    description: "Carved, modelled and cast objects.",
+    name: "Скульптура",
+    description: "Высеченные, вылепленные и отлитые объекты.",
   },
   {
     slug: "photography",
-    name: "Photography",
-    description: "Images made with light, from the first camera photograph to the present.",
+    name: "Фотография",
+    description: "Изображения, созданные светом, — от первого снимка на камеру до наших дней.",
   },
   {
     slug: "digital-art",
-    name: "Digital Art",
-    description: "Work made with software, code and screens.",
+    name: "Цифровое искусство",
+    description: "Работы, созданные с помощью программ, кода и экранов.",
   },
   {
     slug: "ai-art",
-    name: "AI Art",
-    description: "Images generated or co-created with machine-learning models.",
+    name: "ИИ-искусство",
+    description: "Изображения, созданные или доработанные вместе с моделями машинного обучения.",
   },
   {
     slug: "experimental-art",
-    name: "Experimental Art",
-    description: "Work that tests the rules of its own medium.",
+    name: "Экспериментальное искусство",
+    description: "Работы, которые испытывают правила своего медиума.",
   },
 ] as const;
 
@@ -65,24 +65,24 @@ export const VOTE_TYPES = ["yes", "no", "unsure"] as const;
 export type VoteType = (typeof VOTE_TYPES)[number];
 
 export const VOTE_LABELS: Record<VoteType, string> = {
-  yes: "Yes, it's art.",
-  no: "No, it's not art.",
-  unsure: "I'm not sure.",
+  yes: "Да, это искусство.",
+  no: "Нет, это не искусство.",
+  unsure: "Не уверен(а).",
 };
 
 export const VOTE_SHORT: Record<VoteType, string> = {
-  yes: "Yes, art",
-  no: "Not art",
-  unsure: "Not sure",
+  yes: "Да, искусство",
+  no: "Не искусство",
+  unsure: "Не уверен",
 };
 
 export const REPORT_REASONS = [
-  "Copyright or ownership issue",
-  "Hateful or harmful content",
-  "Sexually explicit content",
-  "Spam or misleading information",
-  "Graphic violence",
-  "Other",
+  "Нарушение авторских прав или прав на изображение",
+  "Контент ненависти или причиняющий вред",
+  "Откровенно сексуальный контент",
+  "Спам или ложная информация",
+  "Сцены жестокого насилия",
+  "Другое",
 ] as const;
 
 export const POINTS = {

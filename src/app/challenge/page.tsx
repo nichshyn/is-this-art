@@ -10,9 +10,9 @@ import { getChallengeCards, getChallengeProgress } from "@/lib/queries";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Daily challenge",
+  title: "Задание дня",
   description:
-    "Five works, one day, one shared challenge. Judge all five and compare your answers with the world.",
+    "Пять работ, один день, одно общее задание. Оцените все пять и сравните свои ответы с другими.",
   alternates: { canonical: "/challenge" },
 };
 
@@ -29,23 +29,23 @@ export default async function ChallengePage() {
           <div>
             <p className="eyebrow flex items-center gap-2">
               <CalendarDays size={13} />
-              Daily challenge
+              Задание дня
             </p>
             <h1 className="display mt-3 text-[clamp(1.8rem,4vw,3rem)] leading-[1]">
-              Five works. One shared question.
+              Пять работ. Один общий вопрос.
             </h1>
             <p className="mt-3 max-w-xl text-[13px] leading-relaxed text-muted">
-              Everyone gets the same five works today. Judge each one, then compare
-              your answers with the world. Complete all five for a bonus.
+              Сегодня у всех одни и те же пять работ. Оцените каждую, затем сравните
+              свои ответы с другими. За все пять — бонус.
             </p>
           </div>
           <div className="flex items-center gap-3 text-[11.5px] text-muted">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-paper px-3 py-1.5">
               <Sparkles size={12} />
-              +25 bonus
+              +25 бонусных очков
             </span>
             <Link href="/leaderboard" className="link-underline text-ink">
-              Leaderboard <ArrowRight size={13} />
+              Лидеры <ArrowRight size={13} />
             </Link>
           </div>
         </div>
@@ -57,18 +57,18 @@ export default async function ChallengePage() {
             <Sparkles size={22} />
           </span>
           <h2 className="display mt-6 text-[clamp(2.2rem,5vw,3.8rem)] leading-[0.98]">
-            Today&apos;s challenge is complete.
+            Задание дня выполнено.
           </h2>
           <p className="mx-auto mt-4 max-w-md text-[13.5px] leading-relaxed text-muted">
-            You judged all five works. A new set arrives tomorrow. In the meantime,
-            keep exploring the gallery or submit a work of your own.
+            Вы оценили все пять работ. Завтра появится новый набор. А пока
+            продолжайте обзор галереи или предложите свою работу.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link href="/play" className={buttonClasses()}>
-              Keep playing
+              Продолжить игру
             </Link>
             <Link href="/discover" className={buttonClasses({ variant: "secondary" })}>
-              Browse the gallery
+              Открыть галерею
             </Link>
           </div>
         </div>

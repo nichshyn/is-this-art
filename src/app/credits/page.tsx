@@ -4,13 +4,14 @@ import Link from "next/link";
 import { ArrowUpRight, Info } from "lucide-react";
 
 import { SEED_ARTWORKS } from "@/data/artworks";
+import { plural } from "@/lib/utils";
 
 import credits from "../../../public/artworks/credits.json";
 
 export const metadata: Metadata = {
-  title: "Image credits",
+  title: "Источники изображений",
   description:
-    "Sources, licences and credits for the images used in the IS THIS ART? demonstration gallery.",
+    "Источники, лицензии и указание авторства изображений, используемых в демонстрационной галерее IS THIS ART?.",
   alternates: { canonical: "/credits" },
 };
 
@@ -37,35 +38,35 @@ export default function CreditsPage() {
   return (
     <div className="container-page py-10 sm:py-14">
       <div className="max-w-3xl">
-        <p className="eyebrow">Provenance</p>
+        <p className="eyebrow">Происхождение</p>
         <h1 className="display mt-4 text-[clamp(2.6rem,6vw,5rem)] leading-[0.92]">
-          Image credits
+          Источники изображений
           <br />
-          &amp; licences.
+          и лицензии.
         </h1>
         <p className="mt-5 max-w-xl text-[14px] leading-relaxed text-muted">
-          Historical images in the demonstration catalogue are public-domain or CC0
-          works sourced from Wikimedia Commons. Each entry links to its source file.
-          Five additional works were created for this project and are visibly marked
-          as demo content.
+          Исторические изображения в демонстрационном каталоге — это работы из
+          общественного достояния или с лицензией CC0, взятые с Wikimedia Commons.
+          Каждая запись ведёт к исходному файлу. Ещё пять работ созданы специально
+          для проекта и явно помечены как демо-материалы.
         </p>
       </div>
 
       <div className="mt-8 flex items-start gap-2.5 rounded-2xl border border-line bg-subtle/60 p-4 text-[11.5px] leading-relaxed text-muted">
         <Info size={14} className="mt-0.5 shrink-0" />
         <p>
-          Licences describe the source file, not the underlying work in every
-          jurisdiction. If you believe an attribution is incomplete, please use the
-          report control on the artwork page so a moderator can review it.
+          Лицензии описывают исходный файл, а не саму работу в каждой юрисдикции.
+          Если вы считаете, что указание авторства неполное, воспользуйтесь кнопкой
+          жалобы на странице работы — модератор сможет это проверить.
         </p>
       </div>
 
       <section className="mt-10">
         <div className="flex items-baseline justify-between gap-4 border-b border-line pb-3">
           <h2 className="text-[12px] font-medium uppercase tracking-[0.16em] text-muted">
-            Historical &amp; public-domain images
+            Исторические изображения и общественное достояние
           </h2>
-          <span className="text-[10.5px] text-muted">{items.length} works</span>
+          <span className="text-[10.5px] text-muted">{plural(items.length, "работа", "работы", "работ")}</span>
         </div>
         <ul className="divide-y divide-line">
           {items.map((item) => (
@@ -95,7 +96,7 @@ export default function CreditsPage() {
                 rel="noreferrer noopener"
                 className="inline-flex items-center gap-1 justify-self-start text-[10.5px] text-muted underline underline-offset-2 hover:text-ink sm:justify-self-end"
               >
-                Source <ArrowUpRight size={10} />
+                Источник <ArrowUpRight size={10} />
               </a>
             </li>
           ))}
@@ -105,14 +106,14 @@ export default function CreditsPage() {
       <section className="mt-12">
         <div className="flex items-baseline justify-between gap-4 border-b border-line pb-3">
           <h2 className="text-[12px] font-medium uppercase tracking-[0.16em] text-muted">
-            Demonstration content
+            Демонстрационные материалы
           </h2>
-          <span className="text-[10.5px] text-muted">{demoWorks.length} works</span>
+          <span className="text-[10.5px] text-muted">{plural(demoWorks.length, "работа", "работы", "работ")}</span>
         </div>
         <p className="mt-4 max-w-2xl text-[12px] leading-relaxed text-muted">
-          These pieces were made specifically for this product demo. They are not
-          attributed to a real artist, collection or historical event, and are marked
-          &ldquo;Demo&rdquo; wherever they appear.
+          Эти работы созданы специально для демонстрации продукта. Они не
+          приписываются реальному художнику, коллекции или историческому событию и
+          везде помечены как «Демо».
         </p>
         <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {demoWorks.map((work) => (
@@ -123,7 +124,7 @@ export default function CreditsPage() {
               <div className="min-w-0">
                 <p className="truncate text-[12px] font-medium">{work.title}</p>
                 <p className="text-[10.5px] text-muted">
-                  Demo content · {work.artistName}
+                  Демо-материал · {work.artistName}
                 </p>
               </div>
             </li>
@@ -133,10 +134,10 @@ export default function CreditsPage() {
 
       <div className="mt-12 flex flex-wrap items-center gap-3 border-t border-line pt-6">
         <Link href="/discover" className="text-[12px] font-medium underline underline-offset-4">
-          Browse the gallery
+          Открыть галерею
         </Link>
         <Link href="/about" className="text-[12px] text-muted hover:text-ink">
-          About the experiment
+          О проекте
         </Link>
       </div>
     </div>

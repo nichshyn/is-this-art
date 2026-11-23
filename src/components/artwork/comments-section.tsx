@@ -23,7 +23,7 @@ export function CommentsSection({
     <section className="mt-16 border-t border-line pt-10">
       <div className="flex items-baseline justify-between gap-3">
         <h2 className="text-[19px] font-semibold tracking-tight">
-          Comments
+          Комментарии
           <span className="ml-2 text-[12px] font-normal text-muted">
             {comments.length}
           </span>
@@ -36,7 +36,7 @@ export function CommentsSection({
 
       {comments.length === 0 ? (
         <p className="mt-8 text-[13px] text-muted">
-          No comments yet. Start the conversation.
+          Комментариев пока нет. Начните обсуждение.
         </p>
       ) : (
         <ul className="mt-8 space-y-6">

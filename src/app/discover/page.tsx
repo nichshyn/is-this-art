@@ -11,9 +11,9 @@ import { formatNumber } from "@/lib/utils";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Discover",
+  title: "Обзор",
   description:
-    "Browse paintings, sculpture, photography, installations, digital and AI art. Search, filter and sort the gallery.",
+    "Смотрите живопись, скульптуру, фотографию, инсталляции, цифровое и ИИ-искусство. Ищите, фильтруйте и сортируйте галерею.",
   alternates: { canonical: "/discover" },
 };
 
@@ -57,15 +57,15 @@ export default async function DiscoverPage({
   return (
     <div className="container-page py-10 sm:py-14">
       <div className="max-w-3xl">
-        <p className="eyebrow">The gallery</p>
+        <p className="eyebrow">Галерея</p>
         <h1 className="display mt-4 text-[clamp(2.5rem,6vw,5.2rem)] leading-[0.92]">
-          What counts
+          Что
           <br />
-          as art?
+          считается искусством?
         </h1>
         <p className="mt-5 max-w-xl text-[14px] leading-relaxed text-muted">
-          Paintings, readymades, photographs, AI experiments and things that are
-          hard to name. Every work is here to be looked at — not settled.
+          Картины, готовые объекты, фотографии, эксперименты с ИИ и то, что трудно
+          назвать. Каждая работа здесь, чтобы её смотрели, а не выносили вердикт.
         </p>
       </div>
 
@@ -82,26 +82,26 @@ export default async function DiscoverPage({
 
       <div className="mt-9 flex flex-wrap items-baseline justify-between gap-3 border-t border-line pt-6">
         <p className="text-[12px] text-muted">
-          {activeCategory ? activeCategory.name : q ? `Results for “${q}”` : "All works"}
+          {activeCategory ? activeCategory.name : q ? `Результаты по запросу «${q}»` : "Все работы"}
           <span className="ml-2 text-ink">{formatNumber(data.total)}</span>
         </p>
         <p className="text-[10.5px] text-muted">
-          Page {data.page} of {data.pages}
+          Страница {data.page} из {data.pages}
         </p>
       </div>
 
       {data.items.length === 0 ? (
         <div className="flex min-h-[40vh] flex-col items-center justify-center rounded-3xl border border-dashed border-line py-20 text-center">
-          <p className="text-[18px] font-medium tracking-tight">Nothing here yet.</p>
+          <p className="text-[18px] font-medium tracking-tight">Здесь пока ничего нет.</p>
           <p className="mt-2 max-w-sm text-[13px] leading-relaxed text-muted">
-            Try a different search or category. Or be the first to submit a work
-            that belongs here.
+            Попробуйте другой запрос или категорию. Или станьте первым, кто
+            предложит работу для этой галереи.
           </p>
           <Link
             href="/submit"
             className="mt-5 rounded-full bg-accent px-5 py-2.5 text-[12.5px] font-medium text-accent-ink"
           >
-            Submit artwork
+            Предложить работу
           </Link>
         </div>
       ) : (
@@ -115,17 +115,17 @@ export default async function DiscoverPage({
       )}
 
       {data.pages > 1 && (
-        <nav className="mt-14 flex items-center justify-center gap-2" aria-label="Pagination">
+        <nav className="mt-14 flex items-center justify-center gap-2" aria-label="Пагинация">
           {data.page > 1 ? (
             <Link
               href={buildHref({ q, category, sort, page: data.page - 1 })}
               className="inline-flex h-9 items-center gap-1 rounded-full border border-line px-3.5 text-[12px] hover:bg-subtle"
             >
-              <ChevronLeft size={14} /> Previous
+              <ChevronLeft size={14} /> Назад
             </Link>
           ) : (
             <span className="inline-flex h-9 items-center gap-1 rounded-full border border-line px-3.5 text-[12px] text-muted opacity-40">
-              <ChevronLeft size={14} /> Previous
+              <ChevronLeft size={14} /> Назад
             </span>
           )}
           <span className="px-3 text-[11.5px] tabular-nums text-muted">
@@ -136,11 +136,11 @@ export default async function DiscoverPage({
               href={buildHref({ q, category, sort, page: data.page + 1 })}
               className="inline-flex h-9 items-center gap-1 rounded-full border border-line px-3.5 text-[12px] hover:bg-subtle"
             >
-              Next <ChevronRight size={14} />
+              Далее <ChevronRight size={14} />
             </Link>
           ) : (
             <span className="inline-flex h-9 items-center gap-1 rounded-full border border-line px-3.5 text-[12px] text-muted opacity-40">
-              Next <ChevronRight size={14} />
+              Далее <ChevronRight size={14} />
             </span>
           )}
         </nav>

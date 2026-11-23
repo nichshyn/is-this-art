@@ -65,7 +65,7 @@ async function resolveImage(
   }
   if (imageUrl) {
     if (!/^https:\/\//i.test(imageUrl) && !imageUrl.startsWith("/artworks/")) {
-      throw new Error("Image URL must start with https:// or be a local artwork path.");
+      throw new Error("Адрес изображения должен начинаться с https:// или быть локальным путём к работе.");
     }
     const width = Number(formData.get("imageWidth")) || 1200;
     const height = Number(formData.get("imageHeight")) || 1200;
@@ -85,7 +85,7 @@ async function resolveImage(
       imageSourceUrl,
     };
   }
-  throw new Error("Add an image file or an image URL.");
+  throw new Error("Добавьте файл изображения или его URL.");
 }
 
 export async function adminCreateArtworkAction(
@@ -116,7 +116,7 @@ export async function adminCreateArtworkAction(
 
   try {
     const image = await resolveImage(formData);
-    if (!image) return { error: "Could not resolve the image." };
+    if (!image) return { error: "Не удалось обработать изображение." };
     const id = newId("art_");
     const slug = uniqueSlug(parsed.data.slug || parsed.data.title);
     const { getDb } = await import("@/lib/db");
@@ -155,9 +155,9 @@ export async function adminCreateArtworkAction(
     revalidatePath("/discover");
     revalidatePath("/admin/artworks");
     console.info(`[admin] ${admin.username} created artwork ${slug}`);
-    return { success: `Artwork "${parsed.data.title}" created.` };
+    return { success: `Работа «${parsed.data.title}» создана.` };
   } catch (error) {
-    return { error: error instanceof Error ? error.message : "Could not create artwork." };
+    return { error: error instanceof Error ? error.message : "Не удалось создать работу." };
   }
 }
 
@@ -167,12 +167,12 @@ export async function adminUpdateArtworkAction(
 ): Promise<FormState> {
   await requireAdmin();
   const id = String(formData.get("id") ?? "");
-  if (!id) return { error: "Missing artwork id." };
+  if (!id) return { error: "Не указан идентификатор работы." };
   const current = queryOne<{ image_url: string }>(
     "SELECT image_url FROM artworks WHERE id = ?",
     id,
   );
-  if (!current) return { error: "Artwork not found." };
+  if (!current) return { error: "Работа не найдена." };
 
   const parsed = adminArtworkSchema.safeParse({
     title: String(formData.get("title") ?? ""),
@@ -197,7 +197,7 @@ export async function adminUpdateArtworkAction(
 
   try {
     const image = await resolveImage(formData, current.image_url);
-    if (!image) return { error: "Could not resolve the image." };
+    if (!image) return { error: "Не удалось обработать изображение." };
     const slug = uniqueSlug(parsed.data.slug || parsed.data.title, id);
     const { getDb } = await import("@/lib/db");
     getDb()
@@ -234,9 +234,9 @@ export async function adminUpdateArtworkAction(
     revalidatePath("/discover");
     revalidatePath(`/artwork/${slug}`);
     revalidatePath("/admin/artworks");
-    return { success: "Artwork updated." };
+    return { success: "Работа обновлена." };
   } catch (error) {
-    return { error: error instanceof Error ? error.message : "Could not update artwork." };
+    return { error: error instanceof Error ? error.message : "Не удалось обновить работу." };
   }
 }
 
@@ -250,11 +250,11 @@ export async function adminModerateArtworkAction(
     "SELECT id, submitted_by, slug, title FROM artworks WHERE id = ?",
     artworkId,
   );
-  if (!artwork) return { ok: false, error: "Artwork not found." };
+  if (!artwork) return { ok: false, error: "Работа не найдена." };
   const { getDb } = await import("@/lib/db");
   getDb()
     .prepare("UPDATE artworks SET status = ?, rejection_reason = ? WHERE id = ?")
-    .run(decision, decision === "rejected" ? reason?.slice(0, 500) ?? "Not approved." : null, artworkId);
+    .run(decision, decision === "rejected" ? reason?.slice(0, 500) ?? "Не одобрена." : null, artworkId);
   if (decision === "approved" && artwork.submitted_by) {
     awardUploadAchievements(artwork.submitted_by);
   }
@@ -296,13 +296,13 @@ export async function adminToggleBlockAction(
   userId: string,
 ): Promise<{ ok: boolean; blocked?: boolean; error?: string }> {
   const admin = await requireAdmin();
-  if (admin.id === userId) return { ok: false, error: "You cannot block yourself." };
+  if (admin.id === userId) return { ok: false, error: "Вы не можете заблокировать себя." };
   const target = queryOne<{ id: string; is_blocked: number; role: string }>(
     "SELECT id, is_blocked, role FROM users WHERE id = ?",
     userId,
   );
-  if (!target) return { ok: false, error: "User not found." };
-  if (target.role === "admin") return { ok: false, error: "Admins cannot be blocked here." };
+  if (!target) return { ok: false, error: "Пользователь не найден." };
+  if (target.role === "admin") return { ok: false, error: "Администраторов нельзя заблокировать здесь." };
   const next = target.is_blocked ? 0 : 1;
   const { getDb } = await import("@/lib/db");
   getDb().prepare("UPDATE users SET is_blocked = ? WHERE id = ?").run(next, userId);
@@ -317,11 +317,11 @@ export async function adminAddCategoryAction(
   await requireAdmin();
   const name = String(formData.get("name") ?? "").trim();
   const description = String(formData.get("description") ?? "").trim();
-  if (name.length < 2) return { error: "Category name is too short." };
+  if (name.length < 2) return { error: "Название категории слишком короткое." };
   const slug = slugify(name);
-  if (!slug) return { error: "Enter a valid category name." };
+  if (!slug) return { error: "Введите корректное название категории." };
   if (queryOne("SELECT 1 FROM categories WHERE slug = ?", slug)) {
-    return { error: "That category already exists." };
+    return { error: "Такая категория уже существует." };
   }
   const { getDb } = await import("@/lib/db");
   getDb()
@@ -331,7 +331,7 @@ export async function adminAddCategoryAction(
     .run(slug, name, description || null);
   revalidatePath("/admin/categories");
   revalidatePath("/discover");
-  return { success: `Category "${name}" added.` };
+  return { success: `Категория «${name}» добавлена.` };
 }
 
 export async function adminToggleCategoryAction(

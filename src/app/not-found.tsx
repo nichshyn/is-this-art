@@ -7,20 +7,20 @@ export default function NotFound() {
     <div className="container-narrow flex min-h-[70vh] flex-col items-center justify-center py-20 text-center">
       <p className="eyebrow">404</p>
       <h1 className="display mt-5 text-[clamp(3rem,9vw,6rem)] leading-[0.9]">
-        Not art.
+        Не искусство.
         <br />
-        Not here.
+        Не найдено.
       </h1>
       <p className="mt-6 max-w-md text-[15px] leading-relaxed text-muted">
-        The page you are looking for may have been moved, rejected by a moderator,
-        or never existed in the first place.
+        Возможно, страница была перемещена, отклонена модератором или никогда не
+        существовала.
       </p>
       <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
         <Link href="/" className={buttonClasses({ variant: "primary" })}>
-          Back home
+          На главную
         </Link>
         <Link href="/discover" className={buttonClasses({ variant: "secondary" })}>
-          Browse the gallery
+          Открыть галерею
         </Link>
       </div>
     </div>

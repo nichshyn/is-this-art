@@ -32,7 +32,7 @@ import {
   getUserById,
   hasVoted,
 } from "@/lib/queries";
-import { absoluteUrl, formatNumber, truncate } from "@/lib/utils";
+import { absoluteUrl, plural, truncate } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -43,8 +43,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const artwork = getArtworkBySlug(slug);
-  if (!artwork) return { title: "Artwork not found" };
-  const artist = artwork.is_anonymous ? "Anonymous" : artwork.artist_name;
+  if (!artwork) return { title: "Работа не найдена" };
+  const artist = artwork.is_anonymous ? "Анонимно" : artwork.artist_name;
   return {
     title: `${artwork.title} — ${artist}`,
     description: truncate(artwork.description, 170),
@@ -78,7 +78,7 @@ export default async function ArtworkPage({
   const like = getLikeState(artwork.id, user?.id ?? null);
   const submitter = artwork.submitted_by ? getUserById(artwork.submitted_by) : null;
   const category = CATEGORY_MAP[artwork.category];
-  const displayArtist = artwork.is_anonymous ? "Anonymous" : artwork.artist_name;
+  const displayArtist = artwork.is_anonymous ? "Анонимно" : artwork.artist_name;
   const showSubmitter = submitter && !artwork.is_anonymous;
 
   const jsonLd = {
@@ -109,7 +109,7 @@ export default async function ArtworkPage({
           className="inline-flex items-center gap-1.5 text-[11.5px] text-muted transition-colors hover:text-ink"
         >
           <ArrowLeft size={13} />
-          Discover
+          Обзор
         </Link>
         <div className="flex items-center gap-4">
           <ShareButton title={artwork.title} />
@@ -122,7 +122,7 @@ export default async function ArtworkPage({
           <div className="relative flex min-h-[38vh] items-center justify-center overflow-hidden rounded-3xl border border-line bg-subtle p-3 sm:min-h-[46vh] sm:p-8">
             <ArtworkImage
               src={artwork.image_url}
-              alt={`${artwork.title} by ${displayArtist}`}
+              alt={`${artwork.title} — ${displayArtist}`}
               width={artwork.image_width}
               height={artwork.image_height}
               priority
@@ -132,9 +132,9 @@ export default async function ArtworkPage({
           </div>
           <div className="mt-3 flex flex-wrap items-start justify-between gap-2 text-[10px] leading-relaxed text-muted">
             <span className="max-w-[70%]">
-              Image: {artwork.image_credit ?? "Demo content created for IS THIS ART?"}
+              Изображение: {artwork.image_credit ?? "Демо-материал, созданный для IS THIS ART?"}
             </span>
-            <span>{artwork.image_license ?? "Demo content"}</span>
+            <span>{artwork.image_license ?? "Демо-материал"}</span>
           </div>
           {artwork.image_source_url && (
             <a
@@ -143,7 +143,7 @@ export default async function ArtworkPage({
               rel="noreferrer noopener"
               className="mt-1 inline-flex items-center gap-1 text-[10px] text-muted underline underline-offset-2 hover:text-ink"
             >
-              View source and licence <ExternalLink size={9} />
+              Открыть источник и лицензию <ExternalLink size={9} />
             </a>
           )}
         </div>
@@ -160,18 +160,18 @@ export default async function ArtworkPage({
             )}
             {artwork.is_demo === 1 && (
               <span className="rounded-full bg-subtle px-2.5 py-1 text-[10px] uppercase tracking-[0.12em] text-muted">
-                Demo content
+                Демо-материал
               </span>
             )}
             {artwork.is_ai_generated === 1 && (
               <span className="rounded-full bg-subtle px-2.5 py-1 text-[10px] uppercase tracking-[0.12em] text-muted">
-                AI-generated
+                Создано с помощью ИИ
               </span>
             )}
             {artwork.is_verified === 1 && artwork.is_demo !== 1 && (
               <span className="inline-flex items-center gap-1 rounded-full bg-subtle px-2.5 py-1 text-[10px] uppercase tracking-[0.12em] text-muted">
                 <BadgeCheck size={11} />
-                Verified source
+                Проверенный источник
               </span>
             )}
           </div>
@@ -189,9 +189,9 @@ export default async function ArtworkPage({
 
           <div className="mt-7 rounded-2xl border border-line bg-surface p-5">
             <div className="flex items-baseline justify-between gap-3">
-              <p className="text-[12px] font-medium">What the world thinks</p>
+              <p className="text-[12px] font-medium">Что думают другие</p>
               <p className="text-[11px] tabular-nums text-muted">
-                {formatNumber(artwork.vote_count)} judgments
+                {plural(artwork.vote_count, "суждение", "суждения", "суждений")}
               </p>
             </div>
             {artwork.vote_count > 0 ? (
@@ -210,7 +210,7 @@ export default async function ArtworkPage({
               />
             ) : (
               <p className="mt-3 text-[12.5px] text-muted">
-                No judgments yet. Be the first to answer.
+                Суждений пока нет. Станьте первым, кто ответит.
               </p>
             )}
 
@@ -218,14 +218,14 @@ export default async function ArtworkPage({
               {user && voteType ? (
                 <span className="inline-flex items-center gap-2 text-[12px] text-muted">
                   <Info size={13} />
-                  You said <span className="font-medium text-ink">{VOTE_SHORT[voteType].toLowerCase()}</span>
+                  Вы ответили: <span className="font-medium text-ink">{VOTE_SHORT[voteType].toLowerCase()}</span>
                 </span>
               ) : (
                 <Link
                   href={`/play?artwork=${artwork.slug}`}
                   className={buttonClasses({ size: "sm" })}
                 >
-                  Make your judgment
+                  Выскажите своё суждение
                   <ArrowRight size={14} />
                 </Link>
               )}
@@ -241,7 +241,7 @@ export default async function ArtworkPage({
           {artwork.history && (
             <div className="mt-7 border-t border-line pt-5">
               <h2 className="text-[11px] font-medium uppercase tracking-[0.16em] text-muted">
-                The story
+                История
               </h2>
               <p className="mt-3 text-[13.5px] leading-[1.8] text-ink/80">{artwork.history}</p>
             </div>
@@ -249,7 +249,7 @@ export default async function ArtworkPage({
 
           {artwork.fun_fact && (
             <div className="mt-6 rounded-2xl bg-subtle p-5">
-              <p className="eyebrow">Interesting fact</p>
+              <p className="eyebrow">Любопытный факт</p>
               <p className="mt-2 text-[13px] leading-relaxed text-ink/80">{artwork.fun_fact}</p>
             </div>
           )}
@@ -257,19 +257,19 @@ export default async function ArtworkPage({
           <dl className="mt-7 grid grid-cols-2 gap-x-5 gap-y-4 border-t border-line pt-5 text-[12px]">
             {artwork.creation_year && (
               <div>
-                <dt className="text-[10px] uppercase tracking-[0.12em] text-muted">Year</dt>
+                <dt className="text-[10px] uppercase tracking-[0.12em] text-muted">Год</dt>
                 <dd className="mt-1">{artwork.creation_year}</dd>
               </div>
             )}
             {artwork.country && (
               <div>
-                <dt className="text-[10px] uppercase tracking-[0.12em] text-muted">Country</dt>
+                <dt className="text-[10px] uppercase tracking-[0.12em] text-muted">Страна</dt>
                 <dd className="mt-1">{artwork.country}</dd>
               </div>
             )}
             {artwork.location && (
               <div className="col-span-2">
-                <dt className="text-[10px] uppercase tracking-[0.12em] text-muted">Location</dt>
+                <dt className="text-[10px] uppercase tracking-[0.12em] text-muted">Местоположение</dt>
                 <dd className="mt-1 inline-flex items-center gap-1.5">
                   <MapPin size={11} className="text-muted" />
                   {artwork.location}
@@ -282,20 +282,20 @@ export default async function ArtworkPage({
             <div className="mt-7 flex items-center gap-3 rounded-2xl border border-line p-3">
               <Avatar name={submitter.username} src={submitter.avatar_url} size="sm" />
               <div className="min-w-0 flex-1">
-                <p className="text-[10px] uppercase tracking-[0.12em] text-muted">Submitted by</p>
+                <p className="text-[10px] uppercase tracking-[0.12em] text-muted">Кто предложил</p>
                 <Link href={`/u/${submitter.username}`} className="text-[12.5px] font-medium hover:underline">
                   @{submitter.username}
                 </Link>
               </div>
               <Link href={`/u/${submitter.username}`} className="text-[11px] text-muted hover:text-ink">
-                Profile
+                Профиль
               </Link>
             </div>
           )}
 
           <p className="mt-6 text-[10px] leading-relaxed text-muted">
-            This platform records opinions, not facts about quality. Percentages
-            reflect the votes of everyone who has judged this work.
+            Эта платформа фиксирует мнения, а не факты о качестве. Проценты отражают
+            голоса всех, кто оценил эту работу.
           </p>
         </div>
       </div>
@@ -311,10 +311,10 @@ export default async function ArtworkPage({
       {similar.length > 0 && (
         <section className="mt-20">
           <SectionHeading
-            eyebrow="Keep looking"
-            title="Similar works"
+            eyebrow="Продолжайте смотреть"
+            title="Похожие работы"
             href={`/discover?category=${artwork.category}`}
-            linkLabel={category?.name ?? "More"}
+            linkLabel={category?.name ?? "Ещё"}
           />
           <div className="mt-8 grid grid-cols-1 gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
             {similar.map((item, index) => (

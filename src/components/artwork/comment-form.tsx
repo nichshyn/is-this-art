@@ -24,22 +24,22 @@ export function CommentForm({
   if (!signedIn) {
     return (
       <div className="rounded-2xl border border-line bg-subtle p-5">
-        <p className="text-[13px] font-medium">Join the conversation</p>
+        <p className="text-[13px] font-medium">Присоединитесь к обсуждению</p>
         <p className="mt-1 text-[12px] leading-relaxed text-muted">
-          Sign in to leave a comment. Votes are always anonymous; comments are not.
+          Войдите, чтобы оставить комментарий. Голоса всегда анонимны, комментарии — нет.
         </p>
         <div className="mt-3 flex gap-2">
           <a
             href="/login"
             className="inline-flex h-9 items-center rounded-full bg-accent px-4 text-[12.5px] font-medium text-accent-ink"
           >
-            Sign in
+            Войти
           </a>
           <a
             href="/signup"
             className="inline-flex h-9 items-center rounded-full border border-line bg-surface px-4 text-[12.5px] font-medium"
           >
-            Create account
+            Создать аккаунт
           </a>
         </div>
       </div>
@@ -54,17 +54,17 @@ export function CommentForm({
         required
         minLength={2}
         maxLength={LIMITS.commentLength}
-        placeholder="What do you see?"
+        placeholder="Что вы видите?"
         className="field-area min-h-[104px]"
-        aria-label="Your comment"
+        aria-label="Ваш комментарий"
       />
       <div className="flex items-center justify-between gap-3">
         <p className="text-[10.5px] text-muted">
-          Be curious, not cruel. Comments are public.
+          Будьте любопытны, а не жестоки. Комментарии видны всем.
         </p>
         <Button type="submit" size="sm" disabled={pending}>
           {pending ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}
-          {pending ? "Posting" : "Post"}
+          {pending ? "Отправляем" : "Отправить"}
         </Button>
       </div>
       {state.error && <p className="text-[12px] text-red-500">{state.error}</p>}

@@ -7,6 +7,12 @@ import { getArtworkById, listAllCategories } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
 
+const STATUS_LABELS: Record<string, string> = {
+  approved: "одобрена",
+  pending: "на рассмотрении",
+  rejected: "отклонена",
+};
+
 export default async function AdminEditArtworkPage({
   params,
 }: {
@@ -24,7 +30,7 @@ export default async function AdminEditArtworkPage({
           href="/admin/artworks"
           className="inline-flex items-center gap-1.5 text-[11.5px] text-muted hover:text-ink"
         >
-          <ArrowLeft size={13} /> Catalog
+          <ArrowLeft size={13} /> Каталог
         </Link>
         <div className="flex items-center gap-3">
           {artwork.status === "approved" && (
@@ -32,17 +38,17 @@ export default async function AdminEditArtworkPage({
               href={`/artwork/${artwork.slug}`}
               className="inline-flex items-center gap-1 text-[11px] text-muted hover:text-ink"
             >
-              View public page <ExternalLink size={10} />
+              Открыть публичную страницу <ExternalLink size={10} />
             </Link>
           )}
           <span className="text-[11px] text-muted">
-            {artwork.vote_count} votes · {artwork.status}
+            {artwork.vote_count} голосов · {STATUS_LABELS[artwork.status] ?? artwork.status}
           </span>
         </div>
       </div>
       <div className="card p-5 sm:p-7">
-        <h2 className="text-[16px] font-medium tracking-tight">Edit artwork</h2>
-        <p className="mt-1 text-[12px] text-muted">Changes are public immediately.</p>
+        <h2 className="text-[16px] font-medium tracking-tight">Изменить работу</h2>
+        <p className="mt-1 text-[12px] text-muted">Изменения сразу появляются на сайте.</p>
         <div className="mt-7">
           <AdminArtworkForm
             artwork={artwork}

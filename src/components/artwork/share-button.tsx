@@ -28,7 +28,7 @@ export function ShareButton({ title }: { title: string }) {
       className="inline-flex items-center gap-1.5 text-[11px] text-muted transition-colors hover:text-ink"
     >
       {copied ? <Check size={12} /> : <Share2 size={12} />}
-      {copied ? "Link copied" : "Share"}
+      {copied ? "Ссылка скопирована" : "Поделиться"}
     </button>
   );
 }

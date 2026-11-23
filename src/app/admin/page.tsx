@@ -20,7 +20,7 @@ import {
   listPendingArtworks,
   listReports,
 } from "@/lib/queries";
-import { formatNumber, timeAgo } from "@/lib/utils";
+import { formatNumber, plural, timeAgo } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -37,27 +37,27 @@ export default function AdminDashboardPage() {
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         {[
           {
-            label: "Pending review",
+            label: "На проверке",
             value: stats.pending,
             href: "/admin/moderation",
             icon: <ShieldAlert size={16} />,
             highlight: stats.pending > 0,
           },
           {
-            label: "Open reports",
+            label: "Открытые жалобы",
             value: stats.reports,
             href: "/admin/reports",
             icon: <Flag size={16} />,
             highlight: stats.reports > 0,
           },
           {
-            label: "Approved works",
+            label: "Одобренные работы",
             value: stats.approved,
             href: "/admin/artworks",
             icon: <Images size={16} />,
           },
           {
-            label: "Members",
+            label: "Участники",
             value: stats.users,
             href: "/admin/users",
             icon: <Users size={16} />,
@@ -86,10 +86,10 @@ export default function AdminDashboardPage() {
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {[
-          ["Total judgments", stats.votes],
-          ["Comments", stats.comments],
-          ["All artworks", stats.artworks],
-          ["Blocked users", stats.blocked],
+          ["Всего голосов", stats.votes],
+          ["Комментарии", stats.comments],
+          ["Все работы", stats.artworks],
+          ["Заблокированные пользователи", stats.blocked],
         ].map(([label, value]) => (
           <div key={String(label)} className="rounded-xl border border-line px-4 py-3">
             <p className="text-[16px] font-semibold tabular-nums">{formatNumber(Number(value))}</p>
@@ -102,20 +102,20 @@ export default function AdminDashboardPage() {
         <section className="rounded-2xl border border-line bg-surface">
           <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-4">
             <div>
-              <h2 className="text-[13.5px] font-medium">Moderation queue</h2>
+              <h2 className="text-[13.5px] font-medium">Очередь модерации</h2>
               <p className="mt-0.5 text-[10.5px] text-muted">
-                Oldest submissions first
+                Сначала самые старые работы
               </p>
             </div>
             <Link href="/admin/moderation" className="text-[11px] text-muted hover:text-ink">
-              View all
+              Смотреть все
             </Link>
           </div>
           {pending.length === 0 ? (
             <div className="px-5 py-12 text-center">
               <Sparkles size={20} className="mx-auto text-muted" />
-              <p className="mt-3 text-[12.5px] font-medium">The queue is clear.</p>
-              <p className="mt-1 text-[11px] text-muted">New uploads will appear here.</p>
+              <p className="mt-3 text-[12.5px] font-medium">Очередь пуста.</p>
+              <p className="mt-1 text-[11px] text-muted">Здесь появятся новые работы.</p>
             </div>
           ) : (
             <ul className="divide-y divide-line">
@@ -127,7 +127,7 @@ export default function AdminDashboardPage() {
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-[12px] font-medium">{artwork.title}</p>
                     <p className="truncate text-[10.5px] text-muted">
-                      {artwork.submitter ? `@${artwork.submitter}` : "Seed content"} ·{" "}
+                      {artwork.submitter ? `@${artwork.submitter}` : "Демо-контент"} ·{" "}
                       {timeAgo(artwork.created_at)}
                     </p>
                   </div>
@@ -135,7 +135,7 @@ export default function AdminDashboardPage() {
                     href="/admin/moderation"
                     className="shrink-0 text-[10.5px] text-muted hover:text-ink"
                   >
-                    Review
+                    Проверить
                   </Link>
                 </li>
               ))}
@@ -146,18 +146,18 @@ export default function AdminDashboardPage() {
         <section className="rounded-2xl border border-line bg-surface">
           <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-4">
             <div>
-              <h2 className="text-[13.5px] font-medium">Open reports</h2>
-              <p className="mt-0.5 text-[10.5px] text-muted">Community flags awaiting a decision</p>
+              <h2 className="text-[13.5px] font-medium">Открытые жалобы</h2>
+              <p className="mt-0.5 text-[10.5px] text-muted">Жалобы от сообщества, ожидающие решения</p>
             </div>
             <Link href="/admin/reports" className="text-[11px] text-muted hover:text-ink">
-              View all
+              Смотреть все
             </Link>
           </div>
           {reports.length === 0 ? (
             <div className="px-5 py-12 text-center">
               <ShieldAlert size={20} className="mx-auto text-muted" />
-              <p className="mt-3 text-[12.5px] font-medium">No open reports.</p>
-              <p className="mt-1 text-[11px] text-muted">A quiet queue is a good queue.</p>
+              <p className="mt-3 text-[12.5px] font-medium">Открытых жалоб нет.</p>
+              <p className="mt-1 text-[11px] text-muted">Значит, всё спокойно.</p>
             </div>
           ) : (
             <ul className="divide-y divide-line">
@@ -184,11 +184,11 @@ export default function AdminDashboardPage() {
       <section className="rounded-2xl border border-line bg-surface">
         <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-4">
           <div>
-            <h2 className="text-[13.5px] font-medium">Recently added</h2>
-            <p className="mt-0.5 text-[10.5px] text-muted">Latest catalog entries</p>
+            <h2 className="text-[13.5px] font-medium">Недавно добавленные</h2>
+            <p className="mt-0.5 text-[10.5px] text-muted">Последние поступления в каталог</p>
           </div>
           <Link href="/admin/artworks" className="text-[11px] text-muted hover:text-ink">
-            Manage artworks
+            Управление работами
           </Link>
         </div>
         <ul className="divide-y divide-line">
@@ -204,14 +204,14 @@ export default function AdminDashboardPage() {
                 </p>
               </div>
               <span className="hidden text-[10px] text-muted sm:block">
-                {formatNumber(artwork.vote_count)} votes
+                {plural(artwork.vote_count, "голос", "голоса", "голосов")}
               </span>
               <Status status={artwork.status} />
               <Link
                 href={`/admin/artworks/${artwork.id}/edit`}
                 className="shrink-0 text-[10.5px] text-muted hover:text-ink"
               >
-                Edit
+                Изменить
               </Link>
             </li>
           ))}
@@ -220,16 +220,16 @@ export default function AdminDashboardPage() {
 
       <div className="flex flex-wrap gap-2">
         <Link href="/admin/artworks/new" className={buttonClasses({ size: "sm" })}>
-          Add an artwork <ArrowRight size={14} />
+          Добавить работу <ArrowRight size={14} />
         </Link>
         <Link href="/admin/moderation" className={buttonClasses({ variant: "secondary", size: "sm" })}>
-          <ShieldAlert size={13} /> Open queue
+          <ShieldAlert size={13} /> Открыть очередь
         </Link>
         <Link href="/admin/users" className={buttonClasses({ variant: "ghost", size: "sm" })}>
-          <UserRoundX size={13} /> Manage members
+          <UserRoundX size={13} /> Управление участниками
         </Link>
         <Link href="/community" className={buttonClasses({ variant: "ghost", size: "sm" })}>
-          <MessageSquare size={13} /> View community
+          <MessageSquare size={13} /> Сообщество
         </Link>
       </div>
     </div>
@@ -243,9 +243,14 @@ function Status({ status }: { status: string }) {
       : status === "pending"
         ? "bg-amber-500/10 text-amber-700 dark:text-amber-400"
         : "bg-red-500/10 text-red-600 dark:text-red-400";
+  const labels: Record<string, string> = {
+    approved: "одобрена",
+    pending: "на рассмотрении",
+    rejected: "отклонена",
+  };
   return (
     <span className={`shrink-0 rounded-full px-2 py-0.5 text-[9px] uppercase tracking-[0.1em] ${tone}`}>
-      {status}
+      {labels[status] ?? status}
     </span>
   );
 }

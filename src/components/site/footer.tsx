@@ -5,29 +5,29 @@ import { ThemeToggle } from "./theme-toggle";
 
 const columns = [
   {
-    title: "Explore",
+    title: "Обзор",
     links: [
-      { href: "/discover", label: "Artworks" },
-      { href: "/play", label: "Play" },
-      { href: "/challenge", label: "Daily challenge" },
-      { href: "/leaderboard", label: "Leaderboard" },
+      { href: "/discover", label: "Работы" },
+      { href: "/play", label: "Игра" },
+      { href: "/challenge", label: "Задание дня" },
+      { href: "/leaderboard", label: "Лидеры" },
     ],
   },
   {
-    title: "Community",
+    title: "Сообщество",
     links: [
-      { href: "/community", label: "Community" },
-      { href: "/submit", label: "Submit artwork" },
-      { href: "/signup", label: "Create account" },
-      { href: "/login", label: "Sign in" },
+      { href: "/community", label: "Сообщество" },
+      { href: "/submit", label: "Предложить работу" },
+      { href: "/signup", label: "Создать аккаунт" },
+      { href: "/login", label: "Войти" },
     ],
   },
   {
-    title: "About",
+    title: "О проекте",
     links: [
-      { href: "/about", label: "The experiment" },
-      { href: "/credits", label: "Image credits" },
-      { href: "/privacy", label: "Privacy & terms" },
+      { href: "/about", label: "Эксперимент" },
+      { href: "/credits", label: "Источники изображений" },
+      { href: "/privacy", label: "Конфиденциальность и условия" },
     ],
   },
 ];
@@ -40,12 +40,12 @@ export function Footer() {
           <div className="max-w-xs">
             <Logo />
             <p className="mt-4 text-[13px] leading-relaxed text-muted">
-              A social experiment about taste. Look closely, make a judgment, and
-              discover what everyone else sees.
+              Социальный эксперимент о вкусе. Присмотритесь, оцените и узнайте,
+              что видят другие.
             </p>
             <div className="mt-5 flex items-center gap-2">
               <ThemeToggle />
-              <span className="text-[11px] text-muted">Light / dark</span>
+              <span className="text-[11px] text-muted">Светлая / тёмная</span>
             </div>
           </div>
           {columns.map((column) => (
@@ -70,11 +70,11 @@ export function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col gap-3 border-t border-line pt-6 text-[11.5px] text-muted sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} IS THIS ART? A demonstration project.</p>
+          <p>© {new Date().getFullYear()} IS THIS ART? Демонстрационный проект.</p>
           <p className="max-w-xl text-pretty">
-            Historical images are public domain or CC0, sourced from Wikimedia
-            Commons. Works marked “Demo” were created for this project. This site
-            does not claim to define what art is.
+            Исторические изображения — общественное достояние или CC0 из Wikimedia
+            Commons. Работы с пометкой «Демо» созданы для этого проекта. Сайт не
+            претендует на то, чтобы определять, что такое искусство.
           </p>
         </div>
       </div>

@@ -12,7 +12,7 @@ export function Logo({
   return (
     <Link
       href="/"
-      aria-label="IS THIS ART? home"
+      aria-label="IS THIS ART? — главная"
       className={cn("group inline-flex items-center gap-2.5", className)}
     >
       <span className="relative flex h-7 w-7 shrink-0 items-center justify-center rounded-[8px] bg-accent text-accent-ink transition-transform duration-500 group-hover:rotate-6">

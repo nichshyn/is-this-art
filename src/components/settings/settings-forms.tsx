@@ -47,9 +47,9 @@ export function ProfileForm({
       <div>
         <div className="mb-2 flex items-baseline justify-between gap-3">
           <label htmlFor="bio" className="text-[12px] font-medium">
-            Bio
+            О себе
           </label>
-          <span className="text-[10px] text-muted">Up to {LIMITS.bioLength} characters</span>
+          <span className="text-[10px] text-muted">Не более {LIMITS.bioLength} символов</span>
         </div>
         <textarea
           id="bio"
@@ -57,16 +57,16 @@ export function ProfileForm({
           defaultValue={bio ?? ""}
           maxLength={LIMITS.bioLength}
           rows={3}
-          placeholder="A sentence about how you look."
+          placeholder="Пара слов о том, как вы смотрите."
           className="field-area"
         />
       </div>
       <div>
         <div className="mb-2 flex items-baseline justify-between gap-3">
           <label htmlFor="avatarUrl" className="text-[12px] font-medium">
-            Avatar image URL
+            Ссылка на изображение аватара
           </label>
-          <span className="text-[10px] text-muted">Optional · https only</span>
+          <span className="text-[10px] text-muted">Необязательно · только https</span>
         </div>
         <input
           id="avatarUrl"
@@ -80,7 +80,7 @@ export function ProfileForm({
       <Message state={state} />
       <button type="submit" disabled={pending} className={buttonClasses({ size: "md" })}>
         {pending && <Loader2 size={14} className="animate-spin" />}
-        Save profile
+        Сохранить профиль
       </button>
     </form>
   );
@@ -93,7 +93,7 @@ export function PasswordForm() {
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="currentPassword" className="mb-2 block text-[12px] font-medium">
-            Current password
+            Текущий пароль
           </label>
           <input
             id="currentPassword"
@@ -106,7 +106,7 @@ export function PasswordForm() {
         </div>
         <div>
           <label htmlFor="newPassword" className="mb-2 block text-[12px] font-medium">
-            New password
+            Новый пароль
           </label>
           <input
             id="newPassword"
@@ -122,7 +122,7 @@ export function PasswordForm() {
       <Message state={state} />
       <button type="submit" disabled={pending} className={buttonClasses({ variant: "secondary", size: "md" })}>
         {pending && <Loader2 size={14} className="animate-spin" />}
-        Change password
+        Изменить пароль
       </button>
     </form>
   );
@@ -135,7 +135,7 @@ export function DeleteAccountForm() {
       onSubmit={(event) => {
         if (
           !window.confirm(
-            "Delete your account? Your votes, comments and submissions will be removed. This cannot be undone.",
+            "Удалить аккаунт? Ваши голоса, комментарии и предложенные работы будут удалены. Это действие нельзя отменить.",
           )
         ) {
           event.preventDefault();
@@ -143,7 +143,7 @@ export function DeleteAccountForm() {
       }}
     >
       <button type="submit" className={buttonClasses({ variant: "danger", size: "sm" })}>
-        Delete my account
+        Удалить мой аккаунт
       </button>
     </form>
   );

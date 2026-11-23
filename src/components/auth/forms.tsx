@@ -36,7 +36,7 @@ function Submit({ pending, children }: { pending: boolean; children: React.React
       className={buttonClasses({ size: "lg", className: "w-full" })}
     >
       {pending ? <Loader2 size={16} className="animate-spin" /> : null}
-      {pending ? "One moment…" : children}
+      {pending ? "Один момент…" : children}
     </button>
   );
 }
@@ -55,7 +55,7 @@ export function LoginForm({ next = "/play" }: { next?: string }) {
     <form action={action} className="space-y-4">
       <input type="hidden" name="next" value={next} />
       <div>
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">Электронная почта</Label>
         <div className="relative">
           <Mail size={15} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-muted" />
           <input
@@ -71,9 +71,9 @@ export function LoginForm({ next = "/play" }: { next?: string }) {
       </div>
       <div>
         <div className="mb-1.5 flex items-baseline justify-between gap-3">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">Пароль</Label>
           <Link href="/forgot-password" className="text-[11px] text-muted hover:text-ink">
-            Forgot password?
+            Забыли пароль?
           </Link>
         </div>
         <div className="relative">
@@ -84,15 +84,15 @@ export function LoginForm({ next = "/play" }: { next?: string }) {
             type="password"
             autoComplete="current-password"
             required
-            placeholder="Your password"
+            placeholder="Ваш пароль"
             className="field pl-10"
           />
         </div>
       </div>
       <ErrorMessage message={state.error} />
-      <Submit pending={pending}>Sign in</Submit>
+      <Submit pending={pending}>Войти</Submit>
       <div className="rounded-xl border border-line bg-subtle/60 px-3.5 py-2.5 text-[11px] leading-relaxed text-muted">
-        <span className="font-medium text-ink">Demo account:</span>{" "}
+        <span className="font-medium text-ink">Демо-аккаунт:</span>{" "}
         demo@isart.local · demo1234
       </div>
     </form>
@@ -104,7 +104,7 @@ export function SignupForm() {
   return (
     <form action={action} className="space-y-4">
       <div>
-        <Label htmlFor="username">Username</Label>
+        <Label htmlFor="username">Имя пользователя</Label>
         <div className="relative">
           <User size={15} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-muted" />
           <input
@@ -115,16 +115,16 @@ export function SignupForm() {
             minLength={3}
             maxLength={24}
             pattern="[A-Za-z0-9_]+"
-            placeholder="How the room will know you"
+            placeholder="Как вас будут называть в зале"
             className="field pl-10"
           />
         </div>
         <p className="mt-1.5 text-[10.5px] text-muted">
-          3–24 characters. Letters, numbers and underscores.
+          От 3 до 24 символов. Буквы, цифры и подчёркивания.
         </p>
       </div>
       <div>
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">Электронная почта</Label>
         <div className="relative">
           <Mail size={15} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-muted" />
           <input
@@ -139,7 +139,7 @@ export function SignupForm() {
         </div>
       </div>
       <div>
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password">Пароль</Label>
         <div className="relative">
           <Lock size={15} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-muted" />
           <input
@@ -149,21 +149,21 @@ export function SignupForm() {
             autoComplete="new-password"
             required
             minLength={8}
-            placeholder="At least 8 characters"
+            placeholder="Не менее 8 символов"
             className="field pl-10"
           />
         </div>
       </div>
       <ErrorMessage message={state.error} />
       <Submit pending={pending}>
-        Create account <ArrowRight size={15} />
+        Создать аккаунт <ArrowRight size={15} />
       </Submit>
       <p className="text-[10.5px] leading-relaxed text-muted">
-        By creating an account you agree to the{" "}
+        Создавая аккаунт, вы соглашаетесь с{" "}
         <Link href="/privacy" className="underline underline-offset-2 hover:text-ink">
-          privacy note and terms
+          политикой конфиденциальности и условиями
         </Link>
-        . You can delete your account at any time.
+        . Вы можете удалить аккаунт в любой момент.
       </p>
     </form>
   );
@@ -179,14 +179,14 @@ export function ForgotForm() {
             <Check size={15} />
           </span>
           <div>
-            <p className="text-[13px] font-medium">Check your inbox</p>
+            <p className="text-[13px] font-medium">Проверьте почту</p>
             <p className="mt-1 text-[12px] leading-relaxed text-muted">{state.success}</p>
           </div>
         </div>
         {state.devLink && (
           <div className="rounded-xl border border-dashed border-line p-3.5 text-[11.5px] leading-relaxed text-muted">
-            <p className="font-medium text-ink">Development mode</p>
-            <p className="mt-1">No email is sent locally. Use this link to reset:</p>
+            <p className="font-medium text-ink">Режим разработки</p>
+            <p className="mt-1">Локально письма не отправляются. Для сброса используйте эту ссылку:</p>
             <Link
               href={state.devLink}
               className="mt-2 inline-block break-all text-ink underline underline-offset-2"
@@ -196,7 +196,7 @@ export function ForgotForm() {
           </div>
         )}
         <Link href="/login" className={buttonClasses({ variant: "secondary", size: "lg", className: "w-full" })}>
-          Back to sign in
+          Вернуться ко входу
         </Link>
       </div>
     );
@@ -205,7 +205,7 @@ export function ForgotForm() {
   return (
     <form action={action} className="space-y-4">
       <div>
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">Электронная почта</Label>
         <div className="relative">
           <Mail size={15} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-muted" />
           <input
@@ -220,7 +220,7 @@ export function ForgotForm() {
         </div>
       </div>
       <ErrorMessage message={state.error} />
-      <Submit pending={pending}>Send reset link</Submit>
+      <Submit pending={pending}>Отправить ссылку для сброса</Submit>
     </form>
   );
 }
@@ -231,7 +231,7 @@ export function ResetForm({ token }: { token: string }) {
     <form action={action} className="space-y-4">
       <input type="hidden" name="token" value={token} />
       <div>
-        <Label htmlFor="password">New password</Label>
+        <Label htmlFor="password">Новый пароль</Label>
         <div className="relative">
           <Lock size={15} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-muted" />
           <input
@@ -241,13 +241,13 @@ export function ResetForm({ token }: { token: string }) {
             autoComplete="new-password"
             required
             minLength={8}
-            placeholder="At least 8 characters"
+            placeholder="Не менее 8 символов"
             className="field pl-10"
           />
         </div>
       </div>
       <ErrorMessage message={state.error} />
-      <Submit pending={pending}>Set new password</Submit>
+      <Submit pending={pending}>Установить новый пароль</Submit>
     </form>
   );
 }

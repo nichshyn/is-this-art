@@ -15,8 +15,8 @@ import { formatDate, formatNumber } from "@/lib/utils";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Settings",
-  description: "Manage your profile, password and account.",
+  title: "Настройки",
+  description: "Управляйте профилем, паролем и аккаунтом.",
   alternates: { canonical: "/settings" },
   robots: { index: false, follow: false },
 };
@@ -35,26 +35,27 @@ export default async function SettingsPage({
     <div className="container-page py-10 sm:py-14">
       <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="eyebrow">Account</p>
+          <p className="eyebrow">Аккаунт</p>
           <h1 className="display mt-4 text-[clamp(2.3rem,5vw,4rem)] leading-[0.94]">
-            Settings
+            Настройки
           </h1>
           <p className="mt-3 max-w-lg text-[13px] leading-relaxed text-muted">
-            Your profile is public. Your email is not. Points and streaks are kept
-            server-side and cannot be edited.
+            Ваш профиль общедоступен, адрес электронной почты — нет. Очки и серии
+            дней хранятся на сервере и не подлежат изменению.
           </p>
         </div>
         <Link
           href={`/u/${user.username}`}
           className="inline-flex items-center gap-1.5 text-[12px] font-medium text-ink"
         >
-          View public profile <ArrowUpRight size={14} />
+          Открыть публичный профиль <ArrowUpRight size={14} />
         </Link>
       </div>
 
       {params.error === "admin-account" && (
         <p className="mt-6 rounded-xl border border-amber-500/20 bg-amber-500/5 px-4 py-3 text-[12px] text-amber-700 dark:text-amber-400">
-          Admin accounts cannot be deleted from this page. Transfer the role first.
+          Аккаунты администраторов нельзя удалить на этой странице. Сначала передайте
+          роль другому пользователю.
         </p>
       )}
 
@@ -70,10 +71,10 @@ export default async function SettingsPage({
             </div>
             <dl className="mt-5 grid grid-cols-2 gap-3 border-t border-line pt-4">
               {[
-                ["Points", formatNumber(user.points)],
-                ["Streak", `${user.streak}d`],
-                ["Judgments", formatNumber(stats.votes)],
-                ["Works", formatNumber(stats.works)],
+                ["Очки", formatNumber(user.points)],
+                ["Серия", `${user.streak} д.`],
+                ["Оценки", formatNumber(stats.votes)],
+                ["Работы", formatNumber(stats.works)],
               ].map(([label, value]) => (
                 <div key={label}>
                   <dd className="text-[16px] font-semibold tabular-nums">{value}</dd>
@@ -82,29 +83,29 @@ export default async function SettingsPage({
               ))}
             </dl>
             <p className="mt-4 border-t border-line pt-3 text-[10.5px] text-muted">
-              Joined {formatDate(user.created_at)} · {achievements.length} achievements
+              На сайте с {formatDate(user.created_at)} · {achievements.length} достижений
             </p>
           </div>
 
           <div className="rounded-2xl border border-line p-5">
             <p className="inline-flex items-center gap-1.5 text-[12px] font-medium">
-              <ShieldCheck size={14} /> Account & privacy
+              <ShieldCheck size={14} /> Аккаунт и конфиденциальность
             </p>
             <p className="mt-2 text-[11.5px] leading-relaxed text-muted">
-              Sessions are stored as hashed tokens in httpOnly cookies. Your password
-              is hashed with scrypt and never stored in plain text.
+              Сеансы хранятся как хешированные токены в cookie с флагом httpOnly. Пароль
+              хешируется с помощью scrypt и никогда не хранится в открытом виде.
             </p>
             <Link href="/privacy" className="mt-3 inline-block text-[11.5px] underline underline-offset-2 hover:text-ink">
-              Read the privacy note
+              Прочитать политику конфиденциальности
             </Link>
           </div>
         </aside>
 
         <div className="space-y-4">
           <section className="card p-5 sm:p-7">
-            <h2 className="text-[15px] font-medium tracking-tight">Public profile</h2>
+            <h2 className="text-[15px] font-medium tracking-tight">Публичный профиль</h2>
             <p className="mt-1 text-[11.5px] text-muted">
-              Shown on your profile and next to your comments.
+              Отображается в вашем профиле и рядом с вашими комментариями.
             </p>
             <div className="mt-6">
               <ProfileForm bio={user.bio} avatarUrl={user.avatar_url} />
@@ -112,9 +113,9 @@ export default async function SettingsPage({
           </section>
 
           <section className="card p-5 sm:p-7">
-            <h2 className="text-[15px] font-medium tracking-tight">Password</h2>
+            <h2 className="text-[15px] font-medium tracking-tight">Пароль</h2>
             <p className="mt-1 text-[11.5px] text-muted">
-              Changing your password keeps this session active.
+              После смены пароля текущий сеанс останется активным.
             </p>
             <div className="mt-6">
               <PasswordForm />
@@ -123,12 +124,12 @@ export default async function SettingsPage({
 
           <section className="rounded-2xl border border-red-500/20 bg-red-500/[0.03] p-5 sm:p-7">
             <h2 className="flex items-center gap-2 text-[15px] font-medium tracking-tight text-red-600 dark:text-red-400">
-              <Trash2 size={15} /> Danger zone
+              <Trash2 size={15} /> Опасная зона
             </h2>
             <p className="mt-2 max-w-xl text-[11.5px] leading-relaxed text-muted">
-              Deleting your account removes your votes, comments, likes, follows and
-              submissions. Approved works are removed from the gallery. This action
-              cannot be undone.
+              Удаление аккаунта удалит ваши голоса, комментарии, отметки «Нравится»,
+              подписки и предложенные работы. Одобренные работы будут убраны из
+              галереи. Это действие нельзя отменить.
             </p>
             <div className="mt-5">
               <DeleteAccountForm />

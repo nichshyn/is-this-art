@@ -11,6 +11,13 @@ export const dynamic = "force-dynamic";
 
 const FILTERS = ["all", "pending", "approved", "rejected"] as const;
 
+const FILTER_LABELS: Record<(typeof FILTERS)[number], string> = {
+  all: "все",
+  pending: "на рассмотрении",
+  approved: "одобренные",
+  rejected: "отклонённые",
+};
+
 export default async function AdminArtworksPage({
   searchParams,
 }: {
@@ -27,13 +34,13 @@ export default async function AdminArtworksPage({
     <div>
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h2 className="text-[16px] font-medium tracking-tight">Catalog</h2>
+          <h2 className="text-[16px] font-medium tracking-tight">Каталог</h2>
           <p className="mt-1 text-[12px] text-muted">
-            {formatNumber(all.length)} works in the database.
+            {formatNumber(all.length)} работ в базе.
           </p>
         </div>
         <Link href="/admin/artworks/new" className={buttonClasses({ size: "sm" })}>
-          <Plus size={14} /> New artwork
+          <Plus size={14} /> Новая работа
         </Link>
       </div>
 
@@ -50,7 +57,7 @@ export default async function AdminArtworksPage({
                 filter === status ? "bg-accent text-accent-ink" : "text-muted hover:bg-subtle hover:text-ink",
               )}
             >
-              {filter} <span className="opacity-60">{count}</span>
+              {FILTER_LABELS[filter]} <span className="opacity-60">{count}</span>
             </Link>
           );
         })}
@@ -59,16 +66,16 @@ export default async function AdminArtworksPage({
       <div className="mt-5 overflow-hidden rounded-2xl border border-line bg-surface">
         <div className="hidden grid-cols-[44px_minmax(0,1fr)_120px_90px_90px_130px] items-center gap-3 border-b border-line px-4 py-2.5 text-[9.5px] uppercase tracking-[0.12em] text-muted lg:grid">
           <span />
-          <span>Work</span>
-          <span>Category</span>
-          <span>Status</span>
-          <span className="text-right">Votes</span>
-          <span className="text-right">Actions</span>
+          <span>Работа</span>
+          <span>Категория</span>
+          <span>Статус</span>
+          <span className="text-right">Голоса</span>
+          <span className="text-right">Действия</span>
         </div>
         <ul className="divide-y divide-line">
           {rows.length === 0 && (
             <li className="px-4 py-14 text-center text-[12.5px] text-muted">
-              No artworks with this status.
+              Работ с таким статусом нет.
             </li>
           )}
           {rows.map((artwork) => (
@@ -104,14 +111,14 @@ export default async function AdminArtworksPage({
                     href={`/artwork/${artwork.slug}`}
                     className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-[10.5px] text-muted hover:bg-subtle hover:text-ink"
                   >
-                    View <ArrowUpRight size={10} />
+                    Открыть <ArrowUpRight size={10} />
                   </Link>
                 )}
                 <Link
                   href={`/admin/artworks/${artwork.id}/edit`}
                   className="rounded-full px-2 py-1 text-[10.5px] text-muted hover:bg-subtle hover:text-ink"
                 >
-                  Edit
+                  Изменить
                 </Link>
                 <DeleteArtworkButton artworkId={artwork.id} title={artwork.title} />
               </div>
@@ -130,6 +137,11 @@ function Status({ status, className }: { status: string; className?: string }) {
       : status === "pending"
         ? "bg-amber-500/10 text-amber-700 dark:text-amber-400"
         : "bg-red-500/10 text-red-600 dark:text-red-400";
+  const labels: Record<string, string> = {
+    approved: "одобрена",
+    pending: "на рассмотрении",
+    rejected: "отклонена",
+  };
   return (
     <span
       className={cn(
@@ -138,7 +150,7 @@ function Status({ status, className }: { status: string; className?: string }) {
         className,
       )}
     >
-      {status}
+      {labels[status] ?? status}
     </span>
   );
 }

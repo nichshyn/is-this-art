@@ -7,32 +7,32 @@ const categorySlugs = CATEGORIES.map((c) => c.slug) as [string, ...string[]];
 export const usernameSchema = z
   .string()
   .trim()
-  .min(3, "Username must be at least 3 characters.")
-  .max(24, "Username must be at most 24 characters.")
-  .regex(/^[a-zA-Z0-9_]+$/, "Use letters, numbers and underscores only.");
+  .min(3, "Имя пользователя должно содержать не менее 3 символов.")
+  .max(24, "Имя пользователя должно содержать не более 24 символов.")
+  .regex(/^[a-zA-Z0-9_]+$/, "Используйте только буквы, цифры и подчёркивания.");
 
 export const passwordSchema = z
   .string()
-  .min(8, "Password must be at least 8 characters.")
-  .max(200, "Password is too long.");
+  .min(8, "Пароль должен содержать не менее 8 символов.")
+  .max(200, "Пароль слишком длинный.");
 
 export const signupSchema = z.object({
   username: usernameSchema,
-  email: z.string().trim().toLowerCase().email("Enter a valid email address."),
+  email: z.string().trim().toLowerCase().email("Введите корректный адрес электронной почты."),
   password: passwordSchema,
 });
 
 export const loginSchema = z.object({
-  email: z.string().trim().toLowerCase().email("Enter a valid email address."),
-  password: z.string().min(1, "Enter your password."),
+  email: z.string().trim().toLowerCase().email("Введите корректный адрес электронной почты."),
+  password: z.string().min(1, "Введите пароль."),
 });
 
 export const forgotSchema = z.object({
-  email: z.string().trim().toLowerCase().email("Enter a valid email address."),
+  email: z.string().trim().toLowerCase().email("Введите корректный адрес электронной почты."),
 });
 
 export const resetSchema = z.object({
-  token: z.string().min(10, "This reset link is invalid."),
+  token: z.string().min(10, "Недействительная ссылка для сброса пароля."),
   password: passwordSchema,
 });
 
@@ -41,8 +41,8 @@ export const commentSchema = z.object({
   content: z
     .string()
     .trim()
-    .min(2, "Write at least two characters.")
-    .max(LIMITS.commentLength, `Comments are limited to ${LIMITS.commentLength} characters.`),
+    .min(2, "Введите не менее двух символов.")
+    .max(LIMITS.commentLength, `Комментарий может содержать не более ${LIMITS.commentLength} символов.`),
 });
 
 export const reportSchema = z.object({
@@ -51,7 +51,7 @@ export const reportSchema = z.object({
   details: z
     .string()
     .trim()
-    .max(LIMITS.reportDetails, `Details are limited to ${LIMITS.reportDetails} characters.`)
+    .max(LIMITS.reportDetails, `Описание может содержать не более ${LIMITS.reportDetails} символов.`)
     .optional()
     .or(z.literal("")),
 });
@@ -60,13 +60,13 @@ export const profileSchema = z.object({
   bio: z
     .string()
     .trim()
-    .max(LIMITS.bioLength, `Bio is limited to ${LIMITS.bioLength} characters.`)
+    .max(LIMITS.bioLength, `Описание профиля может содержать не более ${LIMITS.bioLength} символов.`)
     .optional()
     .or(z.literal("")),
   avatarUrl: z
     .string()
     .trim()
-    .url("Enter a valid image URL.")
+    .url("Введите корректный URL изображения.")
     .max(500)
     .optional()
     .or(z.literal("")),
@@ -75,19 +75,19 @@ export const profileSchema = z.object({
 const yearSchema = z
   .string()
   .trim()
-  .max(24, "Year is too long.")
+  .max(24, "Слишком длинное значение года.")
   .optional()
   .or(z.literal(""));
 
 export const artworkSubmissionSchema = z.object({
-  title: z.string().trim().min(2, "Give the work a title.").max(120),
+  title: z.string().trim().min(2, "Укажите название работы.").max(120),
   description: z
     .string()
     .trim()
-    .min(20, "Write at least 20 characters about the work.")
-    .max(2000, "Description is limited to 2000 characters."),
-  category: z.enum(categorySlugs, { message: "Choose a category." }),
-  artistName: z.string().trim().min(2, "Add an artist name or pseudonym.").max(120),
+    .min(20, "Напишите описание работы длиной не менее 20 символов.")
+    .max(2000, "Описание может содержать не более 2000 символов."),
+  category: z.enum(categorySlugs, { message: "Выберите категорию." }),
+  artistName: z.string().trim().min(2, "Укажите имя или псевдоним автора.").max(120),
   creationYear: yearSchema,
   country: z.string().trim().max(80).optional().or(z.literal("")),
   location: z.string().trim().max(160).optional().or(z.literal("")),
@@ -95,7 +95,7 @@ export const artworkSubmissionSchema = z.object({
   isOriginal: z.boolean().default(true),
   isAnonymous: z.boolean().default(false),
   agree: z.literal(true, {
-    message: "You must confirm you have the right to share this image.",
+    message: "Подтвердите, что вы имеете право опубликовать это изображение.",
   }),
 });
 
@@ -106,10 +106,10 @@ export const adminArtworkSchema = z.object({
     .trim()
     .min(2)
     .max(80)
-    .regex(/^[a-z0-9-]+$/, "Slug may contain lowercase letters, numbers and hyphens."),
+    .regex(/^[a-z0-9-]+$/, "Slug может содержать только строчные буквы, цифры и дефисы."),
   description: z.string().trim().min(10).max(2000),
   history: z.string().trim().max(4000).optional().or(z.literal("")),
-  category: z.enum(categorySlugs, { message: "Choose a category." }),
+  category: z.enum(categorySlugs, { message: "Выберите категорию." }),
   artistName: z.string().trim().min(1).max(120),
   creationYear: yearSchema,
   country: z.string().trim().max(80).optional().or(z.literal("")),
@@ -129,5 +129,5 @@ export type LoginInput = z.infer<typeof loginSchema>;
 export type ArtworkSubmissionInput = z.infer<typeof artworkSubmissionSchema>;
 
 export function firstError(error: z.ZodError): string {
-  return error.issues[0]?.message ?? "Please check the form and try again.";
+  return error.issues[0]?.message ?? "Проверьте данные формы и попробуйте снова.";
 }

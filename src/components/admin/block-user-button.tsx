@@ -24,7 +24,7 @@ export function BlockUserButton({
   function onClick() {
     if (
       !blocked &&
-      !window.confirm(`Suspend @${username}? They will not be able to vote or comment.`)
+      !window.confirm(`Заблокировать @${username}? Пользователь не сможет голосовать и комментировать.`)
     ) {
       return;
     }
@@ -32,7 +32,7 @@ export function BlockUserButton({
     startTransition(async () => {
       const result = await adminToggleBlockAction(userId);
       if (!result.ok) {
-        setError(result.error ?? "Could not update.");
+        setError(result.error ?? "Не удалось обновить.");
         return;
       }
       router.refresh();
@@ -62,7 +62,7 @@ export function BlockUserButton({
         ) : (
           <Ban size={11} />
         )}
-        {blocked ? "Restore" : "Suspend"}
+        {blocked ? "Разблокировать" : "Заблокировать"}
       </button>
       {error && <span className="text-[9.5px] text-red-500">{error}</span>}
     </span>

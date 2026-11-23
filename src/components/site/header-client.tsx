@@ -20,13 +20,13 @@ import { ThemeToggle } from "@/components/site/theme-toggle";
 import { Avatar } from "@/components/ui/avatar";
 import { buttonClasses } from "@/components/ui/button";
 import { Logo } from "@/components/site/logo";
-import { cn } from "@/lib/utils";
+import { cn, plural } from "@/lib/utils";
 
 const NAV = [
-  { href: "/discover", label: "Discover" },
-  { href: "/play", label: "Play" },
-  { href: "/community", label: "Community" },
-  { href: "/leaderboard", label: "Leaderboard" },
+  { href: "/discover", label: "Обзор" },
+  { href: "/play", label: "Игра" },
+  { href: "/community", label: "Сообщество" },
+  { href: "/leaderboard", label: "Лидеры" },
 ];
 
 export interface HeaderUser {
@@ -80,7 +80,7 @@ export function HeaderClient({ user }: { user: HeaderUser | null }) {
       <div className="container-page flex h-16 items-center justify-between gap-4">
         <Logo />
 
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
+        <nav className="hidden items-center gap-1 lg:flex" aria-label="Основная навигация">
           {NAV.map((item) => (
             <Link
               key={item.href}
@@ -114,7 +114,7 @@ export function HeaderClient({ user }: { user: HeaderUser | null }) {
             )}
           >
             <Plus size={15} strokeWidth={1.8} />
-            Submit artwork
+            Предложить работу
           </Link>
 
           {user ? (
@@ -145,18 +145,18 @@ export function HeaderClient({ user }: { user: HeaderUser | null }) {
                     <div className="border-b border-line px-3 py-2.5">
                       <p className="text-[13px] font-medium">@{user.username}</p>
                       <p className="mt-0.5 text-[11.5px] text-muted">
-                        {user.points.toLocaleString()} points
+                        {plural(user.points, "очко", "очка", "очков")}
                       </p>
                     </div>
                     <MenuLink href={`/u/${user.username}`} icon={<UserIcon size={15} />}>
-                      Profile
+                      Профиль
                     </MenuLink>
                     <MenuLink href="/settings" icon={<Settings size={15} />}>
-                      Settings
+                      Настройки
                     </MenuLink>
                     {user.role === "admin" && (
                       <MenuLink href="/admin" icon={<LayoutDashboard size={15} />}>
-                        Admin dashboard
+                        Панель администратора
                       </MenuLink>
                     )}
                     <form action={logoutAction}>
@@ -165,7 +165,7 @@ export function HeaderClient({ user }: { user: HeaderUser | null }) {
                         className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-left text-[13px] text-muted transition-colors hover:bg-subtle hover:text-ink"
                       >
                         <LogOut size={15} />
-                        Sign out
+                        Выйти
                       </button>
                     </form>
                   </motion.div>
@@ -180,7 +180,7 @@ export function HeaderClient({ user }: { user: HeaderUser | null }) {
                 "hidden lg:inline-flex",
               )}
             >
-              Sign in
+              Войти
             </Link>
           )}
 
@@ -188,7 +188,7 @@ export function HeaderClient({ user }: { user: HeaderUser | null }) {
             type="button"
             onClick={() => setMenuOpen((v) => !v)}
             className="inline-flex h-9 w-9 items-center justify-center rounded-full text-ink transition-colors hover:bg-subtle lg:hidden"
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"}
             aria-expanded={menuOpen}
           >
             {menuOpen ? <X size={19} /> : <Menu size={19} />}
@@ -226,19 +226,19 @@ export function HeaderClient({ user }: { user: HeaderUser | null }) {
                     <div>
                       <p className="text-[14px] font-medium">@{user.username}</p>
                       <p className="text-[12px] text-muted">
-                        {user.points.toLocaleString()} points
+                        {plural(user.points, "очко", "очка", "очков")}
                       </p>
                     </div>
                   </div>
                   <Link href={`/u/${user.username}`} className="block rounded-xl px-3 py-2.5 text-[15px]">
-                    Profile
+                    Профиль
                   </Link>
                   <Link href="/settings" className="block rounded-xl px-3 py-2.5 text-[15px]">
-                    Settings
+                    Настройки
                   </Link>
                   {user.role === "admin" && (
                     <Link href="/admin" className="block rounded-xl px-3 py-2.5 text-[15px]">
-                      Admin dashboard
+                      Панель администратора
                     </Link>
                   )}
                   <form action={logoutAction} className="pt-1">
@@ -246,17 +246,17 @@ export function HeaderClient({ user }: { user: HeaderUser | null }) {
                       type="submit"
                       className="w-full rounded-xl px-3 py-2.5 text-left text-[15px] text-muted"
                     >
-                      Sign out
+                      Выйти
                     </button>
                   </form>
                 </>
               ) : (
                 <div className="grid grid-cols-2 gap-2 px-1 pt-1">
                   <Link href="/login" className={buttonClasses({ variant: "secondary", size: "md" })}>
-                    Sign in
+                    Войти
                   </Link>
                   <Link href="/signup" className={buttonClasses({ variant: "primary", size: "md" })}>
-                    Create account
+                    Создать аккаунт
                   </Link>
                 </div>
               )}
@@ -265,7 +265,7 @@ export function HeaderClient({ user }: { user: HeaderUser | null }) {
                 className={cn(buttonClasses({ variant: "secondary", size: "md" }), "mt-2 w-full")}
               >
                 <Plus size={16} />
-                Submit artwork
+                Предложить работу
               </Link>
             </div>
           </motion.div>

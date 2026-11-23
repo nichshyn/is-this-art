@@ -11,9 +11,9 @@ const ROWS: Array<{
   short: string;
   tone: string;
 }> = [
-  { key: "yes", label: "Yes, it's art.", short: "Yes", tone: "bg-ink" },
-  { key: "no", label: "No, it's not art.", short: "No", tone: "bg-ink/45" },
-  { key: "unsure", label: "I'm not sure.", short: "Not sure", tone: "bg-ink/15" },
+  { key: "yes", label: "Да, это искусство.", short: "Да", tone: "bg-ink" },
+  { key: "no", label: "Нет, это не искусство.", short: "Нет", tone: "bg-ink/45" },
+  { key: "unsure", label: "Не уверен(а).", short: "Не уверен", tone: "bg-ink/15" },
 ];
 
 export function VoteBars({
@@ -38,7 +38,7 @@ export function VoteBars({
     <div
       className={cn("space-y-4", className)}
       role="img"
-      aria-label={`Yes ${stats.yesPct}%, no ${stats.noPct}%, not sure ${stats.unsurePct}%`}
+      aria-label={`Да: ${stats.yesPct}%, нет: ${stats.noPct}%, не уверен(а): ${stats.unsurePct}%`}
     >
       {ROWS.map((row) => (
         <div key={row.key}>
@@ -47,7 +47,7 @@ export function VoteBars({
               <span className="text-[12.5px] text-ink/80">{row.label}</span>
               {yourVote === row.key && (
                 <span className="rounded-full bg-subtle px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-[0.08em] text-muted">
-                  You
+                  Вы
                 </span>
               )}
             </div>

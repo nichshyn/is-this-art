@@ -15,13 +15,13 @@ const bodySchema = z.object({
 
 export async function POST(request: Request) {
   if (!isSameOrigin(request)) {
-    return NextResponse.json({ ok: false, message: "Invalid origin." }, { status: 403 });
+    return NextResponse.json({ ok: false, message: "Недопустимый источник запроса." }, { status: 403 });
   }
   const ip = clientIp(request);
   const limited = rateLimit(`vote:${ip}`, 80, 60_000);
   if (!limited.ok) {
     return NextResponse.json(
-      { ok: false, message: "Too many votes. Take a breath and try again shortly." },
+      { ok: false, message: "Слишком много голосов. Немного подождите и попробуйте снова." },
       { status: 429, headers: { "Retry-After": String(limited.retryAfter) } },
     );
   }
@@ -30,12 +30,12 @@ export async function POST(request: Request) {
   try {
     json = await request.json();
   } catch {
-    return NextResponse.json({ ok: false, message: "Invalid request." }, { status: 400 });
+    return NextResponse.json({ ok: false, message: "Неверный запрос." }, { status: 400 });
   }
   const parsed = bodySchema.safeParse(json);
   if (!parsed.success) {
     return NextResponse.json(
-      { ok: false, message: parsed.error.issues[0]?.message ?? "Invalid vote." },
+      { ok: false, message: parsed.error.issues[0]?.message ?? "Неверный голос." },
       { status: 400 },
     );
   }

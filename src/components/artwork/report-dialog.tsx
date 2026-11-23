@@ -39,7 +39,7 @@ export function ReportDialog({
         className="inline-flex items-center gap-1.5 text-[11px] text-muted transition-colors hover:text-ink"
       >
         <Flag size={12} />
-        Report
+        Пожаловаться
       </button>
 
       <AnimatePresence>
@@ -64,16 +64,16 @@ export function ReportDialog({
             >
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="eyebrow">Moderation</p>
+                  <p className="eyebrow">Модерация</p>
                   <h2 id="report-title" className="mt-2 text-[20px] font-semibold tracking-tight">
-                    Report this artwork
+                    Пожаловаться на работу
                   </h2>
                 </div>
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
                   className="rounded-full p-1.5 text-muted hover:bg-subtle hover:text-ink"
-                  aria-label="Close"
+                  aria-label="Закрыть"
                 >
                   <X size={17} />
                 </button>
@@ -87,7 +87,7 @@ export function ReportDialog({
                 <form action={action} className="mt-5 space-y-4">
                   <input type="hidden" name="artworkId" value={artworkId} />
                   <label className="block">
-                    <span className="mb-1.5 block text-[11.5px] font-medium text-muted">Reason</span>
+                    <span className="mb-1.5 block text-[11.5px] font-medium text-muted">Причина</span>
                     <select name="reason" required className="field">
                       {REPORT_REASONS.map((reason) => (
                         <option key={reason} value={reason}>
@@ -98,23 +98,23 @@ export function ReportDialog({
                   </label>
                   <label className="block">
                     <span className="mb-1.5 block text-[11.5px] font-medium text-muted">
-                      Details <span className="font-normal">(optional)</span>
+                      Подробности <span className="font-normal">(необязательно)</span>
                     </span>
                     <textarea
                       name="details"
                       maxLength={600}
                       rows={4}
                       className="field-area"
-                      placeholder="What should the moderator know?"
+                      placeholder="Что должен знать модератор?"
                     />
                   </label>
                   {state.error && <p className="text-[12px] text-red-500">{state.error}</p>}
                   <Button type="submit" className="w-full" disabled={pending}>
                     {pending ? <Loader2 size={15} className="animate-spin" /> : <Flag size={14} />}
-                    Submit report
+                    Отправить жалобу
                   </Button>
                   <p className="text-[10.5px] leading-relaxed text-muted">
-                    Reports are reviewed by a moderator. False reports may be ignored.
+                    Жалобы рассматривает модератор. Ложные жалобы могут быть проигнорированы.
                   </p>
                 </form>
               )}

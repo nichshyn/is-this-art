@@ -7,22 +7,22 @@ import { ForgotForm } from "@/components/auth/forms";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Forgot password",
-  description: "Request a password reset link for your IS THIS ART? account.",
+  title: "Забыли пароль",
+  description: "Запросите ссылку для сброса пароля к учётной записи «IS THIS ART?».",
   alternates: { canonical: "/forgot-password" },
 };
 
 export default function ForgotPasswordPage() {
   return (
     <AuthShell
-      eyebrow="Account recovery"
-      title="Let's get you back in."
-      description="Enter the email you signed up with. If an account exists, a reset link will be created."
+      eyebrow="Восстановление аккаунта"
+      title="Поможем вам снова войти."
+      description="Введите адрес электронной почты, указанный при регистрации. Если аккаунт существует, мы создадим ссылку для сброса пароля."
       footer={
         <>
-          Remembered it?{" "}
+          Вспомнили пароль?{" "}
           <Link href="/login" className="font-medium text-ink underline underline-offset-2">
-            Back to sign in
+            Вернуться ко входу
           </Link>
         </>
       }

@@ -68,9 +68,9 @@ export function DiscoverControls({
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search title, artist or description"
+            placeholder="Название, художник или описание"
             className="field h-11 rounded-full pl-10 pr-10 text-[13.5px]"
-            aria-label="Search artworks"
+            aria-label="Поиск работ"
           />
           {query && (
             <button
@@ -80,7 +80,7 @@ export function DiscoverControls({
                 navigate({ q: "", page: 1 });
               }}
               className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-muted hover:text-ink"
-              aria-label="Clear search"
+              aria-label="Очистить поиск"
             >
               <X size={14} />
             </button>
@@ -97,12 +97,12 @@ export function DiscoverControls({
               value={sort}
               onChange={(event) => navigate({ sort: event.target.value, page: 1 })}
               className="h-11 appearance-none rounded-full border border-line bg-surface pl-9 pr-8 text-[12.5px] text-ink focus:outline-none focus:ring-4 focus:ring-ink/5"
-              aria-label="Sort artworks"
+              aria-label="Сортировка работ"
             >
-              <option value="trending">Trending</option>
-              <option value="controversial">Most divisive</option>
-              <option value="newest">Recently added</option>
-              <option value="votes">Most judged</option>
+              <option value="trending">Популярное</option>
+              <option value="controversial">Самые спорные</option>
+              <option value="newest">Недавно добавленные</option>
+              <option value="votes">Больше всего оценок</option>
             </select>
             <span className="pointer-events-none absolute right-3 text-[9px] text-muted">▾</span>
           </label>
@@ -115,7 +115,7 @@ export function DiscoverControls({
               }}
               className="h-11 rounded-full px-3 text-[11.5px] text-muted transition-colors hover:text-ink"
             >
-              Reset
+              Сбросить
             </button>
           )}
         </div>
@@ -132,7 +132,7 @@ export function DiscoverControls({
               : "border-line bg-surface text-muted hover:border-ink/20 hover:text-ink",
           )}
         >
-          All works
+          Все работы
         </button>
         {categories.map((item) => (
           <button
@@ -151,7 +151,7 @@ export function DiscoverControls({
           </button>
         ))}
       </div>
-      {pending && <p className="text-[10.5px] text-muted">Updating gallery…</p>}
+      {pending && <p className="text-[10.5px] text-muted">Обновляем галерею…</p>}
     </div>
   );
 }

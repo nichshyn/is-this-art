@@ -9,33 +9,33 @@ import { SITE } from "@/lib/constants";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: "IS THIS ART? — Who decides what art is?",
+    default: "IS THIS ART? — Кто решает, что такое искусство?",
     template: "%s — IS THIS ART?",
   },
   description: SITE.description,
   applicationName: SITE.name,
   keywords: [
-    "art",
-    "social game",
-    "contemporary art",
-    "art gallery",
-    "taste",
-    "voting",
-    "AI art",
+    "искусство",
+    "социальная игра",
+    "современное искусство",
+    "художественная галерея",
+    "вкус",
+    "голосование",
+    "ИИ-искусство",
   ],
   authors: [{ name: "IS THIS ART?" }],
   openGraph: {
     type: "website",
     url: SITE.url,
     siteName: SITE.name,
-    title: "IS THIS ART? — Who decides what art is?",
+    title: "IS THIS ART? — Кто решает, что такое искусство?",
     description: SITE.description,
     images: [
       {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "IS THIS ART? — a social experiment about taste",
+        alt: "IS THIS ART? — социальный эксперимент о вкусе",
       },
     ],
   },
@@ -78,7 +78,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html lang="ru" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>

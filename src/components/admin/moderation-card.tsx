@@ -25,7 +25,7 @@ export function ModerationCard({
 
   function decide(decision: "approved" | "rejected") {
     if (decision === "rejected" && reason.trim().length < 3) {
-      setError("Add a short reason so the submitter knows what to fix.");
+      setError("Укажите краткую причину, чтобы автор знал, что нужно исправить.");
       return;
     }
     setError(null);
@@ -36,7 +36,7 @@ export function ModerationCard({
         decision === "rejected" ? reason.trim() : undefined,
       );
       if (!result.ok) {
-        setError(result.error ?? "Could not update the artwork.");
+        setError(result.error ?? "Не удалось обновить работу.");
         return;
       }
       router.refresh();
@@ -59,19 +59,19 @@ export function ModerationCard({
         <div className="flex min-w-0 flex-col p-4 sm:p-5">
           <div className="flex flex-wrap items-center gap-2">
             <span className="rounded-full bg-amber-500/10 px-2 py-0.5 text-[9px] font-medium uppercase tracking-[0.1em] text-amber-700 dark:text-amber-400">
-              Pending
+              На рассмотрении
             </span>
             <span className="text-[10px] text-muted">
               {CATEGORY_MAP[artwork.category]?.name ?? artwork.category}
             </span>
             {artwork.is_ai_generated === 1 && (
               <span className="rounded-full bg-subtle px-2 py-0.5 text-[9px] uppercase tracking-[0.1em] text-muted">
-                AI
+                ИИ
               </span>
             )}
             {artwork.is_anonymous === 1 && (
               <span className="rounded-full bg-subtle px-2 py-0.5 text-[9px] uppercase tracking-[0.1em] text-muted">
-                Anonymous
+                Анонимно
               </span>
             )}
           </div>
@@ -85,13 +85,13 @@ export function ModerationCard({
             {artwork.description}
           </p>
           <p className="mt-2 text-[10.5px] text-muted">
-            Submitted {formatDate(artwork.created_at)} by{" "}
+            Отправлено {formatDate(artwork.created_at)} пользователем{" "}
             {artwork.submitter ? (
               <Link href={`/u/${artwork.submitter}`} className="underline underline-offset-2">
                 @{artwork.submitter}
               </Link>
             ) : (
-              "seed content"
+              "демо-контент"
             )}
             {" · "}
             <a
@@ -100,14 +100,14 @@ export function ModerationCard({
               rel="noreferrer noopener"
               className="inline-flex items-center gap-0.5 underline underline-offset-2"
             >
-              Open image <ExternalLink size={9} />
+              Открыть изображение <ExternalLink size={9} />
             </a>
           </p>
 
           {rejecting ? (
             <div className="mt-4 rounded-xl border border-line bg-subtle/60 p-3">
               <label htmlFor={`reason-${artwork.id}`} className="text-[11px] font-medium">
-                Reason for rejection
+                Причина отклонения
               </label>
               <textarea
                 id={`reason-${artwork.id}`}
@@ -115,7 +115,7 @@ export function ModerationCard({
                 onChange={(event) => setReason(event.target.value)}
                 rows={2}
                 maxLength={500}
-                placeholder="e.g. The image is too low resolution to display."
+                placeholder="Например: изображение слишком низкого качества для публикации."
                 className="field mt-2 min-h-[70px] text-[12px]"
               />
               <div className="mt-2 flex gap-2">
@@ -126,7 +126,7 @@ export function ModerationCard({
                   className={buttonClasses({ variant: "danger", size: "sm" })}
                 >
                   {pending ? <Loader2 size={13} className="animate-spin" /> : <X size={13} />}
-                  Confirm rejection
+                  Подтвердить отклонение
                 </button>
                 <button
                   type="button"
@@ -136,7 +136,7 @@ export function ModerationCard({
                   }}
                   className={buttonClasses({ variant: "ghost", size: "sm" })}
                 >
-                  Cancel
+                  Отмена
                 </button>
               </div>
             </div>
@@ -149,7 +149,7 @@ export function ModerationCard({
                 className={buttonClasses({ size: "sm" })}
               >
                 {pending ? <Loader2 size={13} className="animate-spin" /> : <Check size={13} />}
-                Approve
+                Одобрить
               </button>
               <button
                 type="button"
@@ -157,7 +157,7 @@ export function ModerationCard({
                 disabled={pending}
                 className={buttonClasses({ variant: "danger", size: "sm" })}
               >
-                <X size={13} /> Reject
+                <X size={13} /> Отклонить
               </button>
             </div>
           )}

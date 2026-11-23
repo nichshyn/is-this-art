@@ -20,7 +20,7 @@ export function DeleteArtworkButton({
   function onClick() {
     if (
       !window.confirm(
-        `Delete “${title}”? Votes, comments and likes for this work will also be removed.`,
+        `Удалить «${title}»? Голоса, комментарии и отметки «Нравится» для этой работы также будут удалены.`,
       )
     ) {
       return;
@@ -29,7 +29,7 @@ export function DeleteArtworkButton({
     startTransition(async () => {
       const result = await adminDeleteArtworkAction(artworkId);
       if (!result.ok) {
-        setError(result.error ?? "Could not delete.");
+        setError(result.error ?? "Не удалось удалить.");
         return;
       }
       router.refresh();
@@ -45,7 +45,7 @@ export function DeleteArtworkButton({
         className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-[10.5px] text-muted transition-colors hover:bg-red-500/10 hover:text-red-600 disabled:opacity-50"
       >
         <Trash2 size={11} />
-        {pending ? "Deleting…" : "Delete"}
+        {pending ? "Удаление…" : "Удалить"}
       </button>
       {error && <span className="text-[9.5px] text-red-500">{error}</span>}
     </span>

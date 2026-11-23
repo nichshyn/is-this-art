@@ -6,21 +6,21 @@ import { Avatar } from "@/components/ui/avatar";
 import { Reveal } from "@/components/ui/reveal";
 import { getCurrentUser } from "@/lib/auth";
 import { getLeaderboard, getSiteStats } from "@/lib/queries";
-import { cn, formatNumber } from "@/lib/utils";
+import { cn, formatNumber, plural } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Leaderboard",
+  title: "Таблица лидеров",
   description:
-    "The members looking closest. Rankings by points earned from judgments, daily challenges, achievements and approved works.",
+    "Участники, которые смотрят внимательнее всех. Рейтинг по очкам за суждения, задания дня, достижения и одобренные работы.",
   alternates: { canonical: "/leaderboard" },
 };
 
 const PERIODS = [
-  { value: "weekly", label: "This week" },
-  { value: "monthly", label: "This month" },
-  { value: "all", label: "All time" },
+  { value: "weekly", label: "На этой неделе" },
+  { value: "monthly", label: "В этом месяце" },
+  { value: "all", label: "За всё время" },
 ] as const;
 
 type Period = (typeof PERIODS)[number]["value"];
@@ -46,15 +46,15 @@ export default async function LeaderboardPage({
     <div className="container-page py-10 sm:py-14">
       <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="eyebrow">Leaderboard</p>
+          <p className="eyebrow">Таблица лидеров</p>
           <h1 className="display mt-4 text-[clamp(2.6rem,6.4vw,5.2rem)] leading-[0.9]">
-            The people
+            Те, кто
             <br />
-            looking closest.
+            смотрит внимательнее всех.
           </h1>
           <p className="mt-5 max-w-lg text-[14px] leading-relaxed text-muted">
-            Points come from judgments, daily challenges, achievements and approved
-            submissions. No money, no ads, no shortcut.
+            Очки начисляются за суждения, задания дня, достижения и одобренные
+            работы. Никаких денег, рекламы и лёгких путей.
           </p>
         </div>
         <div className="flex shrink-0 gap-1 rounded-full border border-line bg-surface p-1">
@@ -77,10 +77,10 @@ export default async function LeaderboardPage({
 
       <dl className="mt-10 grid grid-cols-2 gap-3 border-y border-line py-5 sm:grid-cols-4">
         {[
-          ["Members", stats.users],
-          ["Judgments", stats.votes],
-          ["Works", stats.artworks],
-          ["Today", stats.todayVotes],
+          ["Участники", stats.users],
+          ["Суждения", stats.votes],
+          ["Работы", stats.artworks],
+          ["Сегодня", stats.todayVotes],
         ].map(([label, value]) => (
           <div key={String(label)}>
             <dd className="text-[22px] font-semibold tracking-tight tabular-nums">
@@ -93,15 +93,15 @@ export default async function LeaderboardPage({
 
       {rows.length === 0 ? (
         <div className="mt-12 rounded-2xl border border-dashed border-line py-16 text-center">
-          <p className="text-[14px] font-medium">No rankings yet.</p>
+          <p className="text-[14px] font-medium">Рейтинга пока нет.</p>
           <p className="mt-2 text-[12.5px] text-muted">
-            Be the first to earn points by judging a work.
+            Станьте первым, кто заработает очки за суждение.
           </p>
           <Link
             href="/play"
             className="mt-5 inline-flex rounded-full bg-accent px-5 py-2.5 text-[12.5px] font-medium text-accent-ink"
           >
-            Start playing
+            Начать игру
           </Link>
         </div>
       ) : (
@@ -124,7 +124,7 @@ export default async function LeaderboardPage({
                       #{index + 1}
                     </span>
                     <span className="text-[10.5px] text-muted">
-                      {formatNumber(row.points)} pts
+                      {plural(row.points, "очко", "очка", "очков")}
                     </span>
                   </div>
                   <Avatar
@@ -137,11 +137,11 @@ export default async function LeaderboardPage({
                     @{row.username}
                   </p>
                   <p className="mt-1 text-[11.5px] text-muted">
-                    {formatNumber(row.votes)} judgments · {row.works} works
+                    {plural(row.votes, "суждение", "суждения", "суждений")} · {plural(row.works, "работа", "работы", "работ")}
                   </p>
                   {row.streak > 0 && (
                     <p className="mt-3 inline-flex items-center gap-1 text-[10.5px] text-muted">
-                      <Flame size={11} /> {row.streak}-day streak
+                      <Flame size={11} /> серия {plural(row.streak, "день", "дня", "дней")}
                     </p>
                   )}
                 </Link>
@@ -151,12 +151,12 @@ export default async function LeaderboardPage({
 
           <div className="mt-4 overflow-hidden rounded-2xl border border-line bg-surface">
             <div className="hidden grid-cols-[48px_1fr_100px_100px_100px_100px] items-center gap-4 border-b border-line px-5 py-3 text-[10px] uppercase tracking-[0.14em] text-muted sm:grid">
-              <span>Rank</span>
-              <span>Member</span>
-              <span className="text-right">Points</span>
-              <span className="text-right">Judgments</span>
-              <span className="text-right">Works</span>
-              <span className="text-right">Streak</span>
+              <span>Место</span>
+              <span>Участник</span>
+              <span className="text-right">Очки</span>
+              <span className="text-right">Суждения</span>
+              <span className="text-right">Работы</span>
+              <span className="text-right">Серия</span>
             </div>
             <ul className="divide-y divide-line">
               {rest.map((row, index) => {
@@ -179,10 +179,10 @@ export default async function LeaderboardPage({
                         <span className="min-w-0">
                           <span className="block truncate text-[12.5px] font-medium">
                             @{row.username}
-                            {isViewer && <span className="ml-2 text-[10px] text-muted">you</span>}
+                            {isViewer && <span className="ml-2 text-[10px] text-muted">вы</span>}
                           </span>
                           <span className="block text-[10px] text-muted sm:hidden">
-                            {formatNumber(row.points)} pts · {formatNumber(row.votes)} judgments
+                            {plural(row.points, "очко", "очка", "очков")} · {plural(row.votes, "суждение", "суждения", "суждений")}
                           </span>
                         </span>
                       </span>
@@ -196,7 +196,7 @@ export default async function LeaderboardPage({
                         {row.works}
                       </span>
                       <span className="hidden text-right text-[12px] tabular-nums text-muted sm:block">
-                        {row.streak > 0 ? `${row.streak}d` : "—"}
+                        {row.streak > 0 ? `${row.streak} дн.` : "—"}
                       </span>
                       <span className="text-right text-[12px] font-medium tabular-nums sm:hidden">
                         {formatNumber(row.points)}
@@ -216,24 +216,23 @@ export default async function LeaderboardPage({
           {viewer ? (
             viewerIndex >= 0 ? (
               <>
-                You are <span className="font-medium text-ink">#{viewerIndex + 1}</span> with{" "}
-                {formatNumber(rows[viewerIndex]!.points)} points this period.
+                У вас {plural(rows[viewerIndex]!.points, "очко", "очка", "очков")} за этот период — <span className="font-medium text-ink">#{viewerIndex + 1} место</span>.
               </>
             ) : (
               <>
-                You are outside the top {rows.length} this period. Judge a few works
-                to climb.
+                В этом периоде вы не вошли в топ-{rows.length}. Оцените несколько
+                работ, чтобы подняться выше.
               </>
             )
           ) : (
-            <>Sign in to keep points, streaks and a place on the board.</>
+            <>Войдите, чтобы сохранить очки, серии и место в рейтинге.</>
           )}
         </p>
         <Link
           href={viewer ? "/play" : "/signup"}
           className="shrink-0 text-[12px] font-medium text-ink underline underline-offset-4"
         >
-          {viewer ? "Judge another work" : "Create an account"}
+          {viewer ? "Оценить ещё работу" : "Создать аккаунт"}
         </Link>
       </div>
     </div>

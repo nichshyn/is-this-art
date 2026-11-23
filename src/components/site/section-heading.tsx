@@ -6,7 +6,7 @@ export function SectionHeading({
   title,
   description,
   href,
-  linkLabel = "View all",
+  linkLabel = "Смотреть всё",
 }: {
   eyebrow: string;
   title: string;

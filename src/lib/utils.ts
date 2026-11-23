@@ -6,11 +6,11 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatNumber(value: number): string {
-  return new Intl.NumberFormat("en-US").format(value);
+  return new Intl.NumberFormat("ru-RU").format(value);
 }
 
 export function formatCompact(value: number): string {
-  return new Intl.NumberFormat("en-US", {
+  return new Intl.NumberFormat("ru-RU", {
     notation: "compact",
     maximumFractionDigits: 1,
   }).format(value);
@@ -58,20 +58,20 @@ export function avatarTone(seed: string): string {
 export function timeAgo(iso: string): string {
   const date = new Date(iso.endsWith("Z") ? iso : iso + "Z");
   const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
-  if (!Number.isFinite(seconds) || seconds < 45) return "just now";
+  if (!Number.isFinite(seconds) || seconds < 45) return "только что";
   const minutes = Math.floor(seconds / 60);
-  if (minutes < 60) return `${minutes}m ago`;
+  if (minutes < 60) return `${plural(minutes, "минуту", "минуты", "минут")} назад`;
   const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `${hours}h ago`;
+  if (hours < 24) return `${plural(hours, "час", "часа", "часов")} назад`;
   const days = Math.floor(hours / 24);
-  if (days < 30) return `${days}d ago`;
+  if (days < 30) return `${plural(days, "день", "дня", "дней")} назад`;
   const months = Math.floor(days / 30);
-  if (months < 12) return `${months}mo ago`;
-  return `${Math.floor(months / 12)}y ago`;
+  if (months < 12) return `${plural(months, "месяц", "месяца", "месяцев")} назад`;
+  return `${plural(Math.floor(months / 12), "год", "года", "лет")} назад`;
 }
 
 export function formatDate(iso: string): string {
-  return new Intl.DateTimeFormat("en-US", {
+  return new Intl.DateTimeFormat("ru-RU", {
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -98,8 +98,23 @@ export function absoluteUrl(path: string): string {
   return `${base.replace(/\/$/, "")}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
-export function plural(count: number, singular: string, pluralForm?: string) {
-  return `${formatNumber(count)} ${count === 1 ? singular : pluralForm ?? singular + "s"}`;
+export function plural(
+  count: number,
+  singular: string,
+  pluralForm?: string,
+  manyForm?: string,
+) {
+  const absolute = Math.abs(count);
+  const mod100 = absolute % 100;
+  const mod10 = absolute % 10;
+
+  let form = manyForm ?? pluralForm ?? singular;
+  if (mod100 < 11 || mod100 > 14) {
+    if (mod10 === 1) form = singular;
+    else if (mod10 >= 2 && mod10 <= 4) form = pluralForm ?? singular;
+  }
+
+  return `${formatNumber(count)} ${form}`;
 }
 
 export function safeNext(value: unknown, fallback = "/play"): string {
