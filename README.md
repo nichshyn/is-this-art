@@ -206,7 +206,7 @@ the current code as a long-running Node service with a persistent disk, plus
 self-hosting.
 
 See [DEPLOYMENT.md](DEPLOYMENT.md) for Render/Docker, or [PC_HOSTING.md](PC_HOSTING.md)
-to publish from your own computer through a free SSH tunnel. In short:
+to publish from your own computer through a free Cloudflare tunnel. In short:
 
 1. Push this folder as the repository root to GitHub.
 2. In Render, create a Blueprint from `render.yaml` and connect the repository.

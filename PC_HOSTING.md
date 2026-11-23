@@ -1,11 +1,10 @@
 # Hosting from your PC (free, no card)
 
-This is the fastest way to put the site online without a paid host. It keeps
-the real SQLite database and uploads on your computer and publishes the local
-Node server through a free `localhost.run` SSH tunnel.
+This publishes the real Next.js server from your computer through a free
+Cloudflare Quick Tunnel. SQLite and uploads stay in `data/` on your PC.
 
-> A free tunnel URL is random and changes every time you restart it. Add an SSH
-> key at <https://admin.localhost.run/> if you want a longer-lasting domain.
+> The URL changes every time the tunnel restarts. For a permanent domain, use a
+> named Cloudflare Tunnel with your own domain (still free).
 
 ## One-time setup
 
@@ -29,8 +28,9 @@ Node server through a free `localhost.run` SSH tunnel.
    These values are used only when `data/is-this-art.db` is first created. To
    change them later, stop the server, run `npm run db:reset`, then start again.
 
-3. Windows 10/11 already includes the `ssh` client. If it is missing, enable
-   **OpenSSH Client** in *Settings → Apps → Optional features*.
+3. If `trycloudflare.com` does not open, enable DNS-over-HTTPS in your browser.
+   In Firefox: **Settings → Network Settings → DNS over HTTPS → Cloudflare**.
+   This is needed because some ISPs block plain DNS for that hostname.
 
 ## Run it
 
@@ -48,14 +48,27 @@ npm start
 npm run tunnel
 ```
 
-The second terminal prints a line like:
+The second terminal prints:
 
 ```text
-PUBLIC URL: https://f787300d1de047.app.lhr.life
+PUBLIC URL: https://something-random.trycloudflare.com
 ```
 
-Open that URL on any device. Nothing else to install — the tunnel uses the
-system SSH client and a free `nokey@localhost.run` account.
+The script downloads `cloudflared.exe` automatically on first use into your
+temp folder. No account or card required.
+
+## Fallback: SSH tunnel
+
+If Cloudflare is unavailable, Windows 10/11 already includes OpenSSH, so you
+can run:
+
+```bash
+npm run tunnel:ssh
+```
+
+This uses `localhost.run` and also needs no account or card, but its free tier
+is heavily bandwidth-throttled — pages can take 20+ seconds to load. Prefer
+`npm run tunnel` unless you have no other option.
 
 ## Keeping it online
 
@@ -63,10 +76,8 @@ system SSH client and a free `nokey@localhost.run` account.
 - The database lives at `data/is-this-art.db`; uploads at `data/uploads/`.
   Both survive restarts. Back up the whole `data/` folder.
 - After any code change, rerun `npm run build`, then restart `npm start`.
-- The public URL changes on every tunnel restart. Register a free SSH key at
-  <https://admin.localhost.run/> for a stable subdomain, or use a named
-  Cloudflare Tunnel if you own a domain.
-- If Windows Firewall asks for permission, allow Node.js and `ssh.exe`.
+- The public URL changes on every tunnel restart.
+- If Windows Firewall asks, allow Node.js and `cloudflared.exe`.
 - Do not commit `.env.local` or `data/`; they are already ignored by Git.
 
 ## Why not just GitHub Pages?
